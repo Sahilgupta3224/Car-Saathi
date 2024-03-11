@@ -14,17 +14,17 @@ export const ErrorMessage = (status,message)=>{
 const sendVerifyMail = async(name,email,user_id)=>{
   try{
      nodemailer.createTransport({
-      host:'smtp.gmail.com',
-      port:587,
-      secure:false,
-      requireTLS:true,
-      auth:{
-        user:'khanakpatwari21@gmail.com',
-        pass:PASSWORD
-      }
+      service:"gmail",//add gmail service 
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth : {
+    user: EMAIL,
+    pass: PASSWORD,//App password   
+  },
      });
      const mailOptions = {
-      from: 'khanakpatwari21@gmail.com',
+      from: EMAIL,
       to: email,
       subject: 'CarSaathi Email verification',
       html:'<p>Hi' + name + ', please click here to <a href="http://localhost:3000/verify?id='+user_id+'">Verify</a> your email.</p>'
@@ -81,10 +81,10 @@ export const verifyMail = async(req,res)=>{
 
    const updatedInfo = await User.updateOne({_id:req.query.id},{ $set:{ email_verified: true } }) 
 
-   console.log(update);
-   res.render("email-verified");
+   console.log(updatedInfo);
+   res.status(200).json({message:"email successfully verified"});
 
   }catch(error){
-    console.log(error.message);
+    console.log("error is",error.message);
   }
 }
