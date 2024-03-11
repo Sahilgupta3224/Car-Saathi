@@ -24,7 +24,17 @@ const userSchema = new mongoose.Schema({
     email_verified:{
         type:Boolean,
         default:false
-    }
-})
+    },
+    trips:{
+        type:Array,
+        default:[]
+    },
+    active_trp:{
+        type: mongoose.ObjectId
+    },
+    role:{
+        type:Boolean
+    },
+},{timestamps: true});
 
 export default mongoose.model("User",userSchema)
