@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema({
     phone:{
         type:String, 
         unique:true,
-        validate: {
-        validator: function(v) {
-          return /^([0-9]{10}$)/.test(v);
-        }},
         required: true
+    },
+    email_verified:{
+        type:Boolean,
+        default:false
     }
 })
 
