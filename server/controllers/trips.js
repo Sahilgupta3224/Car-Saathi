@@ -1,11 +1,17 @@
-import trip from "../models/trip.js";
 import tripSchema from "../models/trip.js";
+
+import User from "../models/user.js";
 
 export const createtrip =async(req,res)=>{
     const {source,destination,driver,availableSeats,CarModel,Riders,Max_Seats,completed,time,route,fare} = req.body;
     const trip = tripSchema(req.body);
     try{
         await trip.save()
+        const user = await User.findByIdAndUpdate(
+            user,
+            { $push: { trips:trip } },
+            { new: true }
+        );
         res.status(200).json({trip})
 
     }catch(err){

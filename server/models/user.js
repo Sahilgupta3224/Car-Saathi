@@ -35,7 +35,22 @@ const userSchema = new mongoose.Schema({
         type:Array,
         default:[]
     },
+    bookings:{
+        type:Array,
+        default:[]
+    },
+    requestedbookings:{
+        type:Array,
+        default:[],
+    },
+    requestedtrips:{
+        type:Array,
+        default:[],
+    },
     active_trp:{
+        type: mongoose.ObjectId
+    },
+    active_booking:{
         type: mongoose.ObjectId
     },
     role:{
