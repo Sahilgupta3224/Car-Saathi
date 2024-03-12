@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema({
     email_verified:{
         type:Boolean,
         default:false
+    },
+    rating:{
+        type:Number
+    },
+    reviews:{
+        type:[Object] //review id,rating,comment,written by whom
     }
 })
 
