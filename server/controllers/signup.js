@@ -1,14 +1,13 @@
-
-import User from  "../models/user.js"
+import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 
-export const ErrorMessage = (status,message)=>{
+export const ErrorMessage = (status, message) => {
   const error = new Error();
   error.status = status;
   error.message = message;
   return error;
-}
+};
 
 //For sending mail
 const sendVerifyMail = async(name,email,user_id)=>{
@@ -48,21 +47,21 @@ export const signup = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    const mobno = bcrypt.hashSync(req.body.phone,salt);
-
-    // Check if the email is already in use
+    const mobno = req.body.phone;  
     const existingUserEmail = await User.findOne({ email: req.body.email });
     if (existingUserEmail) {
-      return res.status(400).json({ success: false, message: "Email is already in use." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Email is already in use." });
     }
-
-    // Check if the phone no. is already in use
     const existingPhone = await User.findOne({ phone: req.body.phone });
     if (existingPhone) {
-      return res.status(400).json({ success: false, message: "Phone number is already in use." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Phone number is already in use." });
     }
 
-    const newUser = new User({ ...req.body, password: hash,phone: mobno });
+    const newUser = new User({ ...req.body, password: hash, phone: mobno });
 
     const userData = await newUser.save();
     if(userData){

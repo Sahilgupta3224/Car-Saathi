@@ -30,7 +30,17 @@ const userSchema = new mongoose.Schema({
     },
     reviews:{
         type:[Object] //review id,rating,comment,written by whom
-    }
-})
+    },
+    trips:{
+        type:Array,
+        default:[]
+    },
+    active_trp:{
+        type: mongoose.ObjectId
+    },
+    role:{
+        type:Boolean
+    },
+},{timestamps: true});
 
 export default mongoose.model("User",userSchema)
