@@ -1,10 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import {connect} from "./db/db.js"
-import authroutes from './routes/auth.js';
 import bodyParser from 'body-parser'
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import authroutes from './routes/auth.js';
+import reviewroutes from './routes/reviews.js';
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,8 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/auth",authroutes)
+app.use("/api/reviews",reviewroutes)
+
 
 app.use((err,req,res,next)=>{
     const status = err.status||500;
