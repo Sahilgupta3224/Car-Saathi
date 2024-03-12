@@ -43,6 +43,19 @@ export const edittrip = async(req,res)=>{
 export const deletetrip = async(req,res)=>{
     try{
         const trip = await tripSchema.findByIdAndDelete(req.params.id);
+        const Driver = trip.driver;
+        const driver = await User.findByIdAndUpdate(
+            Driver,
+            {$pull:{trips:req.params.id}},
+            {new: true}
+        );
+        //jinhone trip ki request ki h unke waha se hatani padegi trip
+        //mai is trip ke andar jaunga aur dekhunga ki kin logo ne iske
+        //liye request ki thi ya fir unke requested trips me jaake is 
+        //trip ko hatana padega
+        //iske liye mai har ek trip me push krunga ki kis user ne request
+        //ki h aur kaun sa user confirmed h fir uske baad unke model me 
+        //jaake is trip ko delete krunga
         res.json({message:"trip deleted"})
         //payment lautana h
         //notification dena h

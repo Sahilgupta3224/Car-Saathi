@@ -26,8 +26,16 @@ const tripSchema = new mongoose.Schema({
         required: true,
     },
     Riders:{
-        type: Array,
+        type: [{
+            location: String,
+            name: String,
+            age: Number
+        }],
         default: []
+    },
+    Bookers:{
+        type:[mongoose.ObjectId],
+        default:[]
     },
     completed:{
         type:Boolean,

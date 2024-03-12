@@ -2,15 +2,25 @@ import bookingSchema from "../models/booking.js";
 
 import User from "../models/user.js";
 
+import trip from "../models/trip.js";
+
 export const booktrip =async(req,res)=>{
     const {Driver}=req.body.Driver
     const {Bookingperson}=req.body.Bookingperson
+    const {trip} = req.body.trip
     const booking= bookingSchema(req.body);
     try{
         await booking.save()
         const user = await User.findByIdAndUpdate(
             Bookingperson,
             {$push:{requestedbookings:booking._id}},
+            {new: true}
+        );
+        const Ttrip = await trip.findByIdAndUpdate(
+            trip,
+            {$push:{requestedbookings:booking._id,Bookers:Bookingperson},
+             $inc: {availableSeats:- booking.seats}
+            },
             {new: true}
         );
         const driver = await User.findByIdAndUpdate(
