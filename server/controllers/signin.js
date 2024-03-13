@@ -4,8 +4,9 @@ import bcrypt from "bcryptjs";
 export const signin = async (req, res, next) => {
 
     try {
+      console.log(req.body)
       const user = await User.findOne({ email: req.body.email });
-      // if (!user) return next(createError(404, "User not found!"));
+      if (!user) res.status(200).json({ message: "User does not exist" });
   
       const isCorrect = await bcrypt.compare(req.body.password, user.password);
   

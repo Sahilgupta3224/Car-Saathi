@@ -51,14 +51,18 @@ export default function SignUp({user, setUser}) {
   const k=event.target.value;
   setName(k);
 }
+const handlePhoneChange=(event)=>{
+    const k=event.target.value;
+    setPhone(k);
+  }
   const handleSubmit = async(event) => {
     event.preventDefault();
     if (isPass && isUsername && confirmpass === password) {
-      const Entry = { name: name, username: username, password: password, email: email };
+      const Entry = { name: name, username: username, password: password, email: email,phone:phone };
       setEntries([entries, Entry]);
   
       try {
-        const res = await axios.post("http://localhost:3001/api/auth/signup", entries);
+        const res = await axios.post("http://localhost:3001/api/auth/signup",{ entries});
         console.log(res.data);
         setUser(res.data.newUser);
         console.log(user);
@@ -71,11 +75,12 @@ export default function SignUp({user, setUser}) {
         console.log(confirmpass);
         alert("Logged in successfully");
       } catch (err) {
-        if (err.response && err.response.status === 400) {
-          alert("Username already exists. Please choose a different username.");
-        } else {
-          console.log(err);
-        }
+        // if (err.response && err.response.status === 400) {
+        //   alert("Username already exists. Please choose a different username.");
+        // } else {
+        //   console.log(err);
+        // }
+        console.log(err)
       }
     } else {
       if (confirmpass !== password) {
@@ -183,6 +188,17 @@ const emptyConfirmpass=()=>{
                 <TextField
                   required
                   fullWidth
+                  id="phone"
+                  label="Phone number"
+                  name="phone"
+                  autoComplete="Your Phone"
+                  onChange={handlePhoneChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -203,12 +219,7 @@ const emptyConfirmpass=()=>{
                   onChange={confirm}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+             
             </Grid>
             <Button
               type="submit"
