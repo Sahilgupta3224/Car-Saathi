@@ -12,41 +12,104 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios"
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
+export default function SignUp({user, setUser}) {
+  
+  const navigate = useNavigate()
+  const [password,setPassword]=useState("")
+  const [name,setName]=useState("")
+  const [username,setUsername]=useState("")
+  const [email,setEmail]=useState("")
+  const [phone,setPhone]=useState('')
+  const [isPass,isPassValid]=useState(false)
+  const [isUsername,isUsernameValid]=useState(false)
+  const [entries,setEntries]=useState([])
+  const [confirmpass,setConformpass]=useState("")
+
+  const handlePasswordChange = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const newPassword = event.target.value;
+     if(newPassword.length <8)
+     {
+      setPassword(false);
+     }
+     
+    setPassword(newPassword);
+    isPassValid(newPassword.length >= 8);
   };
+  const handleEmailChange=(event)=>{
+    const k=event.target.value;
+    setEmail(k);
+ }
+ const handleNameChange=(event)=>{
+  const k=event.target.value;
+  setName(k);
+}
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    if (isPass && isUsername && confirmpass === password) {
+      const Entry = { name: name, username: username, password: password, email: email };
+      setEntries([entries, Entry]);
+  
+      try {
+        const res = await axios.post("http://localhost:3001/api/auth/signup", entries);
+        console.log(res.data);
+        setUser(res.data.newUser);
+        console.log(user);
+        localStorage.setItem('user', JSON.stringify(res.data.newUser))
+        navigate('/dashboard');
+        setEmail("");
+        setPassword("");
+        setUsername("");
+        emptyConfirmpass();
+        console.log(confirmpass);
+        alert("Logged in successfully");
+      } catch (err) {
+        if (err.response && err.response.status === 400) {
+          alert("Username already exists. Please choose a different username.");
+        } else {
+          console.log(err);
+        }
+      }
+    } else {
+      if (confirmpass !== password) {
+        alert("Password and confirmed pass didn't match");
+      } else {
+        alert("Invalid username or password. Make sure username is >= 5 characters and password is >= 8 characters");
+      }
+    }
+  };
+
+ const handleUsernameChange = (event) => {
+  event.preventDefault();
+  const newUsername = event.target.value;
+  setUsername(newUsername);
+  isUsernameValid(newUsername.length >= 5);
+};
+const confirm=(event)=>{
+  event.preventDefault();
+  const k=event.target.value
+  setConformpass(k)
+}
+const emptyConfirmpass=()=>{
+  setConformpass("");
+}
   const defaultTheme = createTheme({
     palette: {
       primary: {
-        main: '#f7b2b7',
+        main: '#DE639A',
       },
       secondary: {
-        main: '#16001E',
+        main: '#000',
       },
       tertiary:{
-        main: '#DE639A'
+        main: '#'
       },
       textColor:{
         main: ''
@@ -55,7 +118,7 @@ export default function SignUp() {
   });
   return (
     <Box
-      bgcolor="primary.main"
+      bgcolor="fff"
       color="black"
       height="100vh"
       width="100vw"
@@ -75,7 +138,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -83,25 +146,26 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
+                  id="name"
+                  label="Name"
+                  name="name"
+                  autoComplete="Your Name"
+                  onChange={handleNameChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="Your Username"
+                  onChange={handleUsernameChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,6 +176,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleEmailChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -123,6 +188,19 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handlePasswordChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete=""
+                  name="confirmpass"
+                  required
+                  fullWidth
+                  id="confirmpass"
+                  label="Confirm your password"
+                  autoFocus
+                  onChange={confirm}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -142,14 +220,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/SignIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider></Box>
   );
