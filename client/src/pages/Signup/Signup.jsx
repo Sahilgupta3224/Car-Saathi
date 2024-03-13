@@ -60,9 +60,10 @@ const handlePhoneChange=(event)=>{
     if (isPass && isUsername && confirmpass === password) {
       const Entry = { name: name, username: username, password: password, email: email,phone:phone };
       setEntries([entries, Entry]);
+      console.log(Entry);
   
       try {
-        const res = await axios.post("http://localhost:3001/api/auth/signup",{ entries});
+        const res = await axios.post("http://localhost:3001/api/auth/signup",{entries});
         console.log(res.data);
         setUser(res.data.newUser);
         console.log(user);
@@ -83,11 +84,16 @@ const handlePhoneChange=(event)=>{
         console.log(err)
       }
     } else {
-      if (confirmpass !== password) {
-        alert("Password and confirmed pass didn't match");
-      } else {
-        alert("Invalid username or password. Make sure username is >= 5 characters and password is >= 8 characters");
+      if(!email || !username  || !phone){
+        alert("Fill all the fields!")
+      }else{
+        if (confirmpass !== password) {
+          alert("Password and confirmed pass didn't match");
+        } else {
+          alert("Invalid username or password. Make sure username is >= 5 characters and password is >= 8 characters");
+        }
       }
+      
     }
   };
 
@@ -108,7 +114,7 @@ const emptyConfirmpass=()=>{
   const defaultTheme = createTheme({
     palette: {
       primary: {
-        main: '#DE639A',
+        main: '#f44336',
       },
       secondary: {
         main: '#000',

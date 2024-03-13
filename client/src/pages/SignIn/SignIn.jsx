@@ -48,7 +48,7 @@ const defaultTheme = createTheme({
   },
 });
 
-export default function SignInSide() {
+export default function SignInSide({user,setUser}) {
   const navigate = useNavigate()
 
   const handleSubmit = async(event) => {
@@ -62,9 +62,9 @@ export default function SignInSide() {
     try {
       const res = await axios.post("http://localhost:3001/api/auth/signin",formdata);
       console.log(res.data);
-      // setUser(res.data.newUser);
+      setUser(res.data);
       // console.log(user);
-      localStorage.setItem('user', JSON.stringify(res.data.newUser))
+      localStorage.setItem('user', JSON.stringify(res.data))
       if(res.data.message){
         alert(res.data.message)
       }else{

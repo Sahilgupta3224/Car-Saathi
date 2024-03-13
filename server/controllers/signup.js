@@ -49,13 +49,14 @@ export const signup = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(reqbody.password, salt);
     const mobno = reqbody.phone;  
-    console.log(req.body)
+    console.log(reqbody)
     const existingUserEmail = await User.findOne({ email: reqbody.email });
     if (existingUserEmail) {
       return res
         .status(400)
         .json({ success: false, message: "Email is already in use." });
     }
+    
     const existingPhone = await User.findOne({ phone: reqbody.phone });
     if (existingPhone) {
       return res
