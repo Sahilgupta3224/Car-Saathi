@@ -2,6 +2,7 @@ import Signup from './pages/Signup/Signup.jsx';
 import SignIn from './pages/SignIn/SignIn.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Profile from './pages/Profile/Profile.jsx';
 // import '@fontsource/roboto/300.css';
 // import '@fontsource/roboto/400.css';
 // import '@fontsource/roboto/500.css';
@@ -17,8 +18,8 @@ function App() {
 
           <Route path="/" element={<SignIn />} />
           <Route path="/SignIn" element={<SignIn/>} />
-          
           <Route path="/Signup" element={<Signup/>} />
+          <Route path="/profile" element={<Profile/>} />
           
         </Routes>
       </BrowserRouter>   
