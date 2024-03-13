@@ -12,13 +12,15 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import {  useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Car Saathi
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,6 +31,7 @@ function Copyright(props) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
+
   palette: {
     primary: {
       main: '#f44336', // Change the primary color to a shade of red
@@ -45,16 +48,38 @@ const defaultTheme = createTheme({
   },
 });
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
+export default function SignInSide({user,setUser}) {
+  const navigate = useNavigate()
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const formdata={
       email: data.get('email'),
       password: data.get('password'),
-    });
-  };
+    }
 
+    try {
+      const res = await axios.post("http://localhost:3001/api/auth/signin",formdata);
+      console.log(res.data);
+      setUser(res.data);
+      // console.log(user);
+      localStorage.setItem('user', JSON.stringify(res.data))
+      if(res.data.message){
+        alert(res.data.message)
+      }else{
+        navigate('/Dashboard');
+      }
+      // alert("Logged in successfully");
+    } catch (err) {
+      // if (err.response && err.response.status === 400) {
+      //   alert("Username already exists. Please choose a different username.");
+      // } else {
+      //   console.log(err);
+      // }
+      console.log(err)
+    }
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -126,12 +151,9 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/Signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

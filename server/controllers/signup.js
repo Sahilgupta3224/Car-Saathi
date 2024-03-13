@@ -45,27 +45,30 @@ const sendVerifyMail = async(name,email,user_id)=>{
 
 export const signup = async (req, res, next) => {
   try {
+    const reqbody=req.body.entries[1];
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
-    const mobno = req.body.phone;  
-    const existingUserEmail = await User.findOne({ email: req.body.email });
+    const hash = bcrypt.hashSync(reqbody.password, salt);
+    const mobno = reqbody.phone;  
+    console.log(reqbody)
+    const existingUserEmail = await User.findOne({ email: reqbody.email });
     if (existingUserEmail) {
       return res
         .status(400)
         .json({ success: false, message: "Email is already in use." });
     }
-    const existingPhone = await User.findOne({ phone: req.body.phone });
+    
+    const existingPhone = await User.findOne({ phone: reqbody.phone });
     if (existingPhone) {
       return res
         .status(400)
         .json({ success: false, message: "Phone number is already in use." });
     }
 
-    const newUser = new User({ ...req.body, password: hash, phone: mobno });
+    const newUser = new User({ ...reqbody, password: hash, phone: mobno });
 
     const userData = await newUser.save();
     if(userData){
-      sendVerifyMail(req.body.username,req.body.email,userData._id);
+      sendVerifyMail(reqbody.username,reqbody.email,userData._id);
       res.status(200).json({ newUser });
     }
 

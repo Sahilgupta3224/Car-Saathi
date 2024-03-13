@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         type:Number
     },
     reviews:{
-        type:[Object] //review id,rating,comment,written by whom
+        type:[Object] //review id,rating,comment,written by whom,date,pfp of person
     },
     trips:{
         type:Array,
