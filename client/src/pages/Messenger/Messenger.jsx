@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
@@ -15,105 +15,32 @@ import {
   ConversationList
 } from "@chatscope/chat-ui-kit-react";
 import axios from 'axios';
+import { ConversationListItem } from '../../components/Conversation/ConversationListItem';
 
 export const Messenger = ({user}) => {
-    const [Conversations,setConversations] = useState([])
+    const [conversations,setConversations] = useState([])
     useEffect(()=>{
         const getConversations = async()=>{
-            const res = await axios.get("/conversation")
+            try{
+            const res = await axios.get("/conversation/"+user._id)
+            setConversations(res.data)
+            console.log(res);
+            }catch(err){
+                console.log(err)
+            }
         }
-    })
+        getConversations()
+    },[user._id])
 
   return (
     <div>
         <div style={{ position: "relative", height: "100vh" }}>
   <MainContainer>
-  <ConversationList
-//   style={{
-//     height: '340px'
-//   }}
->
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Lilly"
-    name="Lilly"
-  >
-    <Avatar
-      name="Lilly"
-      src="https://chatscope.io/storybook/react/assets/lilly-aj6lnGPk.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Joe"
-    name="Joe"
-  >
-    <Avatar
-      name="Joe"
-      src="https://chatscope.io/storybook/react/assets/joe-v8Vy3KOS.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Emily"
-    name="Emily"
-  >
-    <Avatar
-      name="Emily"
-      src="https://chatscope.io/storybook/react/assets/emily-xzL8sDL2.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Kai"
-    name="Kai"
-  >
-    <Avatar
-      name="Kai"
-      src="https://chatscope.io/storybook/react/assets/kai-5wHRJGb2.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Akane"
-    name="Akane"
-  >
-    <Avatar
-      name="Akane"
-      src="https://chatscope.io/storybook/react/assets/akane-MXhWvx63.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Eliot"
-    name="Eliot"
-  >
-    <Avatar
-      name="Eliot"
-      src="https://chatscope.io/storybook/react/assets/eliot-JNkqSAth.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Zoe"
-    name="Zoe"
-  >
-    <Avatar
-      name="Zoe"
-      src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg"
-    />
-  </Conversation>
-  <Conversation
-    info="Yes i can do it for you"
-    lastSenderName="Patrik"
-    name="Patrik"
-  >
-    <Avatar
-      name="Patrik"
-      src="https://chatscope.io/storybook/react/assets/patrik-yC7svbAR.svg"
-    />
-  </Conversation>
-</ConversationList>
+  <ConversationList>
+    {conversations?.map((c)=>{
+       <ConversationListItem conversation={c} user={user}/>
+    })} 
+   </ConversationList>
   <ChatContainer
   style={{
     height: '500px'
