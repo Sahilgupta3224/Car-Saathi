@@ -3,9 +3,8 @@ import Avatar from '@mui/material/Avatar';
 import { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import ReviewCard from '../../components/Review/ReviewCard';
-import Navbar from '../../components/Navbar';
-
+import Navbar from '../../Components/Navbar/Navbar.jsx';
+import ReviewCard from '../../Components/Review/ReviewCard.jsx'
 const Profile = ({user,setUser}) => {
     const params = useParams()
     const [data,setData] = useState({})
@@ -33,8 +32,7 @@ const Profile = ({user,setUser}) => {
         getrating();
     },[params.id])
   return (
-    <div>
-        <Navbar/>
+    <div><Navbar/>
         <div className="flex flex-col">
             <div className='flex items-center justify-around py-8 px-8'>
             <div>
@@ -59,8 +57,8 @@ const Profile = ({user,setUser}) => {
         <div className='justify-center flex'>-----------------------------------------------------------------------------------------------------------------------------------------------</div>
 
         <div className='mx-64 p-4'>
-            Reviews
-            <ReviewCard/>
+                  Reviews
+                  <ReviewCard/>
         </div>
     </div>
        
