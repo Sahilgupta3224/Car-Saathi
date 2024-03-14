@@ -1,0 +1,41 @@
+.services-submenu {
+    width: 10rem;
+    position: absolute;
+    top: 67px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.services-submenu li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: block;
+
+}
+
+.services-submenu li:last-child {
+    border-bottom: none;
+    display: block;
+}
+
+.services-submenu li a {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+}
+
+.services-submenu li a:hover {
+    background: rgb(0, 175, 175);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    
+}
