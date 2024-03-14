@@ -1,10 +1,10 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
-import Navbar from '../../components/Navbar';
 import { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReviewCard from '../../components/Review/ReviewCard';
+import Navbar from '../../components/Navbar';
 
 const Profile = ({user,setUser}) => {
     const params = useParams()
