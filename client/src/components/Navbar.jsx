@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import * as Icons from "react-icons/fa"; 
-import "Navbar.css";
+import "./Navbar.css";
 import { navItems } from './Navitem';
 import Button from './Button';
 

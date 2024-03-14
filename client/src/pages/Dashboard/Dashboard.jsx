@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../Components/Navbar/Navbar.jsx'
 const Dashboard = () => {
   return (
     <>
@@ -9,4 +9,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Dashboard;
