@@ -33,6 +33,10 @@ const tripSchema = new mongoose.Schema({
         }],
         default: []
     },
+    Bookings:{
+        type:[mongoose.ObjectId],
+        default:[]
+    },
     Bookers:{
         type:[mongoose.ObjectId],
         default:[]

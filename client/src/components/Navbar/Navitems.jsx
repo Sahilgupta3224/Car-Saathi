@@ -1,23 +1,25 @@
 export const navItems = [
-    {
-        id: 1,
-        title: "Home",
-        path: "./",
-        cName: "Nav-item",
-    },
-    {
-        id: 2,
-        title: "Services",
-        path: "./Services",
-        cName: "Nav-item",
-    },
-    {
-        id: 3,
-        title: "Contact Us",
-        path: "./Contact Us",
-        cName: "Nav-item",
-    }
+  {
+    id: 1,
+    title: "Home",
+    path: "./",
+    cName: "nav-item",
+  },
+  {
+    id: 2,
+    title: "Contact Us",
+    path: "./contactus",
+    cName: "nav-item",
+    
+  },
+  {
+    id: 3,
+    title: "Services",
+    path: "./services",
+    cName: "nav-item",
+  },
 ];
+
 
 export const ServiceDropdown = [
     {
@@ -45,3 +47,4 @@ export const ServiceDropdown = [
         cName: "submenu-item",
     },
 ];
+

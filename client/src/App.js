@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import Profile from './pages/Profile/Profile.jsx';
-import Navbar from "./components/Navbar.jsx"
 import { useState } from 'react';
 import { Messenger } from './pages/Messenger/Messenger.jsx';
 // import '@fontsource/roboto/300.css';
