@@ -16,9 +16,11 @@ export const newConversation = async(req,res)=>{
 //get conversation of user
 export const getConversation = async(req,res)=>{
     try{
+        console.log("hi")
         const convo = await Conversation.find({
             members: {$in:req.params.userId}
         });
+        console.log(convo)
         res.status(200).json(convo)
     }catch(err){
         res.status(500).json(err);

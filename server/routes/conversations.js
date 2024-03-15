@@ -4,6 +4,6 @@ const router = express.Router();
 
 //Routes for auth api
 router.post("/",newConversation);
-router.get("/:userId",getConversation);
+router.get("/getConversation/:userId",getConversation);
 
 export default router;

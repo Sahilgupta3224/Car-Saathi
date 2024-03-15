@@ -24,7 +24,7 @@ function App() {
           <Route path="/Signup" element={<Signup user={user} setUser={setUser}/>}/>
           <Route path="/Dashboard" element={<Dashboard user={user} setUser={setUser}/>}/>
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser}/>}/>
-          <Route path="/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
+          <Route path="/Dashboard/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           
         </Routes>
       </BrowserRouter>   
