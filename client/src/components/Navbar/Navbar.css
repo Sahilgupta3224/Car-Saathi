@@ -56,3 +56,14 @@
     display: block;
 }
 
+.car-icon {
+    font-size: 2rem;
+    margin-right: 5px;
+
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+}

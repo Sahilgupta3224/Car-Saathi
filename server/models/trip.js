@@ -11,11 +11,11 @@ const tripSchema = new mongoose.Schema({
     },
     driver:{
         type: mongoose.ObjectId,
-        require: true,
+        required: true,
     },
     availableSeats:{
-        type: Boolean,
-        default: true
+        type: Number,
+        required:true,
     },
     Carmodel:{
         type:String,
@@ -47,7 +47,7 @@ const tripSchema = new mongoose.Schema({
     },
     time:{
         type: Date,
-        required: true,
+        // required: true,
     },
     route:{
         type: Array
