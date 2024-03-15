@@ -38,7 +38,7 @@ export const cancelbooking = async(req,res)=>{
         if(booking.BookingStatus===true){
             const updatedTrip = await trip.findByIdAndUpdate(
                 booking.trip,
-                { 
+                {
                     $pull: { 
                         Riders: {
                             name: booking.riders.name,
@@ -47,7 +47,7 @@ export const cancelbooking = async(req,res)=>{
                         }
                     }, 
                     $pull: { Bookers: booking.Bookingperson }, 
-                    $inc: { availableSeats: booking.seats } 
+                    $inc: { availableSeats: booking.seats }
                 },
                 { new: true }
             );

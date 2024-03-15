@@ -33,7 +33,7 @@ function App() {
           <Route path="/trips" element={<Trip user={user} setUser={setUser}/>}/>
           <Route path='/Dashboard/search' element={<Search/>}></Route>
         </Routes>
-      </BrowserRouter>   
+      </BrowserRouter>
     </>
   );
 }
