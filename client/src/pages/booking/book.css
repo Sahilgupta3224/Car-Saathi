@@ -1,0 +1,57 @@
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #800080;
+    /* Purple background */
+    height: 100vh;
+}
+
+.input-group,
+.payment-container {
+    width: 50%;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    background-color: #4CAF50;
+    /* Green background */
+}
+
+.payment-container {
+    background-color: #FFA500;
+    /* Orange background */
+}
+
+.input-group label,
+.payment-container label {
+    margin-right: 10px;
+    color: #fff;
+}
+
+.input-group input,
+.input-group select,
+.payment-container button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.proceed-payment-btn {
+    padding: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.proceed-payment-btn:hover {
+    background-color: #0056b3;
+}
