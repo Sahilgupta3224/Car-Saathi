@@ -32,7 +32,7 @@ function App() {
           <Route path="/Dashboard/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/trips/:id" element={<Trip user={user} setUser={setUser}/>}/>
         </Routes>
-      </BrowserRouter>   
+      </BrowserRouter>
     </>
   );
 }

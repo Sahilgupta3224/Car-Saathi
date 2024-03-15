@@ -1,6 +1,5 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
-import Navbar from '../../components/Navbar/Navbar.jsx';
 import { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
