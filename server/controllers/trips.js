@@ -22,7 +22,7 @@ export const createtrip =async(req,res)=>{
 }
 
 export const findtrip = async(req,res)=>{
-    const {source,destination,time} = req.body;
+    const {source,destination,time} = req.body.tripData;
     try{
         const trip = await tripSchema.find({source:source,destination:destination});
         res.status(200).json({trip});

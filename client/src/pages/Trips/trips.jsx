@@ -6,18 +6,21 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import TripCard from './TripCard.jsx';
 
-const Trip =({user,setUser,tripfilldata})=>{
+const Trip =({user,setUser,tripData})=>{
+    console.log(tripData);
     const [Tripdata,setTripdata] = useState([]);
     useEffect(()=>{
         const getTrips=async()=>{
             try{
-                const res = await axios.get(`http://localhost:3001/api/trip/findtrip`,{tripfilldata})
+                const res = await axios.get(`http://localhost:3001/api/trip/findtrip`,{tripData})
+                console.log(tripData);
                 console.log("data",res.data);
                 setTripdata(res.data);
             }catch(err){
                 console.log(err);
             }
         }
+        getTrips()
     })
     return(
         <>
