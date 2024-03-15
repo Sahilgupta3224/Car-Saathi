@@ -8,7 +8,7 @@ export const createtrip =async(req,res)=>{
     try{
         await trip.save()
         const user = await User.findByIdAndUpdate(
-            user,
+            driver,
             { $push: { trips:trip } },
             { new: true }
         );
@@ -16,6 +16,7 @@ export const createtrip =async(req,res)=>{
 
     }catch(err){
         res.status(500).json({message:'Server error'})
+        console.log(err);
     }
     console.log(trip)
 }
@@ -23,7 +24,7 @@ export const createtrip =async(req,res)=>{
 export const findtrip = async(req,res)=>{
     const {source,destination,time} = req.body;
     try{
-        const trip = await tripSchema.find({source:source,destination:destination,time:time});
+        const trip = await tripSchema.find({source:source,destination:destination});
         res.status(200).json({trip});
     }
     catch{

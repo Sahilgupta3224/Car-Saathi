@@ -5,7 +5,6 @@ export const getUser = async(req,res)=>{
         const user = await User.findById(req.params.id);
         console.log(user)
         res.json({message:"User retrieved",user})
-
     }catch(err){
         res.json({message:"User not found"})
         console.log(err)

@@ -1,10 +1,10 @@
 import express from "express";
-import { booktrip,cancelbooking,confirmbooking } from "../controllers/booking";
+import { booktrip,cancelbooking,confirmbooking } from "../controllers/booking.js";
 const router = express.Router();
 
 //Routes for booking api
 router.post("/booktrip",booktrip);
-router.post("/cancelbooking",cancelbooking);
-router.get("/confirmbooking",confirmbooking);
+router.delete("/cancelbooking",cancelbooking);
+router.post("/confirmbooking",confirmbooking);
 
 export default router;
