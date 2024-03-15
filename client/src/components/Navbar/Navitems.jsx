@@ -31,7 +31,7 @@ export const ServiceDropdown = [
     {
         id: 2,
         title: "Inbox",
-        path: "./Inbox",
+        path: "./messenger",
         cName: "submenu-item",
     },
     {

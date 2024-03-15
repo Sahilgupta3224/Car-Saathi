@@ -7,6 +7,10 @@ import cors from "cors";
 import authroutes from './routes/auth.js';
 import reviewroutes from './routes/reviews.js';
 import userroutes from './routes/user.js';
+import conversationroutes from './routes/conversations.js';
+import messageroutes from './routes/messages.js';
+
+
 
 const app = express();
 dotenv.config();
@@ -19,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/auth",authroutes)
 app.use("/api/reviews",reviewroutes)
 app.use("/api/user",userroutes)
+app.use("/api/conversation",conversationroutes)
+app.use("/api/message",messageroutes)
+
 
 app.use((err,req,res,next)=>{
     const status = err.status||500;
