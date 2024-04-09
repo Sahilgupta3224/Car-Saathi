@@ -1,5 +1,4 @@
 import tripSchema from "../models/trip.js";
-
 import User from "../models/user.js";
 
 export const createtrip =async(req,res)=>{

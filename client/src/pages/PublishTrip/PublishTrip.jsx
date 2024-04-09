@@ -54,7 +54,7 @@ function PublishTrip({user, setUser}){
         </div>
         <div className="mb-4">
           <label htmlFor="availableSeats" className="block text-gray-700 font-bold mb-2">
-            Available Seats
+            Maximum Seats
           </label>
           <input
             type="number"
@@ -128,7 +128,7 @@ function PublishTrip({user, setUser}){
       </form>
       </div>
       <div className="w-1/2">
-        {<GMap apiKey={'AIzaSyC9hvXTVfqtUfdZc-aj6ikjXapeV_pBWvc'}/>}
+        {<GMap apiKey={'AIzaSyC9hvXTVfqtUfdZc-aj6ikjXapeV_pBWvc'} start={source} end={destination}/>}
         </div>
     </div>
   )
