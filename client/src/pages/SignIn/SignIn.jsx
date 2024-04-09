@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -15,18 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Car Saathi
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -37,7 +24,7 @@ const defaultTheme = createTheme({
       main: '#f44336', // Change the primary color to a shade of red
     },
     secondary: {
-      main: '#2196f3', // Change the secondary color to a shade of blue
+      main: '#f44336', // Change the secondary color to a shade of blue
     },
   },
   typography: {
@@ -58,26 +45,22 @@ export default function SignInSide({user,setUser}) {
       email: data.get('email'),
       password: data.get('password'),
     }
-
     try {
-      const res = await axios.post("http://localhost:3001/api/auth/signin",formdata);
-      console.log(res.data);
+      const res = await axios.post("http://localhost:3001/api/auth/signin", formdata);
       setUser(res.data);
-      // console.log(user);
       localStorage.setItem('user', JSON.stringify(res.data))
       if(res.data.message){
         alert(res.data.message)
-      }else{
+      }
+      else{
         navigate('/Dashboard');
       }
-      // alert("Logged in successfully");
     } catch (err) {
-      // if (err.response && err.response.status === 400) {
-      //   alert("Username already exists. Please choose a different username.");
-      // } else {
-      //   console.log(err);
-      // }
-      console.log(err)
+      if (err.response && err.response.status === 400 || err.response.status === 500 ) {
+        alert(err.response.data.message);
+      } else {
+        console.log(err);
+      }
     }
   };
   return (
@@ -137,10 +120,6 @@ export default function SignInSide({user,setUser}) {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -158,7 +137,6 @@ export default function SignInSide({user,setUser}) {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -60,8 +58,6 @@ const handlePhoneChange=(event)=>{
     if (isPass && isUsername && confirmpass === password) {
       const Entry = { name: name, username: username, password: password, email: email,phone:phone };
       setEntries([entries, Entry]);
-      console.log(Entry);
-  
       try {
         const res = await axios.post("http://localhost:3001/api/auth/signup",{entries});
         console.log(res.data);
@@ -73,15 +69,12 @@ const handlePhoneChange=(event)=>{
         setPassword("");
         setUsername("");
         emptyConfirmpass();
-        console.log(confirmpass);
-        alert("Logged in successfully");
       } catch (err) {
-        // if (err.response && err.response.status === 400) {
-        //   alert("Username already exists. Please choose a different username.");
-        // } else {
-        //   console.log(err);
-        // }
-        console.log(err)
+        if (err.response && err.response.status === 400) {
+          alert(err.response.data.message);
+        } else {
+          console.log(err);
+        }
       }
     } else {
       if(!email || !username  || !phone){

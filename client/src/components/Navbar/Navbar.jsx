@@ -6,7 +6,7 @@ import { navItems } from './Navitems.jsx';
 import Button from './Button.jsx';
 import Dropdown from './Dropdown.jsx';
 
-function Navbar() {
+function Navbar({user}) {
     const [dropdown, setDropdown] = useState(false);
     return (
         <>
@@ -34,6 +34,7 @@ function Navbar() {
                         );
                     })}
                 </ul>
+
                 <Button />
             </nav>
         </>

@@ -10,10 +10,7 @@ import Trip from './pages/Trips/trips.jsx';
 import { useState } from 'react';
 import { Messenger } from './pages/Messenger/Messenger.jsx';
 import Search from './pages/Search-Car-Sharing/Search.jsx';
-// import '@fontsource/roboto/300.css';
-// import '@fontsource/roboto/400.css';
-// import '@fontsource/roboto/500.css';
-// import '@fontsource/roboto/700.css';
+import PublishTrip from './pages/PublishTrip/PublishTrip.jsx';
 
 function App() {
   const [user,setUser] = useState({});
@@ -31,10 +28,11 @@ function App() {
           <Route path="/booking" element={<BookingPage user={user} setUser={setUser} />} /> 
           <Route path="/Dashboard/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/trips" element={<Trip user={user} setUser={setUser}/>}/>
-          <Route path='/Dashboard/search' element={<Search/>}></Route>
+          <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
+          <Route path='/Dashboard/search'  element={<Search/>}/>
         </Routes>
       </BrowserRouter>
-    </>
+    </> 
   );
 }
 

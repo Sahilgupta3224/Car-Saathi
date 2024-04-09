@@ -3,16 +3,12 @@ import Navbar from '../../components/Navbar/Navbar'
 import React, { useState } from 'react';
 
 const Search = () => {
-    const navigate=useNavigate();
-    const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
-    const [date, setDate] = useState(`${new Date()}`);
-    const [passengers, setPassengers] = useState(1);
+    const navigate=useNavigate()
     const [tripData, setData] = useState({
         source: '',
         destination: '',
-        date: '',
-        passengers: ''
+        date: `${new Date()}`,
+        passengers: '1'
     })
     const handleTripInput = (name) => (e) => {
         setData({ ...tripData, [name]: e.target.value });
@@ -20,7 +16,7 @@ const Search = () => {
     const handleSearch = () => {
         console.log(`Searching for trips from ${tripData.source} to ${tripData.destination} on ${tripData.date} for ${tripData.passengers} passenger(s).`);
 
-        navigate('/trips',{state:tripData});
+        navigate('/trips');
     };
 
     return (
