@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import './book.css';
 
-function BookingPage() {
+function BookingPage({user, setUser}) {
     const [seatsToBook, setSeatsToBook] = useState('');
     const [seatPreference, setSeatPreference] = useState('');
     const [remarks, setRemarks] = useState('');
@@ -25,7 +25,7 @@ function BookingPage() {
 
     return (
         <div className="booking-page" style={{ backgroundImage: `url('https://cdn.pixabay.com/photo/2014/04/27/00/43/traffic-332857_1280.jpg')` }}>
-            <Navbar />
+            <Navbar user={user}/>
             <div className="booking-container">
                 <div className="input-group">
                     <label htmlFor="seatsToBook">Seats To Book:</label>

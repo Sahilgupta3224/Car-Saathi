@@ -48,6 +48,7 @@ export default function SignInSide({user,setUser}) {
     try {
       const res = await axios.post("http://localhost:3001/api/auth/signin", formdata);
       setUser(res.data);
+      console.log(res)
       localStorage.setItem('user', JSON.stringify(res.data))
       if(res.data.message){
         alert(res.data.message)

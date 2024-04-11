@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import './Navbar.css';
@@ -6,15 +6,18 @@ import { navItems } from './Navitems.jsx';
 import Button from './Button.jsx';
 import Dropdown from './Dropdown.jsx';
 
-function Navbar({user,setUser}) {
+
+function Navbar({user}) {
     const [dropdown, setDropdown] = useState(false);
     const navigate = useNavigate();
-
+    useEffect(()=>{
+    console.log(user)
+    }, [user])
     function Logout() {
         localStorage.clear();
         navigate('/Signin');
+
     }
-    console.log(user)
     return (
         <>
             <nav className="navbar">
@@ -39,7 +42,7 @@ function Navbar({user,setUser}) {
                                 <Link to={item.path}>{item.title}</Link>
                             </li>
                         );
-                    })}{ user ?
+                    })}{ user._id ?
                      <li className="nav-item" onClick={Logout}>
                         <div className="inside font-light text-white hover:cursor-pointer">Logout</div>
                     </li> : <li className="nav-item" onClick={Logout}>

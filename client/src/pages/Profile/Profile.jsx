@@ -32,7 +32,7 @@ const Profile = ({user,setUser}) => {
         getrating();
     },[params.id])
   return (
-    <div><Navbar/>
+    <div><Navbar user={user}/>
         <div className="flex flex-col">
             <div className='flex items-center justify-around py-8 px-8'>
             <div>

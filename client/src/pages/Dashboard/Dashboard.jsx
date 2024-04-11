@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbar/Navbar.jsx';
 import Analytics from '../../components/Analytics/Analytics.jsx';
 import Analytics2 from '../../components/Analytics/Analytics2.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
-function Dashboard (user,setUser){
+function Dashboard ({user,setUser}){
   return (
     <>
     <Navbar user={user} setUser={setUser}/>
@@ -13,7 +13,6 @@ function Dashboard (user,setUser){
     <Analytics2/>
     <Analytics/>
     <Footer/>
-    <div>Dashboard</div>
     </>
   )
 }

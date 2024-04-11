@@ -3,10 +3,10 @@ import Navbar from '../../components/Navbar/Navbar.jsx'
 import Button from './Button.jsx';
 import './DriverInfoPage.css'; 
 
-function DriverInfoPage() {
+function DriverInfoPage({user}) {
     return (
         <div>
-            <Navbar /> 
+            <Navbar user={user}/> 
             <div className="driver-info-container">
                 <div className="driver-info-box">
                     <div className="driver-photo">
