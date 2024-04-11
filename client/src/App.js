@@ -20,17 +20,16 @@ function App() {
     <>
        <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignIn />} />
           <Route path="/SignIn" element={<SignIn user={user} setUser={setUser}/>}/>
           <Route path="/Signup" element={<Signup user={user} setUser={setUser}/>}/>
-          <Route path="/Dashboard" element={<Dashboard user={user} setUser={setUser}/>}/>
+          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>}/>
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} />} />
           <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
           <Route path="/booking" element={<BookingPage user={user} setUser={setUser} />} /> 
           <Route path="/Dashboard/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/trips" element={<Trip user={user} setUser={setUser}/>}/>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
-          <Route path='/Dashboard/search'  element={<Search/>}/>
+          <Route path='/search'  element={<Search/>}/>
           <Route path='/Payment' element= {<Payment user = {user} setUser = {setUser}/>}/>
         </Routes>
       </BrowserRouter>

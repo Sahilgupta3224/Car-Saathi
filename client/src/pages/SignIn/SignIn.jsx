@@ -53,7 +53,7 @@ export default function SignInSide({user,setUser}) {
         alert(res.data.message)
       }
       else{
-        navigate('/Dashboard');
+        navigate('/');
       }
     } catch (err) {
       if (err.response && err.response.status === 400 || err.response.status === 500 ) {

@@ -26,7 +26,6 @@ const GMap = ({ apiKey , start, end}) => {
                 }
             );
         }
-        console.log(start, ' ', end);
     }, [start, end]);
     useEffect(() => {
         if (navigator.geolocation) {

@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import './Navbar.css';
 import { navItems } from './Navitems.jsx';
 import Button from './Button.jsx';
 import Dropdown from './Dropdown.jsx';
 
-function Navbar({user}) {
+function Navbar({user,setUser}) {
     const [dropdown, setDropdown] = useState(false);
+    const navigate = useNavigate();
+
+    function Logout() {
+        localStorage.clear();
+        navigate('/Signin');
+    }
+    console.log(user)
     return (
         <>
             <nav className="navbar">
@@ -32,7 +39,12 @@ function Navbar({user}) {
                                 <Link to={item.path}>{item.title}</Link>
                             </li>
                         );
-                    })}
+                    })}{ user ?
+                     <li className="nav-item" onClick={Logout}>
+                        <div className="inside font-light text-white hover:cursor-pointer">Logout</div>
+                    </li> : <li className="nav-item" onClick={Logout}>
+                        <div className="inside font-light text-white hover:cursor-pointer">Login</div>
+                    </li>}
                 </ul>
 
                 <Button />

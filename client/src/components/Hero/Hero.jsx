@@ -2,7 +2,7 @@ import React from 'react';
 import bgimage from './bgimage.svg'
 function Hero() {
   return (
-    <div className={`text-[#f44336] font-sans bg-[${bgimage}] bg-cover bg-center`}>
+    <div className={`text-[#f44336]`}>
       <div className='max-w-full mt-[-96px] mr-0 w-full h-[80vh] mx-top text-center flex flex-col justify-center bg-[#f5f5f5] '>
         <p className='text-[#4caf50] uppercase font-bold  text-2xl p-2'>Connecting Travelers, One Ride at a Time.</p>
         <h1 className='md:text-5xl sm:text-4xl text-3xl font-bold md:py-3'>India's No.1 Car Pooling Website</h1>

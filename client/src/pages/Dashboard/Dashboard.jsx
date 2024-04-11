@@ -4,10 +4,10 @@ import Navbar from '../../components/Navbar/Navbar.jsx';
 import Analytics from '../../components/Analytics/Analytics.jsx';
 import Analytics2 from '../../components/Analytics/Analytics2.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
-function Dashboard (){
+function Dashboard (user,setUser){
   return (
     <>
-    <Navbar/>
+    <Navbar user={user} setUser={setUser}/>
     <Hero/>
     <Analytics/>
     <Analytics2/>

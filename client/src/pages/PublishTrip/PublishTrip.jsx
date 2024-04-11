@@ -5,6 +5,7 @@ import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import { GMapAPI } from "../../keys";
 import axios from 'axios'
 import AutocompleteExample from "../../components/GMap/Search";
+import Navbar from "../../components/Navbar/Navbar";
 
 function PublishTrip({ user, setUser }) {
   const [source, setSource] = useState("");
@@ -38,11 +39,11 @@ function PublishTrip({ user, setUser }) {
       availableSeats,
       CarModel: carModel,
       Max_Seats: maxSeats,
-      date,
+      time: date,
       fare,
       driver: user
     };
-    console.log({user})
+    console.log(user)
     try{
       const response = await axios.post('http://localhost:3001/api/trip/createtrip', data);
       console.log('response is send')
@@ -56,6 +57,8 @@ function PublishTrip({ user, setUser }) {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container mx-auto px-4 py-8 flex">
       <div className="w-1/2 pr-4">
         <h1 className="text-4xl font-bold mb-6">Publish a Ride</h1>
@@ -216,6 +219,7 @@ function PublishTrip({ user, setUser }) {
         {<GMap apiKey={GMapAPI} start={source} end={destination}/>}
       </div>
     </div>
+    </>
   );
 }
 
