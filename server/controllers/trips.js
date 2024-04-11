@@ -4,6 +4,7 @@ import User from "../models/user.js";
 export const createtrip =async(req,res)=>{
     const {source,destination,driver,availableSeats,CarModel,Riders,Max_Seats,completed,time,route,fare} = req.body;
     const trip = tripSchema(req.body);
+    console.log(req.body)
     try{
         await trip.save()
         const user = await User.findByIdAndUpdate(
@@ -11,10 +12,11 @@ export const createtrip =async(req,res)=>{
             { $push: { trips:trip } },
             { new: true }
         );
+        
         res.status(200).json({trip})
 
     }catch(err){
-        res.status(500).json({message:'Server error'})
+        res.status(500).json({message:'Server error by kritarth'})
         console.log(err);
     }
     console.log(trip)

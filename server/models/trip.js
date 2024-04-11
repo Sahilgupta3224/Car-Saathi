@@ -17,7 +17,7 @@ const tripSchema = new mongoose.Schema({
         type: Number,
         required:true,
     },
-    Carmodel:{
+    CarModel:{
         type:String,
         required:true
     },

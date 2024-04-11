@@ -3,9 +3,9 @@ import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService} from '@re
 
 const GMap = ({ apiKey , start, end}) => {
     const [currentLocation, setCurrentLocation] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState('hello');
     const [error, setError] = useState(null);
-
+    
     useEffect(() => {
         if (start && end) {
             const directionsService = new window.google.maps.DirectionsService();
@@ -26,6 +26,7 @@ const GMap = ({ apiKey , start, end}) => {
                 }
             );
         }
+        console.log(start, ' ', end);
     }, [start, end]);
     useEffect(() => {
         if (navigator.geolocation) {
@@ -41,6 +42,7 @@ const GMap = ({ apiKey , start, end}) => {
         } else {
             console.error('Geolocation is not supported by this browser');
         }
+        
     }, []);
 
     const mapStyles = {

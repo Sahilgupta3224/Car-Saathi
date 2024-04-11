@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Messenger } from './pages/Messenger/Messenger.jsx';
 import Search from './pages/Search-Car-Sharing/Search.jsx';
 import PublishTrip from './pages/PublishTrip/PublishTrip.jsx';
+import Payment from './pages/Payment/Payment.jsx';
 
 function App() {
   const [user,setUser] = useState({});
@@ -30,6 +31,7 @@ function App() {
           <Route path="/trips" element={<Trip user={user} setUser={setUser}/>}/>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
           <Route path='/Dashboard/search'  element={<Search/>}/>
+          <Route path='/Payment' element= {<Payment user = {user} setUser = {setUser}/>}/>
         </Routes>
       </BrowserRouter>
     </> 
