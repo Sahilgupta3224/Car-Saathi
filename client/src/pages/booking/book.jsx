@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar.jsx'; 
+import Navbar from '../../components/Navbar/Navbar.jsx';
 import './book.css';
 
 function BookingPage() {
@@ -20,11 +20,11 @@ function BookingPage() {
     };
 
     const handleProceedPayment = () => {
-        // Handle payment processing
+        // Implement payment handling logic here
     };
 
     return (
-        <div>
+        <div className="booking-page" style={{ backgroundImage: `url('https://cdn.pixabay.com/photo/2014/04/27/00/43/traffic-332857_1280.jpg')` }}>
             <Navbar />
             <div className="booking-container">
                 <div className="input-group">

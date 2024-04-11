@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import './Navbar.css';
 import { navItems } from './Navitems.jsx';
@@ -8,6 +8,12 @@ import Dropdown from './Dropdown.jsx';
 
 function Navbar({user}) {
     const [dropdown, setDropdown] = useState(false);
+    const navigate = useNavigate();
+
+    function Logout() {
+        localStorage.clear();
+        navigate('/Signin');
+    }
     return (
         <>
             <nav className="navbar">
@@ -33,6 +39,9 @@ function Navbar({user}) {
                             </li>
                         );
                     })}
+                     <li className="nav-item" onClick={Logout}>
+                        <div className="inside font-bold text-white hover:cursor-pointer">Logout</div>
+                    </li>
                 </ul>
 
                 <Button />
