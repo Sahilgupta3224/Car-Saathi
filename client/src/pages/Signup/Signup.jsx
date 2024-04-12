@@ -58,13 +58,14 @@ const handlePhoneChange=(event)=>{
     if (isPass && isUsername && confirmpass === password) {
       const Entry = { name: name, username: username, password: password, email: email,phone:phone };
       setEntries([entries, Entry]);
+      console.log(entries)
       try {
         const res = await axios.post("http://localhost:3001/api/auth/signup",{entries});
-        console.log(res.data);
+        // console.log(res.data);
         setUser(res.data.newUser);
         console.log(user);
-        localStorage.setItem('user', JSON.stringify(res.data.newUser))
-        navigate('/dashboard');
+        // localStorage.setItem('user', JSON.stringify(res.data.newUser))
+        navigate('/signin');
         setEmail("");
         setPassword("");
         setUsername("");

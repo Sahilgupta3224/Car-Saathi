@@ -58,7 +58,9 @@ function PublishTrip({ user, setUser }) {
 
   return (
     <>
+    <div className="z-10">
     <Navbar user={user}/>
+    </div>
     <div className="container mx-auto px-4 py-8 flex">
       <div className="w-1/2 pr-4">
         <h1 className="text-4xl font-bold mb-6">Publish a Ride</h1>

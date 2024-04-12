@@ -1,73 +1,100 @@
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar'
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import GMap from "../../components/GMap/GMap";
+import { Autocomplete, LoadScript } from "@react-google-maps/api";
+import { GMapAPI } from "../../keys";
 
-const Search = () => {
-    const navigate=useNavigate()
-    const [tripData, setData] = useState({
-        source: '',
-        destination: '',
-        date: `${new Date()}`,
-        passengers: '1'
-    })
-    const handleTripInput = (name) => (e) => {
-        setData({ ...tripData, [name]: e.target.value });
-      };
-    const handleSearch = () => {
-        console.log(`Searching for trips from ${tripData.source} to ${tripData.destination} on ${tripData.date} for ${tripData.passengers} passenger(s).`);
+function SearchTrip() {
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [seats, setSeats] = useState(1);
 
-        navigate('/trips');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (seats < 1) {
+      alert("Number of seats should be greater than 0.");
+      return;
+    }
+
+    const data = {
+      source,
+      destination,
+      date: date,
     };
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/trip/findtrip",
+        data
+      );
+      console.log(response.data.trip)
+      console.log("hi from search page");
+    } catch (err) {
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        console.log(err);
+      }
+    }
+  };
 
-    return (
-        <>
-        <Navbar/>
-        <div className="flex items-center m-8 py-16 rounded-md">
+  return (
+    <div className="container mx-auto px-4 py-8 flex">
+      <div className="w-1/2 pr-4">
+        <h1 className="text-4xl font-bold mb-6">Search a Ride</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md w-1/2"
+        >
+          <label className="block">
+            <span className="text-gray-700">Source:</span>
             <input
-                type="text"
-                id="from"
-                placeholder="Leaving from"
-                className="w-[80%] p-5 border border-gray-300 rounded-l-3xl shadow-md placeholder:text-zinc-900"
-                value={tripData.source}
-                onChange={handleTripInput('source')}
+              type="text"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              className="block w-full mt-1 border-gray-300 border-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Destination:</span>
             <input
-                type="text"
-                id="to"
-                placeholder="Going to"
-                className="w-[80%] p-5 border border-gray-300 shadow-md placeholder:text-zinc-900"
-                value={tripData.destination}
-                onChange={handleTripInput('destination')}
+              type="text"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              className="block w-full mt-1 border-gray-300 border-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Date:</span>
             <input
-                type="date"
-                id="date"
-                className="w-[50%] p-5 border border-gray-300 shadow-md placeholder:text-zinc-900"
-                placeholder='Today'
-                value={tripData.date}
-                onChange={handleTripInput('date')}
+              type="date"
+              value={date.toISOString().slice(0, 10)}
+              onChange={(e) => setDate(new Date(e.target.value))}
+              className="block w-full mt-1 border-gray-300 border-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-            <select
-                id="passengers"
-                className="w-[60%] p-6 border border-gray-300 shadow-md placeholder:text-zinc-900"
-                value={tripData.passengers}
-                onChange={handleTripInput('passengers')}
-            >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button
-                className="bg-blue-500 w-[50%] text-white p-6 rounded-r-3xl shadow-lg"
-                onClick={handleSearch}
-            >Search</button>
-        </div>
-        </>
-        )
-
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Number of seats:</span>
+            <input
+              type="number"
+              value={seats}
+              onChange={(e) => setSeats(parseInt(e.target.value))}
+              className="block w-full mt-1 border-gray-300 border-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </label>
+          <button
+            type="submit"
+            className="inline-flex items-center px-4 py-2 bg-indigo-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-300 disabled:opacity-25 transition"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+      <div className="w-1/2">
+        {<GMap apiKey={GMapAPI} start={source} end={destination}/>}
+      </div>
+    </div>
+  );
 }
 
-
-export default Search
+export default SearchTrip;

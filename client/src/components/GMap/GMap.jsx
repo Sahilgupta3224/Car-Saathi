@@ -53,7 +53,7 @@ const GMap = ({ apiKey , start, end}) => {
         <LoadScript googleMapsApiKey={apiKey}>
             <GoogleMap
                 mapContainerStyle={mapStyles}
-                zoom={8}
+                zoom={13}
                 //set the center of the map as the user location
                 center={currentLocation || { lat: -34.397, lng: 150.644 }}
             >

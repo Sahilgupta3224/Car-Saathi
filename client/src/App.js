@@ -26,7 +26,7 @@ function App() {
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} />} />
           <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
           <Route path="/booking" element={<BookingPage user={user} setUser={setUser} />} /> 
-          <Route path="/Dashboard/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
+          <Route path="/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/trips" element={<Trip user={user} setUser={setUser}/>}/>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
           <Route path='/search'  element={<Search/>}/>

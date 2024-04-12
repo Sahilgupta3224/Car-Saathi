@@ -4,7 +4,7 @@ const router = express.Router();
 
 //Routes for booking api
 router.post("/createtrip",createtrip);
-router.get("/findtrip",findtrip);
+router.post("/findtrip",findtrip);
 router.put("/edittrip",edittrip);
 router.delete("/deleteTrip/:id",deleteTrip);
 
