@@ -6,27 +6,27 @@ const GMap = ({ apiKey , start, end}) => {
     const [response, setResponse] = useState('hello');
     const [error, setError] = useState(null);
     
-    useEffect(() => {
-        if (start && end) {
-            const directionsService = new window.google.maps.DirectionsService();
-            directionsService.route(
-                {
-                    origin: start,
-                    destination: end,
-                    travelMode: 'DRIVING',
-                    optimizeWaypoints: true,
-                    provideRouteAlternatives: true
-                },
-                (result, status) => {
-                    if (status === 'OK') {
-                        setResponse(result);
-                    } else {
-                        setError(status);
-                    }
-                }
-            );
-        }
-    }, [start, end]);
+    // useEffect(() => {
+    //     if (start && end) {
+    //         const directionsService = new window.google.maps.DirectionsService();
+    //         directionsService.route(
+    //             {
+    //                 origin: start,
+    //                 destination: end,
+    //                 travelMode: 'DRIVING',
+    //                 optimizeWaypoints: true,
+    //                 provideRouteAlternatives: true
+    //             },
+    //             (result, status) => {
+    //                 if (status === 'OK') {
+    //                     setResponse(result);
+    //                 } else {
+    //                     setError(status);
+    //                 }
+    //             }
+    //         );
+    //     }
+    // }, [start, end]);
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -57,7 +57,7 @@ const GMap = ({ apiKey , start, end}) => {
                 //set the center of the map as the user location
                 center={currentLocation || { lat: -34.397, lng: 150.644 }}
             >
-                {response && (
+                {/* {response && (
                     <DirectionsRenderer
                         options={{
                             directions: response
@@ -65,7 +65,7 @@ const GMap = ({ apiKey , start, end}) => {
                     />
                 )}
 
-                {error && <p>{error}</p>}
+                {error && <p>{error}</p>} */}
             </GoogleMap>
         </LoadScript>
     );

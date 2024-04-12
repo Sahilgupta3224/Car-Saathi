@@ -3,13 +3,14 @@ import axios from "axios";
 import GMap from "../../components/GMap/GMap";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import { GMapAPI } from "../../keys";
+import TripList from "../../components/TripCard/TripList";
 
 function SearchTrip() {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
   const [seats, setSeats] = useState(1);
-
+  const [resdata, setResdata] = useState([])
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (seats < 1) {
@@ -27,7 +28,8 @@ function SearchTrip() {
         "http://localhost:3001/api/trip/findtrip",
         data
       );
-      console.log(response.data.trip)
+      setResdata(response.data.trip)
+      console.log(resdata)
       console.log("hi from search page");
     } catch (err) {
       if (err.response) {
@@ -41,10 +43,10 @@ function SearchTrip() {
   return (
     <div className="container mx-auto px-4 py-8 flex">
       <div className="w-1/2 pr-4">
-        <h1 className="text-4xl font-bold mb-6">Search a Ride</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center">Search a Ride</h1>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md w-1/2"
+          className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md mx-5"
         >
           <label className="block">
             <span className="text-gray-700">Source:</span>
@@ -89,6 +91,9 @@ function SearchTrip() {
             Search
           </button>
         </form>
+        <div className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md">
+          <TripList trips={resdata} />
+        </div>
       </div>
       <div className="w-1/2">
         {<GMap apiKey={GMapAPI} start={source} end={destination}/>}
