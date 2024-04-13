@@ -4,17 +4,14 @@
     margin-left: 2%;
     padding-right: 2%;
     width: 100%;
-    /* Add padding to the right for consistency */
 }
 
 .left-section {
     width: 100%;
-    /* Change width to 100% */
 }
 
 .right-section {
     width: 100%;
-    /* Change width to 100% */
 }
 
 .title {
@@ -53,7 +50,6 @@
 .trip-list {
     margin-top: 1rem;
     width: 100%;
-    /* Make trip list full-width */
 }
 
 .trip-card {
@@ -65,7 +61,6 @@
     padding: 1rem;
     margin-bottom: 1rem;
     width: 100%;
-    /* Make trip card full-width */
 }
 
 .trip-details {
@@ -79,7 +74,5 @@
 .Bottom {
     display: flex;
     justify-content: flex-end;
-    /* Move content to the right */
     margin-right: 0%;
-    /* Add margin to the right */
 }
