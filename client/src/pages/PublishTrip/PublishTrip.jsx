@@ -6,8 +6,6 @@ import { GMapAPI } from "../../keys";
 import axios from 'axios'
 import AutocompleteExample from "../../components/GMap/Search";
 import Navbar from "../../components/Navbar/Navbar";
-import { useNavigate } from "react-router-dom";
-
 
 function PublishTrip({ user, setUser }) {
   const [source, setSource] = useState("");
@@ -17,7 +15,6 @@ function PublishTrip({ user, setUser }) {
   const [maxSeats, setMaxSeats] = useState();
   const [date, setDate] = useState(new Date());
   const [fare, setFare] = useState(0);
-  const navigate = useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault();
     if (availableSeats > maxSeats || availableSeats < 0) {
@@ -49,8 +46,7 @@ function PublishTrip({ user, setUser }) {
     console.log(user)
     try{
       const response = await axios.post('http://localhost:3001/api/trip/createtrip', data);
-      // console.log('response is send')
-      navigate('/')
+      console.log('response is send')
     }catch(err){
       if (err.response && err.response.status === 400) {
         alert(err.response.data.message);
