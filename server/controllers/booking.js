@@ -2,31 +2,65 @@ import bookingSchema from "../models/booking.js";
 
 import User from "../models/user.js";
 
-import trip from "../models/trip.js";
+import Trip from "../models/trip.js";
 
-export const booktrip =async(req,res)=>{
-    const {Driver}=req.body.Driver
-    const {Bookingperson}=req.body.Bookingperson
-    const {trip} = req.body.trip
-    const {riders} = req.body.riders
-    const booking= bookingSchema(req.body);
-    try{
-        await booking.save()
-        const user = await User.findByIdAndUpdate(
-            Bookingperson,
-            {$push:{requestedbookings:booking._id}},
-            {new: true}
-        );
-        const driver = await User.findByIdAndUpdate(
-            Driver,
-            {$push:{requestedtrips:booking._id}},
-            {new: true}
-        );
-        res.status(200).json({booking})
-    }catch(err){
-        res.status(500).json({message:'Server error'})
+export const booktrip = async (req, res) => {
+    const { Driver, Bookingperson, trip, NoofBookedSeats } = req.body;
+    const rt = Math.random();
+    const booking = new bookingSchema({ ...req.body, rt });
+    console.log(req.body)
+    try {
+      await booking.save();
+      const user = await User.findByIdAndUpdate(
+        Bookingperson,
+        { $push: { bookings: booking._id } },
+        { new: true }
+      );
+      const updatedTrip = await Trip.findByIdAndUpdate(
+        trip,
+        {
+          $push: {
+            Bookings: booking._id,
+            riders: booking.riders,
+            bookers: Bookingperson,
+          },
+          $inc: { availableSeats: -NoofBookedSeats }
+        },
+        { new: true }
+      );
+  
+      res.status(200).json({ booking });
+    } catch (err) {
+      if (err.code === 11000) {
+        console.log(err);
+        return res.status(400).json({ message: 'Duplicate key error. This record already exists.' });
+      }
+      console.log(err);
+      res.status(500).json({ message: 'Server error' });
     }
-    console.log(trip)
+  };
+
+export const mybookings=async(req,res)=>{
+    const userId=req.params.id;
+    try{
+        
+        const {bookings} = await User.findById(userId)
+        const book =[];
+        for(const id of bookings){
+            const bookingdata = await bookingSchema.findById(id)
+            if(!bookingdata){
+                res.status(400).json("nhi ho rha bhai");
+            }
+            else{
+                book.push(bookingdata);
+            }
+        }
+        res.status(200).json({book});
+    }
+    catch(err){
+        res.status(500).json("error in fiinding trips");
+        console.log(err);
+    }
 }
 
 export const cancelbooking = async(req,res)=>{
@@ -36,7 +70,7 @@ export const cancelbooking = async(req,res)=>{
         const Driver = booking.Driver;
         const bookinguser = booking.bookinguser;
         if(booking.BookingStatus===true){
-            const updatedTrip = await trip.findByIdAndUpdate(
+            const updatedTrip = await Trip.findByIdAndUpdate(
                 booking.trip,
                 {
                     $pull: { 
@@ -127,7 +161,6 @@ export const confirmbooking = async (req, res) => {
         );
         booking.status = true;
         await booking.save();
-
         res.json({ message: "Booking confirmed", user: updatedUser, driver: updatedDriver });
     } catch (err) {
         console.error(err);

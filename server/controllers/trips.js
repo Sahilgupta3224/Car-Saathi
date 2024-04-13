@@ -22,6 +22,18 @@ export const createtrip =async(req,res)=>{
     console.log(trip)
 }
 
+export const mytrips=async(req,res)=>{
+    const userId=req.params.id;
+    try{
+        const {trips} = await User.findById(userId)
+        res.status(200).json({trips});
+    }
+    catch(err){
+        res.status(500).json("error in fiinding trips");
+        console.log(err);
+    }
+}
+
 export const findtrip = async(req,res)=>{
     const {source,destination,date} = req.body;
     console.log(req.body)

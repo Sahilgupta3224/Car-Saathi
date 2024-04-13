@@ -1,50 +1,45 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-    UserId:{
-        type:mongoose.ObjectId,
+    Bookingperson:{
+        type: mongoose.ObjectId,
         required:true
     },
     Driver:{
-        type:mongoose.ObjectId,
-        required:true,
+        type: mongoose.ObjectId,
+        required:true
     },
     source:{
-        type:String,
-        required:true,
+        type: String,
+        required:true
     },
     destination:{
-        type:String,
-        required:true,
+        type: String,
+        required:true
     },
     trip:{
-        type:mongoose.ObjectId,
-        required:true,
+        type: mongoose.ObjectId,
+        required:true
     },
     NoofBookedSeats:{
-        type:Number,
-        required:true,
-        trim:true
+        type: Number,
+        required:true
     },
-    BookingStatus:{
-        type:Boolean,
-        required:true,
-        default:false,
+    Date:{
+        type: Date,
+        // required:true
     },
     fare:{
-        type:Number, 
-        unique:true,
-        required: true
+        type:Number,
+        required:true
     },
     PaymentMethod:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
-    Date:{
-        type:Date,
-        required:true,
+    rt:{
+        type: Number,
     }
 },{timestamps: true});
 
-export default mongoose.model("Booking",bookingSchema)
+export default mongoose.model("Booking", bookingSchema);
