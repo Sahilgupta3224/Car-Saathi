@@ -1,7 +1,7 @@
 import React from 'react';
 import TripCard from './TripCard'; // Assuming TripCard component is imported
 
-const TripList = ({ trips }) => {
+const TripList = ({ trips, user}) => {
   return (
     <div className="max-w-screen-lg mx-auto">
       {trips.length === 0 ? (
@@ -10,8 +10,8 @@ const TripList = ({ trips }) => {
         <div className="overflow-x-auto whitespace-nowrap flex flex-col-reverse">
           {trips.map((trip, index) => (
             <div key={index} className="inline-block mx-4">
-                {console.log(trip)}
-              <TripCard trip={trip} />
+                {/* {console.log(trip)} */}
+              <TripCard trip={trip} user={user}/>
             </div>
           ))}
         </div>

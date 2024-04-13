@@ -11,6 +11,8 @@ import conversationroutes from './routes/conversations.js';
 import messageroutes from './routes/messages.js';
 import triproutes from './routes/trips.js';
 import bookingroutes from './routes/bookings.js';
+import payment from './routes/payment.js'
+
 
 const app = express();
 dotenv.config();
@@ -28,6 +30,7 @@ app.use("/api/message",messageroutes)
 
 app.use("/api/trip",triproutes)
 app.use("/api/booking",bookingroutes)
+app.use('/api/payment', payment)
 
 app.use((err,req,res,next)=>{
     const status = err.status||500;

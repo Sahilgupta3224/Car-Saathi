@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import axios from "axios";
 import GMap from "../../components/GMap/GMap";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import { GMapAPI } from "../../keys";
 import TripList from "../../components/TripCard/TripList";
 
-function SearchTrip() {
+function SearchTrip({user}) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
   const [seats, setSeats] = useState(1);
   const [resdata, setResdata] = useState([])
+  const data = {
+    source,
+    destination,
+    date: date,
+  };
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (seats < 1) {
       alert("Number of seats should be greater than 0.");
       return;
     }
-
-    const data = {
-      source,
-      destination,
-      date: date,
-    };
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/trip/findtrip",
-        data
-      );
-      setResdata(response.data.trip)
-      console.log(resdata)
-      console.log("hi from search page");
-    } catch (err) {
-      if (err.response) {
-        alert(err.response.data.message);
-      } else {
-        console.log(err);
-      }
-    }
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/api/trip/findtrip",
+          data
+        );
+        setResdata(response.data.trip)
+        console.log(resdata)
+        console.log("hi from search page");
+      } catch (err) {
+        if (err.response) {
+          alert(err.response.data.message);
+        } else {
+          console.log(err);
+        }
+      }    
   };
 
   return (
@@ -92,7 +93,7 @@ function SearchTrip() {
           </button>
         </form>
         <div className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md">
-          <TripList trips={resdata} />
+          <TripList trips={resdata} user={user}/>
         </div>
       </div>
       <div className="w-1/2">
