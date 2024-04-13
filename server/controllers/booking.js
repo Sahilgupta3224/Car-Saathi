@@ -29,7 +29,7 @@ export const booktrip = async (req, res) => {
         { new: true }
       );
   
-      res.status(200).json({ booking });
+      res.status(200).json({ booking , message:'Booking Confirmed, Congratulation !!'});
     } catch (err) {
       if (err.code === 11000) {
         console.log(err);

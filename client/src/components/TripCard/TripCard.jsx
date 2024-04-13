@@ -1,13 +1,18 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 
-const TripCard = ({trip}) => {
+const TripCard = ({trip, user}) => {
   const { driver, CarModel, availableSeats, fare } = trip
   const [driverName, setDrivername] = useState('')
   const [driverMobileNumber, setDriverMobileNumber] = useState('')
-
-  console.log(driver)
+  const navigate = useNavigate()
+  const handleBook= ()=>{
+    console.log(trip)
+    navigate('/booking',{state: {trip}})
+  }
+  // console.log(driver)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,7 +20,7 @@ const TripCard = ({trip}) => {
         const { name, phone } = response.data.user;
         setDrivername(name);
         setDriverMobileNumber(phone);
-        console.log(response.data.user);
+        // console.log(response.data.user);
       } catch (err) {
         if (err.response && err.response.status === 400) {
           alert(err.response.data.message);
@@ -26,11 +31,6 @@ const TripCard = ({trip}) => {
     };
 
     fetchData();
-
-    // Cleanup function to abort the request if the component unmounts or the trip changes
-    return () => {
-      // Abort the ongoing request (if any)
-    };
   }, [driver, trip]);
 
   return (<>
@@ -54,7 +54,7 @@ const TripCard = ({trip}) => {
         </div>
       </div>
       <div className="bg-gray-100 p-6 flex items-center justify-center">
-        <button className="bg-indigo-500 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <button className="bg-indigo-500 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110" onClick={handleBook}>
           Book Now
         </button>
       </div>

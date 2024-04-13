@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import axios from "axios";
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import GMap from "../../components/GMap/GMap";
@@ -12,14 +12,26 @@ function SearchTrip({user}) {
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
   const [seats, setSeats] = useState(1);
+<<<<<<< HEAD
   const [resdata, setResdata] = useState([]);
 
+=======
+  const [resdata, setResdata] = useState([])
+  const data = {
+    source,
+    destination,
+    date: date,
+  };
+
+  
+>>>>>>> 4e62de2a034e3730340700a5312820564bf4125b
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (seats < 1) {
       alert("Number of seats should be greater than 0.");
       return;
     }
+<<<<<<< HEAD
 
     const data = {
       source,
@@ -42,6 +54,23 @@ function SearchTrip({user}) {
         console.log(err);
       }
     }
+=======
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/api/trip/findtrip",
+          data
+        );
+        setResdata(response.data.trip)
+        console.log(resdata)
+        console.log("hi from search page");
+      } catch (err) {
+        if (err.response) {
+          alert(err.response.data.message);
+        } else {
+          console.log(err);
+        }
+      }    
+>>>>>>> 4e62de2a034e3730340700a5312820564bf4125b
   };
 
   return (
@@ -92,6 +121,7 @@ function SearchTrip({user}) {
             Search
           </button>
         </form>
+<<<<<<< HEAD
         
       </div>
       <div className="left-section">
@@ -101,6 +131,10 @@ function SearchTrip({user}) {
       <div className="Bottom">
         <div className="trip-list">
           <TripList trips={resdata} />
+=======
+        <div className="flex flex-col space-y-4 p-4 bg-white shadow-md rounded-md">
+          <TripList trips={resdata} user={user}/>
+>>>>>>> 4e62de2a034e3730340700a5312820564bf4125b
         </div>
       </div>
       </div>
