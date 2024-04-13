@@ -26,6 +26,7 @@ export const mytrips=async(req,res)=>{
     const userId=req.params.id;
     try{
         const {trips} = await User.findById(userId)
+        trips.sort((a, b) => new Date(a.date) - new Date(b.date));
         res.status(200).json({trips});
     }
     catch(err){

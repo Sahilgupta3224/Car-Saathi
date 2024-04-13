@@ -45,6 +45,7 @@ export const mybookings=async(req,res)=>{
     try{
         
         const {bookings} = await User.findById(userId)
+        bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
         const book =[];
         for(const id of bookings){
             const bookingdata = await bookingSchema.findById(id)

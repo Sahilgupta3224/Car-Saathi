@@ -10,12 +10,15 @@ function Hero() {
         <p className='text-[#4caf50] uppercase font-bold  text-2xl p-2'>Connecting Travelers, One Ride at a tieme.</p>
         <h1 className='md:text-5xl sm:text-4xl text-3xl font-bold md:py-3'>India's No.1 Car Pooling Website</h1>
         <div>
-          <h2 className='md:text-3xl sm:text-2xl text-xl  text-[#f5f5f5]'>Fast, Flexible, Reliable Car Pooling </h2>
+          <h2 className='md:text-3xl sm:text-2xl text-xl  text-gray'>Fast, Flexible, Reliable Car Pooling </h2>
         </div>
         <p className='md:2xl sm:xl xl text-[#00bcd4] font-bold mt-5'>Your Expedition Begins, Sharing Rides Along the Way.</p>
         <button onClick={()=>{
           navigate('/search')
         }} className='mt-3 bg-[#4caf50] hover:bg-[#8bc34a] w-[200px] font-medium text-black border-1 rounded-md mx-auto my-10 py-3'>Find a Ride</button>
+                <button onClick={()=>{
+          navigate('/myrides')
+        }} className='mt-3 bg-[#4caf50] hover:bg-[#8bc34a] w-[200px] font-medium text-black border-1 rounded-md mx-auto my-10 py-3'>My Rides</button>
       </div>
     </div>
   );
