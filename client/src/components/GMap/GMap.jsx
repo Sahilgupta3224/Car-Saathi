@@ -6,27 +6,6 @@ const GMap = ({ apiKey , start, end}) => {
     const [response, setResponse] = useState('hello');
     const [error, setError] = useState(null);
     
-    // useEffect(() => {
-    //     if (start && end) {
-    //         const directionsService = new window.google.maps.DirectionsService();
-    //         directionsService.route(
-    //             {
-    //                 origin: start,
-    //                 destination: end,
-    //                 travelMode: 'DRIVING',
-    //                 optimizeWaypoints: true,
-    //                 provideRouteAlternatives: true
-    //             },
-    //             (result, status) => {
-    //                 if (status === 'OK') {
-    //                     setResponse(result);
-    //                 } else {
-    //                     setError(status);
-    //                 }
-    //             }
-    //         );
-    //     }
-    // }, [start, end]);
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -44,30 +23,36 @@ const GMap = ({ apiKey , start, end}) => {
         
     }, []);
 
-    const mapStyles = {
-        height: "100vh",
-        width: "100%"
+    const mapContainerStyle = {
+        height: "410px",
+        width: "130%",
+        margin: "30px 0", 
+        borderRadius: "8px", 
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" // Optional: add box shadow for depth
     };
-    return (
-        //using loadScripter by react-google-maps/api to load the google map
-        <LoadScript googleMapsApiKey={apiKey}>
-            <GoogleMap
-                mapContainerStyle={mapStyles}
-                zoom={13}
-                //set the center of the map as the user location
-                center={currentLocation || { lat: -34.397, lng: 150.644 }}
-            >
-                {/* {response && (
-                    <DirectionsRenderer
-                        options={{
-                            directions: response
-                        }}
-                    />
-                )}
 
-                {error && <p>{error}</p>} */}
-            </GoogleMap>
-        </LoadScript>
+    return (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "80%" }}> {/* Adjust width as needed */}
+                <LoadScript googleMapsApiKey={apiKey}>
+                    <GoogleMap
+                        mapContainerStyle={mapContainerStyle}
+                        zoom={13}
+                        center={currentLocation || { lat: -34.397, lng: 150.644 }}
+                    >
+                        {/* {response && (
+                            <DirectionsRenderer
+                                options={{
+                                    directions: response
+                                }}
+                            />
+                        )}
+
+                        {error && <p>{error}</p>} */}
+                    </GoogleMap>
+                </LoadScript>
+            </div>
+        </div>
     );
 };
 

@@ -7,7 +7,7 @@ export const connect =()=>{
         console.log("connected to database")
     })
     .catch((err)=>{
-
+        
         throw err;
     })
 }

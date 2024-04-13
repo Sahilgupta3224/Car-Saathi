@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@chakra-ui/react": "^2.8.2",
     "@chatscope/chat-ui-kit-react": "^2.0.3",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
@@ -16,6 +17,7 @@
     "@types/react": "^18.2.65",
     "axios": "^1.6.7",
     "google-map-react": "^2.2.1",
+    "razorpay": "^2.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",

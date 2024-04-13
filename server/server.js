@@ -1,50 +1,66 @@
 import express from "express";
 import dotenv from "dotenv";
-import {connect} from "./db/db.js"
-import bodyParser from 'body-parser'
+import { connect } from "./db/db.js";
+import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authroutes from './routes/auth.js';
-import reviewroutes from './routes/reviews.js';
-import userroutes from './routes/user.js';
-import conversationroutes from './routes/conversations.js';
-import messageroutes from './routes/messages.js';
-import triproutes from './routes/trips.js';
-import bookingroutes from './routes/bookings.js';
+import authRoutes from './routes/auth.js';
+import reviewRoutes from './routes/reviews.js';
+import userRoutes from './routes/user.js';
+import conversationRoutes from './routes/conversations.js';
+import messageRoutes from './routes/messages.js';
+import tripRoutes from './routes/trips.js';
+import bookingRoutes from './routes/bookings.js';
+// import paymentRoute from './routes/paymentRoute.js'; // Import payment route
+// import { app } from "./app.js"; // Import app
+import Razorpay from "razorpay"; // Import Razorpay
+// import { connectDB } from "./config/database.js"; // Import connectDB
 
-const app = express();
 dotenv.config();
 
-//Middleware
-app.use(cors())
-app.use(cookieParser())
-app.use(express.json())
+console.log(process.env.RAZORPAY_ID_KEY);
+console.log(process.env.RAZORPAY_SECRET_KEY);
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(cookieParser());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api/auth",authroutes)
-app.use("/api/reviews",reviewroutes)
-app.use("/api/user",userroutes)
-app.use("/api/conversation",conversationroutes)
-app.use("/api/message",messageroutes)
 
-app.use("/api/trip",triproutes)
-app.use("/api/booking",bookingroutes)
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/conversation", conversationRoutes);
+app.use("/api/message", messageRoutes);
+app.use("/api/trip", tripRoutes);
+app.use("/api/booking", bookingRoutes);
 
-app.use((err,req,res,next)=>{
-    const status = err.status||500;
-    const message = err.message||"ERROR";
-    console.log(err);
-    return res.status(status).json({
-        success:false,
-        status,
-        message,
-    })
-})
-  
+// Mount payment route
+// app.use("/api/payment", paymentRoute);
 
-//server listens on port 3001
-app.listen(3001,()=>{
-    //connecting to database
-    connect()
-    //connecting to server
-    console.log("connected");
-})
+// Error handling middleware
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    console.error(err.stack);
+    res.status(status).json({ success: false, status, message });
+});
+
+const PORT = process.env.PORT || 3001;
+
+// Connect to database
+connect();
+
+// Initialize Razorpay instance
+// export const instance = new Razorpay({
+//     key_id: process.env.RAZORPAY_API_KEY,
+//     key_secret: process.env.RAZORPAY_APT_SECRET,
+// });
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

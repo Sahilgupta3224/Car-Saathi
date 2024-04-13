@@ -1,5 +1,5 @@
 import React from 'react';
-import TripCard from './TripCard'; // Assuming TripCard component is imported
+import TripCard from './TripCard'; 
 
 const TripList = ({ trips }) => {
   return (
@@ -7,10 +7,9 @@ const TripList = ({ trips }) => {
       {trips.length === 0 ? (
         <div className="text-center mt-8 text-gray-500">No Trips Exist</div>
       ) : (
-        <div className="overflow-x-auto whitespace-nowrap flex flex-col-reverse">
+        <div className="grid grid-cols-2 gap-16">
           {trips.map((trip, index) => (
-            <div key={index} className="inline-block mx-4">
-                {console.log(trip)}
+            <div key={index} className="w-full">
               <TripCard trip={trip} />
             </div>
           ))}

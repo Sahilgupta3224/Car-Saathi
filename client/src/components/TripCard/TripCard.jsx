@@ -33,16 +33,17 @@ const TripCard = ({trip}) => {
     };
   }, [driver, trip]);
 
-  return (
-    <div className="bg-white overflow-hidden rounded-lg shadow-md">
-      <div className="p-6">
+  return (<>
+    <div className="bg-gray overflow-hidden rounded-lg shadow-md">
+      <div className="p-8">
         <h2 className="text-2xl font-bold text-center uppercase">{driverName}</h2>
         <div className="flex justify-between mt-4">
           <div>
-            <p className="text-gray-700">Car Model:</p>
+            <p className="text-gray-600 uppercase">Car Model:</p>
             <p className="text-gray-700">Available Seats:</p>
             <p className="text-gray-700">Driver Mobile Number:</p>
-            <p className="text-gray-700 mt-4">Fare per Seat:</p>
+            <span className="inline-block text-bold ">Fare per Seat:</span>
+            {/* <h5 className="text-gray-700">Fare per Seat:</h5> */}
           </div>
           <div>
             <p className="text-blue-600 uppercase">{CarModel}</p>
@@ -58,6 +59,7 @@ const TripCard = ({trip}) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
