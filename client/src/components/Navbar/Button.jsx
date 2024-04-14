@@ -5,7 +5,7 @@ import "./Button.css";
 function Button() {
   return (
     <Link to="/createtrip">
-      <button className="btn">Add Ride</button>
+      <button className="relative text-white hover:text-yellow-400 cursor-pointer">Add Ride</button>
     </Link>
   );
 }
