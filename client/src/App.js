@@ -14,6 +14,7 @@ import Payment from './pages/Payment/Payment.jsx';
 import PaymentSuccess from './pages/Payment/PaymentSuccess.jsx';
 import Rider from './pages/Rides/Rider/Rider.jsx';
 import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
+import ResetPassword from './pages/Reset/Reset.jsx';
 
 
 function App() {
@@ -39,8 +40,9 @@ function App() {
           <Route path='/search' element={<Search user={user} />}/>
           <Route path='/Payment' element={<Payment user={user} setUser={setUser} />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-          <Route path="/myrides" element={<Rider user={user}/>} />
-          <Route path="/mybooking" element={<DriverRides user={user}/>} />
+          <Route path="/myrides" element={<DriverRides user={user}/>} />
+          <Route path="/mybooking" element={<Rider user={user}/>} />
+          <Route path='/resetPassword' element={<ResetPassword />}/>
         </Routes>
       </BrowserRouter>
     </> 

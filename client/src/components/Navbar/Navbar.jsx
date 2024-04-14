@@ -53,10 +53,10 @@ function Navbar({ user }) {
             </>
           );
         })}
-        <Button/>
       </ul>
       
-      <div className="flex items-center space-x-4 ml-auto"> {/* Right-aligned */}
+      <div className="flex items-center space-x-4 ml-auto">
+        <Button/>
         {user._id ? (
           <div className="flex space-x-6 ">
             <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={profile}>

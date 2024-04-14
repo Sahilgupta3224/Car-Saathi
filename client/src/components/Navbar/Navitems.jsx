@@ -26,8 +26,8 @@ export const navItems = [
   },
   {
     id: 5,
-    title: "Inbox",
-    path: '/inbox',
+    title: "Publish Ride",
+    path: '/createtrip',
     cName: "nav-item",
   }
 ];

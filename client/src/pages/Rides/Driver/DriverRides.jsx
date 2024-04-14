@@ -36,14 +36,14 @@ function DriverRides({ user }) {
     <>
       <Navbar user={user} />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-6">Your Bookings</h1>
-        <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
+        <h1 className="text-3xl font-semibold mb-6">Your Rides</h1>
+        <h2 className="text-2xl font-semibold mb-4">Upcoming Rides</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {upcomingTrips.map((trip) => {
             return <TripCard key={trip._id} trip={trip} />;
           })}
         </div>
-        <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
+        <h2 className="text-2xl font-semibold mb-4 mt-8">Past Rides</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pastTrips.map((trip) => {
             return <TripCard key={trip._id} trip={trip} />;

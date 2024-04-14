@@ -1,63 +1,93 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
-
-
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
-
   palette: {
     primary: {
-      main: '#f44336', // Change the primary color to a shade of red
+      main: "#f44336", // Change the primary color to a shade of red
     },
     secondary: {
-      main: '#f44336', // Change the secondary color to a shade of blue
+      main: "#f44336", // Change the secondary color to a shade of blue
     },
   },
   typography: {
-    fontFamily: [
-      'Roboto',
-      'sans-serif',
-    ].join(','), // Set the default font to Roboto
+    fontFamily: ["Roboto", "sans-serif"].join(","), // Set the default font to Roboto
   },
 });
 
-export default function SignInSide({user,setUser}) {
-  const navigate = useNavigate()
-
-  const handleSubmit = async(event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const formdata={
-      email: data.get('email'),
-      password: data.get('password'),
+export default function SignInSide({ user, setUser }) {
+  const navigate = useNavigate();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleForget = async (e)=>{
+    e.preventDefault();
+    if(!email){
+      return alert('Email de bahdve')
     }
+
     try {
-      const res = await axios.post("http://localhost:3001/api/auth/signin", formdata);
-      setUser(res.data);
-      console.log(res)
-      localStorage.setItem('user', JSON.stringify(res.data))
-      if(res.data.message){
-        alert(res.data.message)
+      console.log("tatti")
+      const res = await axios.post('http://localhost:3001/api/auth/forget-password', { email });
+
+      alert('Reset token sent to your email');
+      // console.log(res.data.resetToken)
+      const resetToken = res.data.resetToken;
+      navigate(`/resetPassword?token=${resetToken}`)
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.message);
+      }  else {
+        console.log(error);
       }
-      else{
-        navigate('/');
+    }
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formdata = {
+      email: email,
+      password: password
+    }
+    console.log(formdata)
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/api/auth/signin",
+        formdata
+      );
+      setUser(res.data);
+      console.log(res);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      if (res.data.message) {
+        alert(res.data.message);
+      } else {
+        navigate("/");
       }
     } catch (err) {
-      if (err.response && err.response.status === 400 || err.response.status === 500 ) {
+      if (
+        (err.response && err.response.status === 400) ||
+        err.response.status === 500
+      ) {
         alert(err.response.data.message);
       } else {
         console.log(err);
@@ -66,22 +96,25 @@ export default function SignInSide({user,setUser}) {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
-          width={1/2}
+          width={1 / 2}
           sx={{
-            backgroundImage: 'url(https://cdn.blablacar.com/kairos/assets/images/driver-c3bdd70e6a29c6af9ef1.svg)',
-            backgroundRepeat: 'no-repeat',
+            backgroundImage:
+              "url(https://cdn.blablacar.com/kairos/assets/images/driver-c3bdd70e6a29c6af9ef1.svg)",
+            backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'small',
-            backgroundPosition: 'left',
-            width: '50%',
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "small",
+            backgroundPosition: "left",
+            width: "50%",
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -89,22 +122,30 @@ export default function SignInSide({user,setUser}) {
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
                 fullWidth
+                onChange={(e)=>{
+                  setEmail(e.target.value)
+                }}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -112,15 +153,35 @@ export default function SignInSide({user,setUser}) {
                 autoFocus
               />
               <TextField
-                margin="normal"
                 required
+                margin="normal"
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                onChange={(e)=>{
+                  setPassword(e.target.value)
+                }}
+                type={showPassword ? "text" : "password"}
                 id="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleShowPassword}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
+              <Grid container>
+                <Grid item xs></Grid>
+                <Grid item>
+                  <Link href="/signin" variant="body2" onClick={handleForget}>
+                    {"Forget Password"}
+                  </Link>
+                </Grid>
+              </Grid>
               <Button
                 type="submit"
                 fullWidth
@@ -130,8 +191,7 @@ export default function SignInSide({user,setUser}) {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                </Grid>
+                <Grid item xs></Grid>
                 <Grid item>
                   <Link href="/Signup" variant="body2">
                     {"Don't have an account? Sign Up"}

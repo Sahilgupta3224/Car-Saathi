@@ -60,6 +60,14 @@ const userSchema = new mongoose.Schema({
     role:{
         type:Boolean
     },
+    resetToken: {
+        type: String,
+        default: 'hihhi'
+      },
+    resetTokenExpiration: {
+        type: Date,
+        default: new Date()
+    },
 },{timestamps: true});
 
 export default mongoose.model("User",userSchema)
