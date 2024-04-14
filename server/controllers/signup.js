@@ -76,20 +76,20 @@ export const resetPassword = async (req, res) => {
     if (Date.now() > resetTokenExpiration) {
       return res.json({ message: "Token Expired" }).status(400);
     }
-    console.log("token: ",token);
+    // console.log("token: ",token);
     // console.log("resetToken: ",resetToken);
     if (token !== resetToken) {
       return res.status(401).send("Invalid token");
     }
     const salt = bcrypt.genSaltSync(10);
-    console.log(req.body);
+    // console.log(req.body);
     const hash = bcrypt.hashSync(password, salt);
     const updateUser = await User.findByIdAndUpdate(id, {
       password: hash,
       resetToken: "hihihi",
       resetTokenExpiration: new Date(),
     });
-    console.log("flfl")
+    // console.log("flfl")
     return res.json({ message: "Password Updated", updateUser}).status(200);
   } catch (error) {
     console.error("Failed to verify token:", error);

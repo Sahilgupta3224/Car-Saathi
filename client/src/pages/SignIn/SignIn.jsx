@@ -16,6 +16,8 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -35,6 +37,7 @@ const defaultTheme = createTheme({
 
 export default function SignInSide({ user, setUser }) {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
@@ -64,6 +67,8 @@ export default function SignInSide({ user, setUser }) {
     }
   }
   const handleSubmit = async (event) => {
+    
+    setIsLoading(true);
     event.preventDefault();
     const formdata = {
       email: email,
@@ -88,12 +93,15 @@ export default function SignInSide({ user, setUser }) {
         (err.response && err.response.status === 400) ||
         err.response.status === 500
       ) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
         console.log(err);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -187,8 +195,9 @@ export default function SignInSide({ user, setUser }) {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isLoading}
               >
-                Sign In
+                {isLoading ? "Signing In..." : "Sign In"}
               </Button>
               <Grid container>
                 <Grid item xs></Grid>
@@ -202,6 +211,7 @@ export default function SignInSide({ user, setUser }) {
           </Box>
         </Grid>
       </Grid>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

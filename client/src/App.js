@@ -10,12 +10,10 @@ import { useState , useEffect} from 'react';
 import { Messenger } from './pages/Messenger/Messenger.jsx';
 import Search from './pages/Search-Car-Sharing/Search.jsx';
 import PublishTrip from './pages/PublishTrip/PublishTrip.jsx';
-import Payment from './pages/Payment/Payment.jsx';
-import PaymentSuccess from './pages/Payment/PaymentSuccess.jsx';
 import Rider from './pages/Rides/Rider/Rider.jsx';
 import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
 import ResetPassword from './pages/Reset/Reset.jsx';
-
+import { ContactUs } from './pages/ContactUs/contact.jsx';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
@@ -25,6 +23,10 @@ function App() {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
+  // Update localStorage when user state changes
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
   return (
     <>
        <BrowserRouter>
@@ -38,11 +40,10 @@ function App() {
           <Route path="/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
           <Route path='/search' element={<Search user={user} />}/>
-          <Route path='/Payment' element={<Payment user={user} setUser={setUser} />} />
-          <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-          <Route path="/myrides" element={<DriverRides user={user}/>} />
-          <Route path="/mybooking" element={<Rider user={user}/>} />
+          <Route path="/myrides" element={<Rider user={user}/>} />
+          <Route path="/mybooking" element={<DriverRides user={user}/>} />
           <Route path='/resetPassword' element={<ResetPassword />}/>
+          <Route path="/contactus" element={<ContactUs user={user} />} />
         </Routes>
       </BrowserRouter>
     </> 

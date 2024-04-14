@@ -24,11 +24,11 @@ const GMap = ({ apiKey , start, end}) => {
     }, []);
 
     const mapContainerStyle = {
-        height: "410px",
-        width: "130%",
-        margin: "30px 0", 
+        height: "420px",
+        width: "108%",
+        margin: "20px auto", 
         borderRadius: "8px", 
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" // Optional: add box shadow for depth
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" 
     };
 
     return (
