@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import BookingInfo from './pages/BookingInfo/Info.jsx';
 import BookingPage from './pages/booking/book.jsx';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { Messenger } from './pages/Messenger/Messenger.jsx';
 import Search from './pages/Search-Car-Sharing/Search.jsx';
 import PublishTrip from './pages/PublishTrip/PublishTrip.jsx';
@@ -14,7 +14,12 @@ import Payment from './pages/Payment/Payment.jsx';
 import PaymentSuccess from './pages/Payment/PaymentSuccess.jsx';
 import Rides from './pages/Rides/Rides.jsx'
 function App() {
-  const [user,setUser] = useState({});
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
+
+  // Update localStorage when user state changes
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   return (
     <>

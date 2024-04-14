@@ -74,12 +74,12 @@ function Rides({ user }) {
   console.log(bookings);
    
   return (
-    <div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {trips.map((trip) => {
         return <TripCard key={trip._id} trip={trip} />;
       })}
       {bookings.map((booking) => (
-        <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''}/>
+        <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} />
       ))}
     </div>
   );

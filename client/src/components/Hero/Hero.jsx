@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Hero() {
   const navigate = useNavigate()
   return (
-    <div className={'text-[#f44336]'}>
+    <div className={'text-[#f44336] mt-24'}>
       <div className='  max-w-full mt-[-96px] mr-0 w-full h-[80vh] mx-top text-center flex flex-col justify-center'>
         <p className='text-[#4caf50] uppercase font-bold  text-2xl p-2'>Connecting Travelers, One Ride at a tieme.</p>
         <h1 className='md:text-5xl sm:text-4xl text-3xl font-bold md:py-3'>India's No.1 Car Pooling Website</h1>

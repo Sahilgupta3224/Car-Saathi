@@ -81,7 +81,7 @@ function BookingPage({ user, setUser }) {
           //! maybe transaction history show karne ke liye
         },
         prefill: {
-          name: "kritarth",
+          name: `${user.name}`,
           email: "customer@example.com",
           contact: "Customer Phone Number",
         },
