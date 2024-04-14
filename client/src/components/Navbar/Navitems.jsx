@@ -14,10 +14,22 @@ export const navItems = [
   },
   {
     id: 3,
-    title: "Services",
-    path: "/services",
+    title: "Rides",
+    path: "/myrides",
     cName: "nav-item",
   },
+  {
+    id: 4,
+    title: "Bookings",
+    path: '/myBooking',
+    cName: "nav-item",
+  },
+  {
+    id: 5,
+    title: "Inbox",
+    path: '/inbox',
+    cName: "nav-item",
+  }
 ];
 
 export const ServiceDropdown = [

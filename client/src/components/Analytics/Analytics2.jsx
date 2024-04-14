@@ -3,7 +3,7 @@ import React from 'react'
 function Analytics2() {
     return (
         <>
-            <div className='w-full bg-yellow-200 py-auto px-4' style={{ height: '80vh' }}>
+            <div className='w-fullpy-auto px-4' style={{ height: '80vh' }}>
                 <div className='max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 items-center'>
                     <div className='text-center md:text-left px-10'>
                         <p className='text-[#00df9a] font-bold font-serif'>Lorem ipsum dolor sit.</p>

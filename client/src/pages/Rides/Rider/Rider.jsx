@@ -1,12 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar.jsx';
+import Navbar from '../../../components/Navbar/Navbar.jsx';
+import BookCard from '../../../components/MyRides/book.jsx';
 import axios from 'axios';
-import BookCard from '../../components/MyRides/book.jsx';
-import TripCard from "../../components/MyRides/trip.jsx";
 
-
-function Rides({ user }) {
-  const [trips, setTrips] = useState([]);
+function Rider({ user }) {
   const [bookings, setBookings] = useState([]);
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
@@ -38,20 +36,6 @@ function Rides({ user }) {
   }, [bookings]);
 
   useEffect(() => {
-    const getTrips = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/api/trip/mytrips/${user._id}`
-        );
-        setTrips(response.data.trips);
-      } catch (err) {
-        if (err.response) {
-          alert(err.response.data.message);
-        } else {
-          console.log(err);
-        }
-      }
-    };
     const getBookings = async () => {
       try {
         const response = await axios.get(
@@ -67,19 +51,8 @@ function Rides({ user }) {
       }
     };
 
-    getTrips();
     getBookings();
   }, [user._id]);
-
-  const upcomingTrips = trips.filter((trip) => {
-    const tripDate = new Date(trip.Date);
-    return tripDate > new Date();
-  });
-
-  const pastTrips = trips.filter((trip) => {
-    const tripDate = new Date(trip.Date);
-    return tripDate <= new Date();
-  });
   const pastBooking = bookings.filter((book)=>{
     const bookDate = new Date(book.Date);
     return bookDate <= new Date();
@@ -96,18 +69,12 @@ function Rides({ user }) {
         <h1 className="text-3xl font-semibold mb-6">Your Rides</h1>
         <h2 className="text-2xl font-semibold mb-4">Upcoming Rides</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {upcomingTrips.map((trip) => {
-            return <TripCard key={trip._id} trip={trip} />;
-          })}
           {upcomingBooking.map((booking) => {
             return <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} />;
           })}
         </div>
         <h2 className="text-2xl font-semibold mb-4 mt-8">Past Rides</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pastTrips.map((trip) => {
-            return <TripCard key={trip._id} trip={trip} />;
-          })}
           {pastBooking.map((booking) => (
             <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} />
           ))}
@@ -117,4 +84,4 @@ function Rides({ user }) {
   );
 }
 
-export default Rides;
+export default Rider;

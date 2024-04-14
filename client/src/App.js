@@ -12,7 +12,10 @@ import Search from './pages/Search-Car-Sharing/Search.jsx';
 import PublishTrip from './pages/PublishTrip/PublishTrip.jsx';
 import Payment from './pages/Payment/Payment.jsx';
 import PaymentSuccess from './pages/Payment/PaymentSuccess.jsx';
-import Rides from './pages/Rides/Rides.jsx'
+import Rider from './pages/Rides/Rider/Rider.jsx';
+import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
+
+
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
 
@@ -36,7 +39,8 @@ function App() {
           <Route path='/search' element={<Search user={user} />}/>
           <Route path='/Payment' element={<Payment user={user} setUser={setUser} />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-          <Route path="/myrides" element={<Rides user={user}/>} />
+          <Route path="/myrides" element={<Rider user={user}/>} />
+          <Route path="/mybooking" element={<DriverRides user={user}/>} />
         </Routes>
       </BrowserRouter>
     </> 
