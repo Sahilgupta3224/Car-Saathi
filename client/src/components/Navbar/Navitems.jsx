@@ -2,7 +2,7 @@ export const navItems = [
   {
     id: 1,
     title: "Home",
-    path: "/dashboard",
+    path: "/",
     cName: "nav-item",
   },
   {
@@ -42,7 +42,7 @@ export const ServiceDropdown = [
     {
         id: 4,
         title: "Publish Ride",
-        path: "/createride",
+        path: "/createtrip",
         cName: "submenu-item",
     },
 ];

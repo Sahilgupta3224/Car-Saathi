@@ -69,27 +69,6 @@ function PublishTrip({ user, setUser }) {
       <div className="w-1/2 pr-4">
         <h1 className="text-4xl font-bold mb-6">Publish a Ride</h1>
         <form onSubmit={handleSubmit}>
-          {/* <div className="mb-4">
-            <AutocompleteExample/>
-          </div> */}
-          {/* <div className="mb-4">
-        <LoadScript googleMapsApiKey={GMapAPI} libraries={['places']}>
-          <label htmlFor="destination" className="block text-gray-700 font-bold mb-2">
-            Destination
-          </label>
-          <Autocomplete onLoad={(autocomplete) => console.log('Autocomplete loaded:', autocomplete)}
-                onPlaceChanged={(autocomplete) => handleDestinationChange(autocomplete.getPlace())}
-          >
-          <input 
-            type= 'text'
-            required
-            id= 'destination'
-            value={destination}
-            className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          </Autocomplete>
-          </LoadScript>
-        </div> */}
         <div className="mb-4">
             <label
               htmlFor="Source"
@@ -230,3 +209,4 @@ function PublishTrip({ user, setUser }) {
 }
 
 export default PublishTrip;
+
