@@ -17,7 +17,7 @@ export const forgetPassword = async (req, res) => {
     if (!user) {
       return res.status(400).send("User not found");
     }
-    const resetToken = jwt.sign({ id: user._id }, "chaljabetichodeke", {
+    const resetToken = jwt.sign({ id: user._id }, "3S1KeYwhichISUn1@u3>>**CArS@@Th1", {
       expiresIn: "15m",
     });
     user.resetToken = resetToken;
