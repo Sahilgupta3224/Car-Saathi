@@ -15,13 +15,10 @@ import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
 import ResetPassword from './pages/Reset/Reset.jsx';
 import { ContactUs } from './pages/ContactUs/contact.jsx';
 
+
+import Inbox from './pages/Inbox/Inbox.jsx';
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
-
-  // Update localStorage when user state changes
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
 
   // Update localStorage when user state changes
   useEffect(() => {
@@ -40,10 +37,11 @@ function App() {
           <Route path="/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
           <Route path='/search' element={<Search user={user} />}/>
-          <Route path="/myrides" element={<DriverRides user={user}/>} />
           <Route path="/mybooking" element={<Rider user={user}/>} />
+          <Route path="/myrides" element={<DriverRides user={user}/>} />
           <Route path='/resetPassword' element={<ResetPassword />}/>
           <Route path="/contactus" element={<ContactUs user={user} />} />
+          <Route path="/inbox" element={<Inbox user={user} setUser={setUser}/>} />
         </Routes>
       </BrowserRouter>
     </> 

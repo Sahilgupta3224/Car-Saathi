@@ -137,6 +137,7 @@ export const signup = async (req, res, next) => {
   try {
     const reqbody = req.body.entries[1];
     const salt = bcrypt.genSaltSync(10);
+    console.log(reqbody)
     const hash = bcrypt.hashSync(reqbody.password, salt);
     const mobno = reqbody.phone;
     console.log(reqbody);
@@ -146,7 +147,6 @@ export const signup = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Email is already in use." });
     }
-
     const existingPhone = await User.findOne({ phone: reqbody.phone });
     if (existingPhone) {
       return res

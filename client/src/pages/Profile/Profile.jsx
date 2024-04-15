@@ -10,12 +10,13 @@ const Profile = ({ user, setUser }) => {
     const params = useParams();
     const [data, setData] = useState({});
     const [rating, setRating] = useState(null);
-
+    console.log(user)
     useEffect(() => {
         const getUser = async () => {
             try {
                 const res = await axios.get(`http://localhost:3001/api/user/getUser/${params.id}`);
                 setData(res.data.user);
+                console.log(res.data.user)
             } catch (err) {
                 console.log(err);
             }
@@ -55,7 +56,6 @@ const Profile = ({ user, setUser }) => {
                     <div className="reviews-section">
                         <h2>Reviews</h2>
                         <div className="review-card">
-                            {/* Render your review cards here */}
                             <ReviewCard />
                         </div>
                     </div>

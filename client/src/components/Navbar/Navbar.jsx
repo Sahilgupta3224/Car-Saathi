@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import { RiLogoutBoxLine, RiUserLine } from "react-icons/ri"; // Using modern icons
@@ -7,9 +7,28 @@ import Button from "./Button.jsx";
 import Dropdown from "./Dropdown.jsx";
 
 function Navbar({ user }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
   const [dropdown, setDropdown] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -37,21 +56,28 @@ function Navbar({ user }) {
               <li
                 key={item.id}
                 className="relative text-white hover:text-yellow-400 cursor-pointer"
-                onMouseEnter={() => setDropdown(true)}
-                onMouseLeave={() => setDropdown(false)}
+                onClick={handleDropdownToggle}
               >
-                <Link to={item.path}>{item.title}</Link>
-                {dropdown && <Dropdown />}
+                <p>Services</p>
+                {isDropdownOpen&& <Dropdown ref={dropdownRef} />}
               </li>
             );
           }
-          return (
-            <>
-            <li key={item.id} className="relative text-white hover:text-yellow-400 cursor-pointer">
-              <Link to={item.path}>{item.title}</Link>
-            </li>
-            </>
-          );
+          else{
+            return (
+
+
+
+
+
+              
+              <>
+              <li key={item.id} className="relative text-white hover:text-yellow-400 cursor-pointer">
+                <Link to={item.path}>{item.title}</Link>
+              </li>
+              </>
+            );
+          }
         })}
       </ul>
       

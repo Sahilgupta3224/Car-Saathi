@@ -1,8 +1,7 @@
 import bookingSchema from "../models/booking.js";
-
 import User from "../models/user.js";
-
 import Trip from "../models/trip.js";
+import Notification from "../models/notifications.js";
 
 export const booktrip = async (req, res) => {
     const { Driver, Bookingperson, trip, NoofBookedSeats } = req.body;
@@ -10,7 +9,17 @@ export const booktrip = async (req, res) => {
     const booking = new bookingSchema({ ...req.body, rt });
     console.log(req.body)
     try {
+        if(trip.availableSeats-NoofBookedSeats<0){
+            return res.status(400).json("not enough seats,Sorry!")
+        }
       await booking.save();
+      const content = `New booking made by ${Bookingperson} with {trip.Driver} with ${NoofBookedSeats} seats`;
+        const notification = new Notification({
+            userId: Bookingperson,
+            type: "booking-confirmed",
+            content: content
+        });
+        await notification.save();
       const user = await User.findByIdAndUpdate(
         Bookingperson,
         { $push: { bookings: booking._id } },

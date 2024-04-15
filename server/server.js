@@ -12,6 +12,7 @@ import messageroutes from './routes/messages.js';
 import triproutes from './routes/trips.js';
 import bookingroutes from './routes/bookings.js';
 import paymentroutes from './routes/payment.js'
+import notificationroutes  from './routes/notifications.js'
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/message",messageroutes)
 app.use("/api/payment",paymentroutes)
 app.use("/api/trip",triproutes)
 app.use("/api/booking",bookingroutes)
+app.use("/api/notifications",notificationroutes)
 
 app.use((err,req,res,next)=>{
     const status = err.status||500;

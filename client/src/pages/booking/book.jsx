@@ -43,7 +43,6 @@ function BookingPage({ user, setUser }) {
     try {
       const response = await axios.post('http://localhost:3001/api/booking/booktrip', data);
       console.log(response.data.message)
-      
     } catch (err) {
       if (err.response && err.response.status === 400) {
       alert(err.response.data.message);
