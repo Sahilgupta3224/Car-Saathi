@@ -6,6 +6,9 @@ const GMap = ({ apiKey , start, end}) => {
     const [response, setResponse] = useState('hello');
     const [error, setError] = useState(null);
     
+
+    //? Function to get user live location using browser
+    
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(

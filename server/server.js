@@ -48,5 +48,5 @@ app.listen(3001,()=>{
     //connecting to database
     connect()
     //connecting to server
-    console.log("connected");
+    console.log("Connected at port 3001...");
 })

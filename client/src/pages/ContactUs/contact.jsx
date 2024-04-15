@@ -3,10 +3,12 @@ import Navbar from "../../components/Navbar/Navbar";
 import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export const ContactUs = ({ user }) => {
   const form = useRef();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
   const sendEmail = async (e) => {
     e.preventDefault();
@@ -22,10 +24,13 @@ export const ContactUs = ({ user }) => {
         }
       );
       toast.success("Email sent successfully!");
+      toast.success('We will reach at you at the earliest')
+      navigate('/');
     } catch (err) {
       if (err instanceof EmailJSResponseStatus) {
         console.log("EMAILJS FAILED...", err);
         toast.error("Failed to send email.");
+
       } else {
         console.log("ERROR", err);
       }
