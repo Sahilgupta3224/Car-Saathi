@@ -40,8 +40,8 @@ function App() {
           <Route path="/messenger" element={<Messenger user={user} setUser={setUser}/>}></Route>
           <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
           <Route path='/search' element={<Search user={user} />}/>
-          <Route path="/myrides" element={<Rider user={user}/>} />
-          <Route path="/mybooking" element={<DriverRides user={user}/>} />
+          <Route path="/myrides" element={<DriverRides user={user}/>} />
+          <Route path="/mybooking" element={<Rider user={user}/>} />
           <Route path='/resetPassword' element={<ResetPassword />}/>
           <Route path="/contactus" element={<ContactUs user={user} />} />
         </Routes>

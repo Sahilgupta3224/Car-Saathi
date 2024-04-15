@@ -6,7 +6,7 @@ const TripCard = ({ trip }) => {
   const textColorClass = tripDate < today ? "text-red-900" : "text-green-900";
   return (
     <div
-      className={`trip-card border border-gray-300 rounded-md p-4 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass} ${
+      className={`border border-gray-300 rounded-md p-4 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass} ${
         textColorClass === "text-green-900" ? "bg-green-200" : "bg-red-200"
       }`}
     >
