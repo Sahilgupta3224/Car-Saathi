@@ -7,10 +7,11 @@ export const MessageItem = ({message,own}) => {
     console.log(message)
     const [usr,setUsr] = useState(null)
 
+    // Fetching details of the receiver
     useEffect(()=>{
         const getUser = async()=>{
             try{
-                const res= await axios("http://localhost:3001/api/user/getUser/"+message.sender);
+                const res= await axios.get("http://localhost:3001/api/user/getUser/"+message.sender);
                 console.log(res.data.user)
                 setUsr(res.data.user)
 
@@ -22,24 +23,23 @@ export const MessageItem = ({message,own}) => {
     },[])
   return (
     <div>
-        <Message
-        model={{
-        direction: own ? 'outgoing':'incoming',
-        message: message.text,
-        position: 'single',
-        sender: message.sender,
-        // sentTime: '15 mins ago'
-      }}
-    >
-      <Message.Footer
-       sentTime={format(message.createdAt)}
-  />
-      <Avatar
-        name="Emily"
-        src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`}
-      />
+      {usr && (<Message
+            model={{
+            direction: own ? 'outgoing':'incoming',
+            message: message.text,
+            position: 'single',
+            sender: message.sender,
+            // sentTime: '15 mins ago'
+          }}
+      >
+      <Message.Footer sentTime={format(message.createdAt)}/>
       
-    </Message>
+      <Avatar
+          name={usr.name}
+          src={`https://ui-avatars.com/api/?name=${usr.name}&background=random`}
+      />
+    </Message>)
+    }
     </div>
   )
 }
