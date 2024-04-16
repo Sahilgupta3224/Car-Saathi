@@ -27,12 +27,15 @@ export const Messenger = ({user}) => {
     const [newMessage,setNewMessage] = useState("")
     const [arrivalMessage,setArrivalMessage] = useState(null)
     const [receiver,setReceiver] = useState(null)
+    const [onlineUsers,setOnlineUsers] = useState([])
+    const [isOnline,setIsOnline] = useState(false)
     //using Reference to socket to avoid using useEffect again and again
     const socket = useRef()
     const scrollRef = useRef()
 
     console.log(conversations)
     console.log("Current chat",currentChat)
+    
     useEffect(()=>{
         const friendId = currentChat?.members.find(m=> m !== user._id)
         console.log(friendId)
@@ -68,11 +71,11 @@ export const Messenger = ({user}) => {
     },[arrivalMessage,currentChat])
 
 
-
     useEffect(()=>{
         socket.current.emit("addUser",user._id)
         socket.current.on("getUsers",users=>{
-            console.log(users)
+            console.log("Online users",users)
+            setOnlineUsers(users)
         })
     },[user])
     console.log(socket)
@@ -82,7 +85,7 @@ export const Messenger = ({user}) => {
             try{
             const res = await axios.get("http://localhost:3001/api/conversation/getConversation/"+user._id)
             setConversations(res.data)
-            console.log(res.data);
+            console.log("conversations",res.data);
             }catch(err){
                 console.log(err)
             }
@@ -134,7 +137,18 @@ export const Messenger = ({user}) => {
         }
 
     }
+    
+    useEffect(() => {
+        const friendId = currentChat?.members.find(m => m !== user._id);
+        if (friendId) {
+          const isFriendOnline = onlineUsers.some(user => user?.userId === friendId);
+          setIsOnline(isFriendOnline);
+        }
+      }, [currentChat, onlineUsers, user._id]);
 
+      const handleBack = ()=>{
+        setCurrentChat(null)
+      }
   return (
     <div>
         <Navbar user=
@@ -143,7 +157,7 @@ export const Messenger = ({user}) => {
   <MainContainer>
   <ConversationList>
     {conversations?.map((c)=>{
-       return <div onClick={()=>setCurrentChat(c)}><ConversationListItem conversation={c} user={user} messages={messages}/></div>
+       return <div onClick={()=>setCurrentChat(c)}><ConversationListItem conversation={c} user={user} onlineUsers={onlineUsers}/></div>
     })} 
    </ConversationList>
    {
@@ -151,20 +165,21 @@ export const Messenger = ({user}) => {
             <>
   <ChatContainer
   style={{
-    height: '600px'
+    height: '600px',
+    width:'full'
   }}
 >
     
    {/* <ConversationTopbar conversation={currentChat} user={user}/> */}
   <ConversationHeader>
-  <ConversationHeader.Back />
+  <ConversationHeader.Back onClick={handleBack}/>
   <Avatar
     name={receiver}
-    // src="https://chatscope.io/storybook/react/assets/joe-v8Vy3KOS.svg"
     src={`https://ui-avatars.com/api/?name=${receiver}&background=random`}
+    status = {isOnline ? "available" : "unavailable"}
   />
   <ConversationHeader.Content
-    info="Active 10 mins ago"
+    info={isOnline ? "Online" : "Offline"}
     userName={receiver}
   />
   </ConversationHeader>
@@ -200,7 +215,7 @@ export const Messenger = ({user}) => {
 </ChatContainer>
             </>
         ) : (
-            <div className='w-full flex justify-center items-center bold text-gray-300 text-3xl'>Open a chat to start a conversation</div>
+            <div className='flex justify-center w-full items-center bold text-gray-300 text-3xl'>Open a chat to start a conversation</div>
         )
     }
   </MainContainer>
