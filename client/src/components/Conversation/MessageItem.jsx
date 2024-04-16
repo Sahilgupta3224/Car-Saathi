@@ -7,6 +7,7 @@ export const MessageItem = ({message,own}) => {
     console.log(message)
     const [usr,setUsr] = useState(null)
 
+    // Fetching details of the receiver
     useEffect(()=>{
         const getUser = async()=>{
             try{
@@ -22,23 +23,20 @@ export const MessageItem = ({message,own}) => {
     },[])
   return (
     <div>
-        <Message
-        model={{
-        direction: own ? 'outgoing':'incoming',
-        message: message.text,
-        position: 'single',
-        sender: message.sender,
-        // sentTime: '15 mins ago'
-      }}
-    >
-      <Message.Footer
-       sentTime={format(message.createdAt)}
-  />
+      <Message
+            model={{
+            direction: own ? 'outgoing':'incoming',
+            message: message.text,
+            position: 'single',
+            sender: message.sender,
+            // sentTime: '15 mins ago'
+          }}
+      >
+      <Message.Footer sentTime={format(message.createdAt)}/>
       <Avatar
         name="Emily"
         src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`}
-      />
-      
+      /> 
     </Message>
     </div>
   )

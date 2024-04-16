@@ -1,16 +1,19 @@
 import React, { useEffect,useState } from 'react'
 import {
     Conversation,
-    Avatar
+    Avatar,
+    Loader
 } from "@chatscope/chat-ui-kit-react";
 import axios from "axios"
 
 export const ConversationListItem = ({conversation,user,onlineUsers}) => {
     const [usr,setUsr] = useState(null)
     const [messages,setMessages] = useState([])
+    const [isLoaded,setIsLoaded] = useState(false)
     console.log('Conversation',conversation);
     console.log("messages",messages)
 
+    // Fetching details of the receiver
     useEffect(()=>{
         const friendId = conversation.members.find(m=> m !== user._id)
         // console.log(friendId)
@@ -19,6 +22,7 @@ export const ConversationListItem = ({conversation,user,onlineUsers}) => {
                 const res= await axios("http://localhost:3001/api/user/getUser/"+friendId);
                 console.log(res.data.user)
                 setUsr(res.data.user)
+                setIsLoaded(true)
 
             }catch(err){
                console.log(err)
@@ -27,6 +31,7 @@ export const ConversationListItem = ({conversation,user,onlineUsers}) => {
         getUser()
     },[])
 
+    // Fetching all messages of the conversation
     useEffect(()=>{
       const getMessages = async() =>{
           try{
@@ -53,17 +58,21 @@ export const ConversationListItem = ({conversation,user,onlineUsers}) => {
 
     return (
     <div>
-        <Conversation
-        info={lastmsg?.text}
-        lastSenderName={lastsender}
+      {isLoaded ? (
+      <Conversation
+      info={lastmsg?.text}
+      lastSenderName={lastsender}
+      name={usr?.name}
+      >
+      <Avatar
         name={usr?.name}
-        >
-        <Avatar
-          name={usr?.name}
-          src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`} 
-          status = {isOnline ? "available" : "unavailable"}
-       />
-      </Conversation>
+        src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`} 
+        status = {isOnline ? "available" : "unavailable"}
+     />
+    </Conversation>
+      ) : <Loader/>
+      }
+        
     </div>
   )
 }
