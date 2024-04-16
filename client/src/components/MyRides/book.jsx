@@ -14,8 +14,11 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
               const res= await axios.get("http://localhost:3001/api/conversation/getConversation/" + booking.Bookingperson);
               let conversations = res.data 
               // console.log(conversations)
+
+              // Find if conversation with the driver already exists
               let chatExists = conversations?.find(conversation => conversation.members.includes(booking.Driver));
-              // console.log(chatExists)
+              //console.log(chatExists)
+              
               if(chatExists){
                   setCurrentChat(chatExists)  
                   if (currentChat) {
@@ -25,9 +28,7 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
                const res= await axios.post("http://localhost:3001/api/conversation/",{senderId:booking.Bookingperson,receiverId:booking.Driver});
                console.log(res.data)
                setCurrentChat(res.data)
-              //  if (currentChat) {
-                navigate("/messenger");
-              // }
+               navigate("/messenger");
               }
           }catch(err){
              console.log(err)
