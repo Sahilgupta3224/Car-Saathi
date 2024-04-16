@@ -27,7 +27,7 @@ const bookingSchema = new mongoose.Schema({
     },
     Date:{
         type: Date,
-        // required:true
+        required:true
     },
     fare:{
         type:Number,

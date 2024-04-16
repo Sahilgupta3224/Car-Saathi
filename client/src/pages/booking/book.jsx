@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar.jsx";
 import "./book.css";
 import axios from "axios";
 import useRazorpay from "react-razorpay"; // Import the Razorpay component
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function BookingPage({ user, setUser }) {
   const [seatsToBook, setSeatsToBook] = useState("");
@@ -12,21 +12,7 @@ function BookingPage({ user, setUser }) {
   const [Razorpay] = useRazorpay();
   const state = useLocation();
   const { trip } = state.state || {};
-  useEffect(() => {
-    console.log(trip, `trp ki maa ka bhosda`, user);
-  },[]);
 
-  const data = {
-    Driver: trip.driver,
-    Bookingperson: user,
-    trip: trip._id,
-    NoofBookedSeats: seatsToBook,
-    source: trip.source,
-    destination: trip.destination,
-    Date: trip.time,
-    fare: trip.fare,
-    PaymentMethod: `Online- Card /UPI /Net Banking`
-  }
   const handleSeatsToBookChange = (e) => {
     setSeatsToBook(e.target.value);
   };
@@ -38,11 +24,27 @@ function BookingPage({ user, setUser }) {
   const handleRemarksChange = (e) => {
     setRemarks(e.target.value);
   };
-
-  const initiatePayment = async () => {
+  const navigate = useNavigate()
+  const bookingConfirm = async(di, order, signature )=>{
+    const data = {
+      Driver: trip.driver,
+      Bookingperson: user,
+      trip: trip._id,
+      NoofBookedSeats: seatsToBook,
+      source: trip.source,
+      destination: trip.destination,
+      Date: trip.time,
+      fare: trip.fare,
+      PaymentMethod: `Online- Card /UPI /Net Banking`,
+      Payment_id: di,
+      Payment_order_id: order,
+      Payment_signature: signature,
+      Remark: remarks
+    }
     try {
       const response = await axios.post('http://localhost:3001/api/booking/booktrip', data);
-      console.log(response.data.message)
+      // console.log(response.data.booking)
+      navigate('/mybooking')
     } catch (err) {
       if (err.response && err.response.status === 400) {
       alert(err.response.data.message);
@@ -50,7 +52,10 @@ function BookingPage({ user, setUser }) {
       console.log(err);
     }
     }
-    const body = {
+  }
+  const initiatePayment = async () => {
+   
+    const body2 = {
       amount: `${seatsToBook*trip.fare}`,
       currency: "INR",
     };
@@ -59,7 +64,7 @@ function BookingPage({ user, setUser }) {
       // Make a POST request to your server to create a payment order
       const res = await axios.post(
         "http://localhost:3001/api/payment/create-order",
-        body
+        body2
       );
       const { orderId, amount } = res.data;
 
@@ -75,20 +80,17 @@ function BookingPage({ user, setUser }) {
           console.log(response.razorpay_payment_id);
           console.log(response.razorpay_order_id);
           console.log(response.razorpay_signature);
-
-          //! inko bhi handle karna hai baad mein 
-          //! maybe transaction history show karne ke liye
+          bookingConfirm(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature)
         },
         prefill: {
           name: `${user.name}`,
-          email: "customer@example.com",
-          contact: "Customer Phone Number",
+          email: `${user.email}`,
+          contact: `${user.phone}`,
         },
         notes: {
           address: "Customer Address",
         },
       };
-
       const rzp1 = new Razorpay(options);
       // Render the Razorpay component
       rzp1.on("payment.failed", function (response) {
