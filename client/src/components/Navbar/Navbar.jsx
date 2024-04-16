@@ -65,12 +65,6 @@ function Navbar({ user }) {
           }
           else{
             return (
-
-
-
-
-
-              
               <>
               <li key={item.id} className="relative text-white hover:text-yellow-400 cursor-pointer">
                 <Link to={item.path}>{item.title}</Link>

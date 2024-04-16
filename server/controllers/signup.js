@@ -56,7 +56,7 @@ export const resetPassword = async (req, res) => {
   const password = req.query.password
   console.log('password: ',password)
   try {
-    const decoded = jwt.verify(token, "chaljabetichodeke", (err, decode) => {
+    const decoded = jwt.verify(token, "3S1KeYwhichISUn1@u3>>**CArS@@Th1", (err, decode) => {
       if (err) {
         console.log(err);
       } else {

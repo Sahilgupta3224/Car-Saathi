@@ -7,6 +7,13 @@ export const navItems = [
     
   },
   {
+    id: 5,
+    title: "Inbox",
+    path: "/messenger",
+    cName: "submenu-item",
+    
+  },
+  {
     id: 3,
     title: "Rides",
     path: "/myrides",

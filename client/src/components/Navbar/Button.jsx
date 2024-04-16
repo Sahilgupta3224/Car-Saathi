@@ -10,7 +10,7 @@ function Button() {
     <div  className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center">
     <Link to="/inbox" className="flex gap-2">
     <RiInboxLine className="text-3xl font-bold"/>
-      <button className="relative">Inbox</button>
+      <button className="relative"></button>
     </Link>
     </div>
   );
