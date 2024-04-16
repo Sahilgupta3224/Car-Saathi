@@ -14,9 +14,8 @@ import Rider from './pages/Rides/Rider/Rider.jsx';
 import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
 import ResetPassword from './pages/Reset/Reset.jsx';
 import { ContactUs } from './pages/ContactUs/contact.jsx';
-
-
 import Inbox from './pages/Inbox/Inbox.jsx';
+
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
 

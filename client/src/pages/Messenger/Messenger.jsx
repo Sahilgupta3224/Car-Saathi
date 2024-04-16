@@ -18,17 +18,64 @@ import axios from 'axios';
 import { ConversationListItem } from '../../components/Conversation/ConversationListItem';
 import Navbar from '../../components/Navbar/Navbar';
 import { MessageItem } from '../../components/Conversation/MessageItem';
-import { ConversationTopbar } from '../../components/Conversation/ConversationTopbar';
+import {io} from "socket.io-client"
 
 export const Messenger = ({user}) => {
     const [conversations,setConversations] = useState([])
     const [currentChat,setCurrentChat] = useState(null)
     const [messages,setMessages] = useState([])
     const [newMessage,setNewMessage] = useState("")
+    const [arrivalMessage,setArrivalMessage] = useState(null)
+    const [receiver,setReceiver] = useState(null)
+    //using Reference to socket to avoid using useEffect again and again
+    const socket = useRef()
     const scrollRef = useRef()
 
     console.log(conversations)
-    console.log(currentChat)
+    console.log("Current chat",currentChat)
+    useEffect(()=>{
+        const friendId = currentChat?.members.find(m=> m !== user._id)
+        console.log(friendId)
+        const getUser = async()=>{
+            try{
+                const res= await axios("http://localhost:3001/api/user/getUser/"+friendId);
+                // console.log('friend is hereeeeee',res.data)
+                setReceiver(res.data.user.name)
+
+            }catch(err){
+               console.log(err)
+            }
+        }
+        getUser()
+    },[currentChat])
+
+    useEffect(()=>{
+        socket.current = io("ws://localhost:8900")
+        socket.current.on("getMessage",data=>{
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    },[])
+ 
+    
+    //for updating messages array when a real time message is received
+    useEffect(()=>{
+       arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && 
+       setMessages((prev)=>[...prev,arrivalMessage])
+    },[arrivalMessage,currentChat])
+
+
+
+    useEffect(()=>{
+        socket.current.emit("addUser",user._id)
+        socket.current.on("getUsers",users=>{
+            console.log(users)
+        })
+    },[user])
+    console.log(socket)
 
     useEffect(()=>{
         const getConversations = async()=>{
@@ -68,6 +115,15 @@ export const Messenger = ({user}) => {
             conversationId: currentChat._id,
             text: newMessage
         }
+
+        const receiverId = currentChat.members.find(member => member!=user._id)
+        
+        socket.current.emit("sendMessage",{
+            senderId: user._id,
+            receiverId,
+            text: newMessage
+        })
+
         try{
             const res = await axios.post("http://localhost:3001/api/message/",msg)
             setMessages([...messages,res.data])
@@ -81,12 +137,13 @@ export const Messenger = ({user}) => {
 
   return (
     <div>
-        <Navbar/>
+        <Navbar user=
+        {user} />
         <div style={{ position: "relative", height: "90vh" }}>
   <MainContainer>
   <ConversationList>
     {conversations?.map((c)=>{
-       return <div onClick={()=>setCurrentChat(c)}><ConversationListItem conversation={c} user={user}/></div>
+       return <div onClick={()=>setCurrentChat(c)}><ConversationListItem conversation={c} user={user} messages={messages}/></div>
     })} 
    </ConversationList>
    {
@@ -98,10 +155,22 @@ export const Messenger = ({user}) => {
   }}
 >
     
-   <ConversationTopbar conversation={currentChat} user={user}/>
+   {/* <ConversationTopbar conversation={currentChat} user={user}/> */}
+  <ConversationHeader>
+  <ConversationHeader.Back />
+  <Avatar
+    name={receiver}
+    // src="https://chatscope.io/storybook/react/assets/joe-v8Vy3KOS.svg"
+    src={`https://ui-avatars.com/api/?name=${receiver}&background=random`}
+  />
+  <ConversationHeader.Content
+    info="Active 10 mins ago"
+    userName={receiver}
+  />
+  </ConversationHeader>
 
   <MessageList>
-    <MessageSeparator content="Saturday, 30 November 2019" />
+    {/* <MessageSeparator content="Saturday, 30 November 2019" /> */}
     {
         messages.map((m)=>(
             <div ref={scrollRef}>
@@ -115,6 +184,7 @@ export const Messenger = ({user}) => {
   {/* <MessageInput placeholder="Type message here" value={newMessage} onChange={(e) => setNewMessage(() => e.target.value)} onSend={handleSubmit}/> */}
   <MessageInput
   placeholder="Type message here"
+  attachButton='false'
   value={newMessage}
   onChange={(innerHTML, textContent, innerText, additionalData) => {
     console.log(innerHTML); // The inner HTML of the input element
@@ -133,8 +203,6 @@ export const Messenger = ({user}) => {
             <div className='w-full flex justify-center items-center bold text-gray-300 text-3xl'>Open a chat to start a conversation</div>
         )
     }
- 
-
   </MainContainer>
 </div>
     </div>
