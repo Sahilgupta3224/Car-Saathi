@@ -61,7 +61,7 @@ export const ConversationListItem = ({conversation,user,onlineUsers}) => {
       {isLoaded ? (
       <Conversation
       info={lastmsg?.text}
-      lastSenderName={lastsender}
+      lastSenderName={lastmsg && lastsender}
       name={usr?.name}
       >
       <Avatar

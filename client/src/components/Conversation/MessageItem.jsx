@@ -11,7 +11,7 @@ export const MessageItem = ({message,own}) => {
     useEffect(()=>{
         const getUser = async()=>{
             try{
-                const res= await axios("http://localhost:3001/api/user/getUser/"+message.sender);
+                const res= await axios.get("http://localhost:3001/api/user/getUser/"+message.sender);
                 console.log(res.data.user)
                 setUsr(res.data.user)
 
@@ -23,7 +23,7 @@ export const MessageItem = ({message,own}) => {
     },[])
   return (
     <div>
-      <Message
+      {usr && (<Message
             model={{
             direction: own ? 'outgoing':'incoming',
             message: message.text,
@@ -33,11 +33,13 @@ export const MessageItem = ({message,own}) => {
           }}
       >
       <Message.Footer sentTime={format(message.createdAt)}/>
+      
       <Avatar
-        name="Emily"
-        src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`}
-      /> 
-    </Message>
+          name={usr.name}
+          src={`https://ui-avatars.com/api/?name=${usr.name}&background=random`}
+      />
+    </Message>)
+    }
     </div>
   )
 }

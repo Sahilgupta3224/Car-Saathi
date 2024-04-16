@@ -3,7 +3,7 @@ import Navbar from '../../../components/Navbar/Navbar.jsx';
 import BookCard from '../../../components/MyRides/book.jsx';
 import axios from 'axios';
 
-function Rider({ user }) {
+function Rider({ user,setCurrentChat,currentChat }) {
   const [bookings, setBookings] = useState([]);
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
@@ -69,13 +69,13 @@ function Rider({ user }) {
         <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {upcomingBooking.map((booking) => {
-            return <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} />;
+            return <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
           })}
         </div>
         <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pastBooking.map((booking) => (
-            <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} />
+            <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
           ))}
         </div>
       </div>

@@ -3,7 +3,7 @@ import Conversation from  "../models/Conversation.js"
 //New Conversation
 export const newConversation = async(req,res)=>{
     const newConvo = new Conversation({
-        members: [req,body.senderId,req.body.receiverId],
+        members: [req.body.senderId,req.body.receiverId],
     });
     try{
         const savedConvo = await newConvo.save();
