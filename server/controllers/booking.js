@@ -52,29 +52,26 @@ export const booktrip = async (req, res) => {
 export const mybookings=async(req,res)=>{
     const userId=req.params.id;
     try{
-        
         const {bookings} = await User.findById(userId)
+        console.log("bookings",bookings)
         bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
         const book =[];
         for(const id of bookings){
             const bookingdata = await bookingSchema.findById(id)
-            if(!bookingdata){
-                res.status(400).json("nhi ho rha bhai");
-            }
-            else{
-                book.push(bookingdata);
-            }
+            if(bookingdata)book.push(bookingdata)
         }
+        console.log("book",book)
+
         res.status(200).json({book});
     }
     catch(err){
-        res.status(500).json("error in fiinding trips");
+        res.status(500).json("error in finding trips");
         console.log(err);
     }
 }
 
 export const cancelbooking = async(req,res)=>{
-    const {source,destination,time} = req.body;
+    // const {source,destination,Date} = req.body;
     try{
         const booking = await bookingSchema.findByIdAndDelete(req.params.id);
         const Driver = booking.Driver;
@@ -118,7 +115,7 @@ export const cancelbooking = async(req,res)=>{
                 {new: true}
             );
         }
-        res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver });
+        res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver});
         //payment lautana h
     }
     catch{

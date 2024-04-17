@@ -40,6 +40,7 @@ function Rider({ user,setCurrentChat,currentChat }) {
         const response = await axios.get(
           `http://localhost:3001/api/booking/mybookings/${user._id}`
         );
+        console.log(response.data)
         setBookings(response.data.book);
       } catch (err) {
         if (err.response) {

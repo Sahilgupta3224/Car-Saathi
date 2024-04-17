@@ -1,7 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  borderRadius: 1,
+  boxShadow: 24,
+
+  p: 4,
+};
+
 const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const today = new Date();
   const bookDate = new Date(booking.Date);
   const textColorClass = bookDate < today ? 'text-red-900' : 'text-green-900';
@@ -37,6 +59,17 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
       getConversation()
   }
 
+  const handleDelete = async()=>{
+    try{
+      const res = axios.delete(`http://localhost:3001/api/booking/cancelbooking/${booking._id}`)
+      console.log(res.data);
+      toast.success("Booking removed successfully!")
+      handleClose()
+    }catch(err){
+      console.log(err);
+    }
+  }
+
     return (
   <div
   className={` border border-gray-300 rounded-md p-4 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass} ${
@@ -62,7 +95,7 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
     </div>
     {/* {textColorClass === "text-green-900" ? ( */}
         <div className="flex justify-end">
-          <button className="bg-red-500 text-white rounded-md px-4 py-2 mr-2 hover:bg-red-600">
+          <button className="bg-red-500 text-white rounded-md px-4 py-2 mr-2 hover:bg-red-600" onClick={handleOpen}>
             Delete Trip
           </button>
           <button className="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600" onClick={handleMessageClick}>
@@ -72,6 +105,25 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
       {/* ) : ( */}
         {/* <div></div> */}
       {/* )} */}
+      {/* <DeleteModal/> */}
+      <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className='text-lg'>Are you sure you want to cancel / delete the booking?</div>
+          <div className='flex justify-between mt-4'>
+          <Button variant="outlined" color="success" size="large" onClick={handleDelete}>YES</Button>
+          <Button variant='outlined' color="error" size="large" onClick={handleClose}>NO</Button>
+          </div>
+          
+        </Box>
+      </Modal>
+      <ToastContainer draggablePercent={60} autoClose={false}/>
+    </div>
   </div>
 );
 };

@@ -43,6 +43,7 @@ function App() {
           <Route path='/resetPassword' element={<ResetPassword />}/>
           <Route path="/contactus" element={<ContactUs user={user} />} />
           <Route path="/inbox" element={<Inbox user={user} setUser={setUser}/>} />
+          <Route path="*" element={<p>ERROR 404</p>}/>
         </Routes>
       </BrowserRouter>
     </> 
