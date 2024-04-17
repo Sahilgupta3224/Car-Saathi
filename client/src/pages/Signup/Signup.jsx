@@ -22,7 +22,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-export default function SignUp({ user, setUser }) {
+export default function SignUp({ user, setUser,setIsLoggedIn }) {
 
   const navigate = useNavigate()
   const [password, setPassword] = useState("")
@@ -74,6 +74,7 @@ export default function SignUp({ user, setUser }) {
         const res = await axios.post("http://localhost:3001/api/auth/signup", { entries });
         // console.log(res.data);
         setUser(res.data.newUser);
+        setIsLoggedIn(true)
         console.log(user);
         // localStorage.setItem('user', JSON.stringify(res.data.newUser))
         navigate('/signin');

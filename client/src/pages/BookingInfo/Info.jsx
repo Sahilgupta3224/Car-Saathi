@@ -6,7 +6,7 @@ import './DriverInfoPage.css';
 function DriverInfoPage({user}) {
     return (
         <div>
-            <Navbar user={user}/> 
+            <Navbar user={user} /> 
             <div className="driver-info-container">
                 <div className="driver-info-box">
                     <div className="driver-photo">

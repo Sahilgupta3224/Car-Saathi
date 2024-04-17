@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function PublishTrip({ user, setUser }) {
+function PublishTrip({ user, setUser,setIsLoggedIn }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyClnzcci8V997acQhlpEiYhaLlz_ogR_Vc",
     libraries: ["places"],
@@ -138,7 +138,7 @@ function PublishTrip({ user, setUser }) {
   return (
     <>
       <div className="z-10">
-        <Navbar user={user} />
+        <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
       </div>
       <div className="container mx-auto px-4 py-8 flex">
         <div className="w-1/2 pr-4">

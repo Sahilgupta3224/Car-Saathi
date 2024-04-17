@@ -6,7 +6,7 @@ import ReviewCard from '../../components/Review/ReviewCard.jsx';
 import Avatar from '@mui/material/Avatar';
 import './Profile.css'; // Import your CSS file
 
-const Profile = ({ user, setUser }) => {
+const Profile = ({ user, setUser,setIsLoggedIn }) => {
     const params = useParams();
     const [data, setData] = useState({});
     const [rating, setRating] = useState(null);
@@ -37,7 +37,7 @@ const Profile = ({ user, setUser }) => {
 
     return (
         <div>
-            <Navbar user={user} />
+            <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
             <div className="profile-container">
                 <div className="profile-header">
                     <div className="profile-info">
