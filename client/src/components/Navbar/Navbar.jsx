@@ -6,7 +6,7 @@ import { navItems } from "./Navitems.jsx";
 import Button from "./Button.jsx";
 import Dropdown from "./Dropdown.jsx";
 
-function Navbar({ user }) {
+function Navbar({ user,setIsLoggedIn }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -35,6 +35,7 @@ function Navbar({ user }) {
 
   function Logout() {
     localStorage.clear();
+    setIsLoggedIn(false)
     navigate("/Signin");
   }
 

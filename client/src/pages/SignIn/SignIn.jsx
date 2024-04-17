@@ -35,7 +35,7 @@ const defaultTheme = createTheme({
   },
 });
 
-export default function SignInSide({ user, setUser }) {
+export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
@@ -47,11 +47,10 @@ export default function SignInSide({ user, setUser }) {
   const handleForget = async (e)=>{
     e.preventDefault();
     if(!email){
-      return alert('Email de bahdve')
+      return alert('Fill email')
     }
 
     try {
-      console.log("tatti")
       const res = await axios.post('http://localhost:3001/api/auth/forget-password', { email });
 
       alert('Reset token sent to your email');
@@ -81,6 +80,7 @@ export default function SignInSide({ user, setUser }) {
         formdata
       );
       setUser(res.data);
+      setIsLoggedIn(true)
       console.log(res);
       localStorage.setItem("user", JSON.stringify(res.data));
       if (res.data.message) {

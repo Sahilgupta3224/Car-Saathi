@@ -3,7 +3,7 @@ import Navbar from '../../../components/Navbar/Navbar.jsx';
 import BookCard from '../../../components/MyRides/book.jsx';
 import axios from 'axios';
 
-function Rider({ user,setCurrentChat,currentChat }) {
+function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
   const [bookings, setBookings] = useState([]);
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
@@ -40,6 +40,7 @@ function Rider({ user,setCurrentChat,currentChat }) {
         const response = await axios.get(
           `http://localhost:3001/api/booking/mybookings/${user._id}`
         );
+        console.log(response.data)
         setBookings(response.data.book);
       } catch (err) {
         if (err.response) {
@@ -63,7 +64,7 @@ function Rider({ user,setCurrentChat,currentChat }) {
 
   return (
     <>
-    <Navbar user={user}/>
+    <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
       <div className="mx-auto px-4 py-8">
         <h1 className="text-3xl font-semibold mb-6">Your Bookings</h1>
         <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>

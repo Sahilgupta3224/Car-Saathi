@@ -5,7 +5,7 @@ import axios from "axios";
 import useRazorpay from "react-razorpay"; // Import the Razorpay component
 import { useLocation, useNavigate } from "react-router-dom";
 
-function BookingPage({ user, setUser }) {
+function BookingPage({ user, setUser,setIsLoggedIn }) {
   const [seatsToBook, setSeatsToBook] = useState("");
   const [seatPreference, setSeatPreference] = useState("");
   const [remarks, setRemarks] = useState("");
@@ -120,7 +120,7 @@ function BookingPage({ user, setUser }) {
         backgroundImage: `url('https://cdn.pixabay.com/photo/2014/04/27/00/43/traffic-332857_1280.jpg')`,
       }}
     >
-      <Navbar user={user} />
+      <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
       <div className="booking-container">
         <div className="input-group">
           <label htmlFor="seatsToBook">Seats To Book:</label>

@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../../../components/Navbar/Navbar.jsx";
 import TripCard from "../../../components/MyRides/trip.jsx";
 
-function DriverRides({ user }) {
+function DriverRides({ user,setIsLoggedIn }) {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function DriverRides({ user }) {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
       {/* <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-semibold mb-6">Your Rides</h1>
         <h2 className="text-2xl font-semibold mb-4">Upcoming Rides</h2>

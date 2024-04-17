@@ -15,12 +15,13 @@ import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
 import ResetPassword from './pages/Reset/Reset.jsx';
 import { ContactUs } from './pages/ContactUs/contact.jsx';
 import Inbox from './pages/Inbox/Inbox.jsx';
+import ProtectedRoute from './ProtectedRoute.js';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
   const [currentChat,setCurrentChat] = useState(null)
-
-
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
+  console.log(isLoggedIn)
   // Update localStorage when user state changes
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -29,20 +30,23 @@ function App() {
     <>
        <BrowserRouter>
         <Routes>
-          <Route path="/SignIn" element={<SignIn user={user} setUser={setUser}/>}/>
-          <Route path="/Signup" element={<Signup user={user} setUser={setUser}/>}/>
-          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>}/>
-          <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} />} />
-          <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
-          <Route path="/booking" element={<BookingPage user={user} setUser={setUser} />} /> 
-          <Route path="/messenger" element={<Messenger user={user} setUser={setUser} currentChat={currentChat} setCurrentChat={setCurrentChat}/>}></Route>
-          <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser}/>}/>
-          <Route path='/search' element={<Search user={user} />}/>
-          <Route path="/mybooking" element={<Rider user={user} setCurrentChat={setCurrentChat} currentChat={currentChat}/>} />
-          <Route path="/myrides" element={<DriverRides user={user}/>} />
+          <Route path="/SignIn" element={<SignIn user={user} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUser={setUser}/>}/>
+          <Route path="/Signup" element={<Signup user={user} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUser={setUser}/>}/>
+          <Route path="/" element={<Dashboard user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
           <Route path='/resetPassword' element={<ResetPassword />}/>
-          <Route path="/contactus" element={<ContactUs user={user} />} />
-          <Route path="/inbox" element={<Inbox user={user} setUser={setUser}/>} />
+          <Route path="/contactus" element={<ContactUs user={user} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
+          <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
+            <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
+            <Route path="/booking" element={<BookingPage user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} /> 
+            <Route path="/messenger" element={<Messenger user={user} setUser={setUser} currentChat={currentChat} setCurrentChat={setCurrentChat} setIsLoggedIn={setIsLoggedIn}/>}></Route>
+            <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>}/>
+            <Route path='/search' element={<Search user={user} setIsLoggedIn={setIsLoggedIn} />}/>
+            <Route path="/mybooking" element={<Rider user={user} setCurrentChat={setCurrentChat} currentChat={currentChat} setIsLoggedIn={setIsLoggedIn}/>} />
+            <Route path="/myrides" element={<DriverRides user={user} setIsLoggedIn={setIsLoggedIn}/>} />
+            <Route path="/inbox" element={<Inbox user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
+          </Route>
+          <Route path="*" element={<p>ERROR 404</p>}/>
         </Routes>
       </BrowserRouter>
     </> 
