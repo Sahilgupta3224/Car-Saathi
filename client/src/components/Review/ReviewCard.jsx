@@ -14,6 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Rating } from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,7 +27,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard({data}) {
+export default function RecipeReviewCard({data,review}) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -37,8 +38,9 @@ export default function RecipeReviewCard({data}) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {data?.username[0]}
+          <Avatar 
+          src={`https://ui-avatars.com/api/?name=${review?.ReviewerName}&background=random`}
+          >
           </Avatar>
         }
         action={
@@ -46,22 +48,17 @@ export default function RecipeReviewCard({data}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={data?.username}
-        subheader={data?.date}
+        title={review?.ReviewerName}
+        subheader={review?.Date.slice(0,10)}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-           {data?.comment}
+      {/* <CardContent> */}
+      <div className='mx-5'>
+      <Rating name="read-only" value={review.Rating} precision={0.5} readOnly/>
+        <Typography variant="body2" color="text.secondary" className='px-1 pb-2'>
+           {review?.Comment}
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
+      </div>
+      {/* </CardContent> */}
     </Card>
   );
 }

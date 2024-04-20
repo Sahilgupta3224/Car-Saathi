@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+const secret = "This#*(%i#s%@c^a(ersatthid>><><dheggefj";
 
 export const ErrorMessage = (status, message) => {
   const error = new Error();
@@ -159,6 +160,7 @@ export const signup = async (req, res, next) => {
     const userData = await newUser.save();
     if (userData) {
       sendVerifyMail(reqbody.username, reqbody.email, userData._id);
+      
       res.status(200).json({ newUser });
     }
   } catch (err) {

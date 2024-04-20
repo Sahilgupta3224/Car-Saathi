@@ -3,13 +3,12 @@ import mongoose from "mongoose";
 const reviewSchema = new mongoose.Schema({
     Reviewer:{
         type:mongoose.ObjectId,
-        required:true,
-        trim:true
+    },
+    ReviewerName:{
+        type:String,
     },
     ReviewedUser:{
         type:mongoose.ObjectId,
-        required:true,
-        trim:true
     },
     Rating:{
         type:Number,
@@ -17,9 +16,7 @@ const reviewSchema = new mongoose.Schema({
         trim:true
     },
     Comment:{
-        type:String, 
-        unique:true,
-        required: true
+        type:String,
     },
     Date:{
         type:Date
