@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const style = {
@@ -38,6 +42,32 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
     const [profileRating, setProfileRating] = useState(0);
     const [comment, setComment] = useState("");
     const [reviews,setReviews] = useState(null)
+    const [openSnack, setOpenSnack] = React.useState(false);
+   
+
+  const handleClick = () => {
+    setOpenSnack(true);
+  };
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnack}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
     console.log(comment)
 
 
@@ -75,10 +105,11 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
         getRating();
         getReviews();
     }, [params.id]);
-
+    console.log(reviews)
     const handleSubmit = async()=>{
         try{
             const review = {
+                _id: uuidv4(),
                 Reviewer: user._id,
                 ReviewedUser: params.id,
                 ReviewerName: user.name,
@@ -86,6 +117,7 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
                 Comment: comment,
                 Date: new Date()
             }
+            console.log(review)
             const res = await axios.post(`http://localhost:3001/api/reviews/addReview/${params.id}`,review);
             console.log(res.data)
             setComment("")
@@ -98,6 +130,7 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
             console.log(err)
         }
     }
+
 
     return (
         <div>
@@ -119,12 +152,13 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
                     <div className="separator"></div>
                     <div className="reviews-section">
                         <h2>Reviews</h2>
-                        <button onClick={handleOpen}>Add review</button>
+                      {/* { user._id!=params.id && <button onClick={handleOpen}>Add review</button>} */}
+                      <button onClick={handleOpen}>Add review</button>
                         {
                             reviews?.map(review=>{
                                 return (
                                     <div className="review-card">
-                                       <ReviewCard review={review} />
+                                       <ReviewCard review={review} setOpenSnack={setOpenSnack}/>
                                     </div>
                                 )
                             })
@@ -173,6 +207,13 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
             </div>
         <ToastContainer/>
 
+        <Snackbar
+        open={openSnack}
+        autoHideDuration={6000}
+        action={action}
+        onClose={handleClose}
+        message="Review deleted successfully"
+      />
         </div>
     );
 };

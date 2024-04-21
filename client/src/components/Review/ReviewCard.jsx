@@ -15,6 +15,12 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Rating } from '@mui/material';
+import OptionsPopover from '../OptionsPopover';
+import { useParams } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+// import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,12 +33,39 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard({data,review}) {
+export default function RecipeReviewCard({data,review,setOpenSnack}) {
   const [expanded, setExpanded] = React.useState(false);
+  const params = useParams()
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const handleEdit = () => {
+    // Handle edit functionality
+    try{
+      const res = await axios.delete(`http://localhost:3001/api/reviews/editReview/${params.id}/${review._id}`);
+      console.log(res.data);
+      setOpenSnack(true)
+
+
+    }catch(err){
+      console.log(err)
+    }
+
+};
+
+const handleDelete = async() => {
+    // Handle delete functionality
+    try{
+      const res = await axios.delete(`http://localhost:3001/api/reviews/deleteReview/${params.id}/${review._id}`);
+      console.log(res.data);
+      setOpenSnack(true)
+
+
+    }catch(err){
+      console.log(err)
+    }
+};
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -45,7 +78,8 @@ export default function RecipeReviewCard({data,review}) {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            {/* <MoreVertIcon /> */}
+            <OptionsPopover onEdit={handleEdit} onDelete={handleDelete} />
           </IconButton>
         }
         title={review?.ReviewerName}

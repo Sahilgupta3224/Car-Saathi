@@ -1,5 +1,6 @@
 import User from  "../models/user.js"
 
+
 export const addReview = async(req,res)=>{
     console.log("review",req.body)
     try{
@@ -49,9 +50,7 @@ export const getRating = async(req,res)=>{
 
 export const editReview = async(req,res)=>{
     try{
-        if(req.body.editedReview.rating==null){
-            res.json({message:"Please add a rating"})
-        }else{
+        
         const user = await User.findById(req.params.id);
         console.log(user)
         if(!user)res.json({message:"User not found"})
@@ -65,7 +64,6 @@ export const editReview = async(req,res)=>{
             console.log(user.reviews)
             const usr=await User.findByIdAndUpdate(req.params.id,{$set:{reviews:user.reviews}},{new:true})
             res.json({message:"Review edited",usr})
-        }
     }
        
     }catch(err){
@@ -75,21 +73,22 @@ export const editReview = async(req,res)=>{
 }
 
 export const deleteReview = async(req,res)=>{
+    console.log(req.body)
     try{
         const user = await User.findById(req.params.userId);
+        console.log("user",user)
 
         if(!user)res.json({message:"User not found"})
         
         else{
-            const updatedReviews = user.reviews.filter(review=> review._id.toString() !== req.params.reviewId)
+            const updatedReviews = user.reviews.filter(review=> review._id !== req.params.reviewId)
             const usr = await User.findByIdAndUpdate(req.params.userId,{$set:{reviews:updatedReviews}},{new:true});
-    
+            console.log("usr",usr)
             res.json({message:"review deleted",usr})
         }
-        
        
     }catch(err){
-        res.json({message:"cannot delete the review"})
+        res.status(500).json({message:"cannot delete the review"})
         console.log(err)
         
     }

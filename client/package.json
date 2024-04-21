@@ -28,6 +28,7 @@
     "react-typed": "^2.0.12",
     "socket.io-client": "^4.7.5",
     "timeago.js": "^4.0.2",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
