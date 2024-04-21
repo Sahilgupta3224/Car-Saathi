@@ -34,7 +34,7 @@ const style = {
 
 const Profile = ({ user, setUser,setIsLoggedIn }) => {
     const params = useParams();
-    const [data, setData] = useState({});
+    const [data, setData] = useState({});//user data of currently logged in person
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -44,8 +44,6 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
     const [reviews,setReviews] = useState(null)
     const [openSnack, setOpenSnack] = useState(false);
     const [openEditSnack, setOpenEditSnack] = useState(false);
-
-   
 
   const handleClick = () => {
     setOpenSnack(true);
@@ -171,13 +169,12 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
                     <div className="separator"></div>
                     <div className="reviews-section">
                         <h2>Reviews</h2>
-                      {/* { user._id!=params.id && <button onClick={handleOpen}>Add review</button>} */}
-                      <button onClick={handleOpen}>Add review</button>
+                      { user._id!=params.id && <button onClick={handleOpen}>Add review</button>}
                         {
                             reviews?.map(review=>{
                                 return (
                                     <div className="review-card">
-                                       <ReviewCard review={review} setOpenSnack={setOpenSnack} setOpenEditSnack={setOpenEditSnack}/>
+                                       <ReviewCard review={review} setOpenSnack={setOpenSnack} setOpenEditSnack={setOpenEditSnack} data={data}/>
                                     </div>
                                 )
                             })

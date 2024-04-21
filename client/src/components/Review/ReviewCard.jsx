@@ -101,7 +101,8 @@ const handleDelete = async() => {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
+      {/* If review card is not about the currently logged in person */}
+     { data._id != review.ReviewedUser && (<CardHeader
         avatar={
           <Avatar 
           src={`https://ui-avatars.com/api/?name=${review?.ReviewerName}&background=random`}
@@ -116,7 +117,24 @@ const handleDelete = async() => {
         }
         title={review?.ReviewerName}
         subheader={review?.Date.slice(0,10)}
-      />
+      />)
+      }
+      {/* If it is about the currently logged in person */}
+      {
+        data._id == review.ReviewedUser && (
+         <CardHeader
+         avatar={
+           <Avatar 
+           src={`https://ui-avatars.com/api/?name=${review?.ReviewerName}&background=random`}
+           >
+           </Avatar>
+         }
+         title={review?.ReviewerName}
+         subheader={review?.Date.slice(0,10)}
+       />
+        )
+      }
+
       {/* <CardContent> */}
       <div className='mx-5'>
       <Rating name="read-only" value={review.Rating} precision={0.5} readOnly/>
