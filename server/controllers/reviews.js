@@ -50,7 +50,6 @@ export const getRating = async(req,res)=>{
 
 export const editReview = async(req,res)=>{
     try{
-        
         const user = await User.findById(req.params.id);
         console.log(user)
         if(!user)res.json({message:"User not found"})

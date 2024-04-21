@@ -35,14 +35,16 @@ const style = {
 const Profile = ({ user, setUser,setIsLoggedIn }) => {
     const params = useParams();
     const [data, setData] = useState({});
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [rating, setRating] = useState(0);
-    const [profileRating, setProfileRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [profileRating, setProfileRating] = useState(0);
     const [reviews,setReviews] = useState(null)
-    const [openSnack, setOpenSnack] = React.useState(false);
+    const [openSnack, setOpenSnack] = useState(false);
+    const [openEditSnack, setOpenEditSnack] = useState(false);
+
    
 
   const handleClick = () => {
@@ -53,8 +55,13 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnack(false);
+  };
+  const handleCloseEditSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenEditSnack(false);
   };
   const action = (
     <React.Fragment>
@@ -63,6 +70,18 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
         aria-label="close"
         color="inherit"
         onClick={handleCloseSnack}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+  const actionedit = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseEditSnack}
       >
         <CloseIcon fontSize="small" />
       </IconButton>
@@ -158,7 +177,7 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
                             reviews?.map(review=>{
                                 return (
                                     <div className="review-card">
-                                       <ReviewCard review={review} setOpenSnack={setOpenSnack}/>
+                                       <ReviewCard review={review} setOpenSnack={setOpenSnack} setOpenEditSnack={setOpenEditSnack}/>
                                     </div>
                                 )
                             })
@@ -212,7 +231,14 @@ const Profile = ({ user, setUser,setIsLoggedIn }) => {
         autoHideDuration={6000}
         action={action}
         onClose={handleClose}
-        message="Review deleted successfully"
+        message="Review deleted"
+      />
+      <Snackbar
+        open={openEditSnack}
+        autoHideDuration={6000}
+        action={actionedit}
+        onClose={handleCloseEditSnack}
+        message="Review edited"
       />
         </div>
     );
