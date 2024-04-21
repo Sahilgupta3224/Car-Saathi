@@ -36,16 +36,19 @@ function App() {
           <Route path='/resetPassword' element={<ResetPassword />}/>
           <Route path="/contactus" element={<ContactUs user={user} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
+          <Route path="/messenger" element={<ProtectedRoute isLoggedIn={isLoggedIn} user={user}/>}>
+          <Route path="/messenger" element={<Messenger user={user} setUser={setUser} currentChat={currentChat} setCurrentChat={setCurrentChat} setIsLoggedIn={setIsLoggedIn}/>}></Route>
+          
+          </Route>
+          <Route path="/booking" element={<BookingPage user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} /> 
+
+            
             <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
-            <Route path="/booking" element={<BookingPage user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} /> 
-            <Route path="/messenger" element={<Messenger user={user} setUser={setUser} currentChat={currentChat} setCurrentChat={setCurrentChat} setIsLoggedIn={setIsLoggedIn}/>}></Route>
             <Route path="/createtrip" element={<PublishTrip user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>}/>
             <Route path='/search' element={<Search user={user} setIsLoggedIn={setIsLoggedIn} />}/>
             <Route path="/mybooking" element={<Rider user={user} setCurrentChat={setCurrentChat} currentChat={currentChat} setIsLoggedIn={setIsLoggedIn}/>} />
             <Route path="/myrides" element={<DriverRides user={user} setIsLoggedIn={setIsLoggedIn}/>} />
             <Route path="/inbox" element={<Inbox user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
-          </Route>
           <Route path="*" element={<p>ERROR 404</p>}/>
         </Routes>
       </BrowserRouter>

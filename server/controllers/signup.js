@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+const secret = "This#*(%i#s%@c^a(ersatthid>><><dheggefj";
 
 export const ErrorMessage = (status, message) => {
   const error = new Error();

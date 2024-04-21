@@ -79,10 +79,10 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
         "http://localhost:3001/api/auth/signin",
         formdata
       );
-      setUser(res.data);
+      setUser(res.data.others);
       setIsLoggedIn(true)
-      console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data));
+      console.log("sign in info",res.data);
+      localStorage.setItem("user", JSON.stringify(res.data.others));
       if (res.data.message) {
         alert(res.data.message);
       } else {
