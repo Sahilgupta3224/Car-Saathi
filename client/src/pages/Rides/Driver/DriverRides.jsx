@@ -5,6 +5,7 @@ import TripCard from "../../../components/MyRides/trip.jsx";
 
 function DriverRides({ user,setIsLoggedIn }) {
   const [trips, setTrips] = useState([]);
+  console.log(trips)
 
   useEffect(() => {
     const getTrips = async () => {
@@ -22,7 +23,7 @@ function DriverRides({ user,setIsLoggedIn }) {
       }
     };
     getTrips();
-  }, [user._id]);
+  }, []);
 
   const upcomingTrips = trips.filter((trip) => {
     const tripDate = new Date(trip.Date);

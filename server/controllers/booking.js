@@ -53,14 +53,14 @@ export const mybookings=async(req,res)=>{
     const userId=req.params.id;
     try{
         const {bookings} = await User.findById(userId)
-        console.log("bookings",bookings)
+        // console.log("bookings",bookings)
         bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
         const book =[];
         for(const id of bookings){
             const bookingdata = await bookingSchema.findById(id)
             if(bookingdata)book.push(bookingdata)
         }
-        console.log("book",book)
+        // console.log("book",book)
 
         res.status(200).json({book});
     }
