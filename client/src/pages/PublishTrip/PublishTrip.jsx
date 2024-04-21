@@ -1,15 +1,23 @@
 import React, { useEffect, useReducer, useRef } from "react";
 import { useState } from "react";
 import GMap from "../../components/GMap/GMap";
-import { Autocomplete, GoogleMap, LoadScript, DirectionsRenderer, DirectionsService, useLoadScript} from '@react-google-maps/api';
+import {
+  Autocomplete,
+  GoogleMap,
+  LoadScript,
+  DirectionsRenderer,
+  DirectionsService,
+  useLoadScript,
+} from "@react-google-maps/api";
 import { GMapAPI } from "../../keys";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { selectClasses } from "@mui/material";
 
-function PublishTrip({ user, setUser,setIsLoggedIn }) {
+function PublishTrip({ user, setUser, setIsLoggedIn }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyClnzcci8V997acQhlpEiYhaLlz_ogR_Vc",
     libraries: ["places"],
@@ -18,6 +26,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [availableSeats, setAvailableSeats] = useState();
+  const [selectedRouteIndex, setSelectedRouteIndex] = useState('');
   const [carModel, setCarModel] = useState("");
   const [maxSeats, setMaxSeats] = useState();
   const [date, setDate] = useState(new Date());
@@ -27,14 +36,18 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
   const destinationRef = useRef();
   const [routeLoading, setRouteLoading] = useState();
   const [directionResponses, setDirectionsResponses] = useState();
-  
+
+  useEffect(() => {
+    console.log(selectedRouteIndex);
+  }, [selectedRouteIndex]);
   if (!isLoaded) return <div>Loading... Hi Hi</div>;
-
-
 
   const onSourceChange = (place) => {
     setSource(sourceRef.current.value);
-    };
+  };
+  const handleRouteClick = (index) => {
+    setSelectedRouteIndex(index);
+  };
 
   async function calculateRoute() {
     if (source === "" || destination === "") {
@@ -50,7 +63,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
     }
 
     setRouteLoading(true);
-    const directionsService = new window.google.maps.DirectionsService()
+    const directionsService = new window.google.maps.DirectionsService();
 
     try {
       const results = await directionsService.route({
@@ -65,7 +78,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
         throw new Error("Error: " + results.status);
       }
 
-      // console.log(results);
+      console.log(results.routes);
       setDirectionsResponses(results);
     } catch (error) {
       console.error("Error calculating route:", error);
@@ -98,8 +111,8 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
     //   alert("Maximum seats should be greater than or equal to available seats.");
     //   return;
     // }
-    if(maxSeats <1){
-      alert('Maximum Seats should be greater than 0.')
+    if (maxSeats < 1) {
+      alert("Maximum Seats should be greater than 0.");
       return;
     }
     if (new Date(date) <= new Date()) {
@@ -110,24 +123,35 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
       alert("Fare should be greater than 0.");
       return;
     }
-    setSource(sourceRef.current.value);
-    setDestination(destinationRef.current.value);
-    const data = {
-      source,
-      destination,
-      availableSeats,
-      CarModel: carModel,
-      Max_Seats: maxSeats,
-      time: date,
-      fare,
-      driver: user
-    };
-
-    try{
-      await axios.post('http://localhost:3001/api/trip/createtrip', data);
+    try {
+      // console.log(directionResponses.routes, ' ', selectedRouteIndex)
+      // setSource(sourceRef.current.value);
+      // setDestination(destinationRef.current.value);
+      const source1 = directionResponses.routes[selectedRouteIndex].legs[0].start_address
+      const destination1 = directionResponses.routes[selectedRouteIndex].legs[0].end_address
+      const totalTime =
+        directionResponses.routes[selectedRouteIndex].legs[0].duration.text;
+      const totalDistance =
+        directionResponses.routes[selectedRouteIndex].legs[0].distance.text;
+      const route = directionResponses.routes[0].summary;
+      const data = {
+        source: source1,
+        destination: destination1,
+        availableSeats,
+        CarModel: carModel,
+        Max_Seats: maxSeats,
+        time: date,
+        fare,
+        driver: user,
+        routes: route,
+        totalTime,
+        totalDistance,
+      }
       console.log(data)
+      const res = await axios.post('http://localhost:3001/api/trip/createtrip', data);
+      console.log(res);
       navigate('/')
-    }catch(err){
+    } catch (err) {
       if (err.response && err.response.status === 400) {
         alert(err.response.data.message);
       } else {
@@ -139,7 +163,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
   return (
     <>
       <div className="z-10">
-        <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
+        <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       </div>
       <div className="container mx-auto px-4 py-8 flex">
         <div className="w-1/2 pr-4">
@@ -280,7 +304,41 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
           </form>
         </div>
         <div className="w-1/2">
-          {<GMap apiKey={GMapAPI} start={source} end={destination} directionsResponses={directionResponses} />}
+          {
+            <GMap
+              apiKey={GMapAPI}
+              start={source}
+              end={destination}
+              directionsResponses={directionResponses}
+            />
+          }
+          {directionResponses && (
+            <div className=" mt-4 p-4 border w-[80%] m-auto flex flex-col gap-4 overflow-y-auto h-[200px]">
+              {directionResponses.routes.map((route, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <input
+                    type="radio"
+                    id={`route${index}`}
+                    name="routes"
+                    value={index}
+                    checked={selectedRouteIndex === index}
+                    onChange={() => handleRouteClick(index)}
+                    className="mr-2"
+                  />
+                  <label
+                    htmlFor={`route${index}`}
+                    className="flex-grow py-2 px-4 bg-gray-100 rounded-lg cursor-pointer"
+                  >
+                    <div className="font-semibold">{route.summary}</div>
+                    <div className="text-sm text-gray-600">
+                      <div>Distance: {route.legs[0].distance.text}</div>
+                      <div>Duration: {route.legs[0].duration.text}</div>
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <ToastContainer />
       </div>
