@@ -1,47 +1,28 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, MenuItem, Link, Grid, Box, Typography, Container, CssBaseline, Avatar, IconButton, InputAdornment } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios"
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+import axios from 'axios';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import 'react-phone-number-input/style.css';
+import { useNavigate } from 'react-router-dom';
 
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-export default function SignUp({ user, setUser,setIsLoggedIn }) {
-
+export default function SignUp({ setUser, setIsLoggedIn }) {
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phonee, setPhonee] = useState('');
+  const [confirmpass, setConformpass] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [countryCode, setCountryCode] = useState('');
   const navigate = useNavigate()
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState('')
-  const [isPass, isPassValid] = useState(false)
-  const [isUsername, isUsernameValid] = useState(false)
-  const [entries, setEntries] = useState([])
-  const [confirmpass, setConformpass] = useState("")
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showPassword2, setShowPassword2] = useState(false)
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleShowPassword2 = () => {
-    setShowPassword2(!showPassword2);
-  };
+  const [isValidPhone, setIsValidPhone] = useState(false)
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -50,89 +31,98 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
     }
 
     setPassword(newPassword);
-    isPassValid(newPassword.length >= 8);
+    setIsValidPassword(newPassword.length >= 8);
   };
+
+  React.useEffect(()=>{
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValid(emailRegex.test(email));
+  }, [email])
+
+  useEffect(() => {
+    const isValid =
+      password.length >= 8 && /[a-z]/.test(password) && /[A-Z]/.test(password) && 
+      /\d/.test(password) && /[!@#$%^&*]/.test(password); 
+    setIsValidPassword(isValid);
+  }, [password]);
+
+  const handleCountryCodeChange = (event) => {
+    setCountryCode(event.target.value);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
   const handleEmailChange = (event) => {
     const k = event.target.value;
     setEmail(k);
-  }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValid(emailRegex.test(k));
+  };
+
   const handleNameChange = (event) => {
     const k = event.target.value;
     setName(k);
-  }
-  const handlePhoneChange = (event) => {
-    const k = event.target.value;
-    setPhone(k);
-  }
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (isPass && isUsername && confirmpass === password) {
-      const Entry = { name: name, username: username, password: password, email: email, phone: phone };
-      setEntries([entries, Entry]);
-      console.log(entries)
-      try {
-        const res = await axios.post("http://localhost:3001/api/auth/signup", { entries });
-        // console.log(res.data);
-        setUser(res.data.newUser);
-        setIsLoggedIn(true)
-        console.log(user);
-        // localStorage.setItem('user', JSON.stringify(res.data.newUser))
-        navigate('/signin');
-        setEmail("");
-        setPassword("");
-        setUsername("");
-        emptyConfirmpass();
-      } catch (err) {
-        if (err.response && err.response.status === 400) {
-          alert(err.response.data.message);
-        } else {
-          console.log(err);
-        }
-      }
-    } else {
-      if (!email || !username || !phone) {
-        alert("Fill all the fields!")
-      } else {
-        if (confirmpass !== password) {
-          alert("Password and confirmed pass didn't match");
-        } else {
-          alert("Invalid username or password. Make sure username is >= 5 characters and password is >= 8 characters");
-        }
-      }
-
-    }
   };
 
   const handleUsernameChange = (event) => {
-    event.preventDefault();
     const newUsername = event.target.value;
     setUsername(newUsername);
-    isUsernameValid(newUsername.length >= 5);
   };
-  const confirm = (event) => {
+
+  useEffect(()=>{
+    if(phonee.length == 10){
+      setIsValidPhone(true)
+    }
+  })
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const k = event.target.value
-    setConformpass(k)
-  }
-  const emptyConfirmpass = () => {
-    setConformpass("");
-  }
+    if (!isValid) {
+      return alert("Invalid Email");
+    }
+    if (!isValidPassword) {
+      return alert("Make a strong password");
+    }
+    if (confirmpass !== password) {
+      return alert("Password and confirmed password didn't match");
+    }
+    if(!isValidPhone){
+      return alert('Enter Valid Contact Number')
+    }
+    console.log(phonee)
+    let phone = countryCode+phonee
+    const Entry = { name, username, password, email, phone };
+    console.log(Entry);
+    try {
+      const res = await axios.post("http://localhost:3001/api/auth/signup", Entry);
+      navigate('/signin')
+      
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      setConformpass("");
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data.message);
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
   const defaultTheme = createTheme({
     palette: {
       primary: {
         main: '#f44336',
       },
-      secondary: {
-        main: '#000',
-      },
-      tertiary: {
-        main: '#'
-      },
-      textColor: {
-        main: ''
-      }
     },
   });
+
   return (
     <Box
       bgcolor="fff"
@@ -170,7 +160,7 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
                     id="name"
                     label="Name"
                     name="name"
-                    autoComplete="Your Name"
+                    autoComplete="name"
                     onChange={handleNameChange}
                   />
                 </Grid>
@@ -181,7 +171,7 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
                     id="username"
                     label="Username"
                     name="username"
-                    autoComplete="Your Username"
+                    autoComplete="username"
                     onChange={handleUsernameChange}
                   />
                 </Grid>
@@ -196,7 +186,22 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
                     onChange={handleEmailChange}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    select
+                    defaultValue={'+1'}
+                    label="Country Code"
+                    value={countryCode}
+                    onChange={handleCountryCodeChange}
+                    variant="outlined"
+                    style={{ width: '100%' }}
+                  >
+                  <MenuItem value="+44">+44 (UK)</MenuItem>
+                  <MenuItem value="+1">+1 (US)</MenuItem>
+                  <MenuItem value="+91">+91 (IN)</MenuItem>
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={8}>
                   <TextField
                     required
                     fullWidth
@@ -204,53 +209,53 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
                     label="Phone number"
                     name="phone"
                     autoComplete="Your Phone"
-                    onChange={handlePhoneChange}
+                    onChange={(e)=>{
+                      setPhonee(e.target.value)
+                    }}
                   />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  onChange={handlePasswordChange}
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  autoComplete="new-password"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleShowPassword}>
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                     required
-                     fullWidth
-                     name="confirmpass"
-                     type={showPassword2 ? "text" : "password"}
-                     id="confirmpass"
-                     autoComplete="new-password"
-                     InputProps={{
-                       endAdornment: (
-                         <InputAdornment position="end">
-                           <IconButton onClick={handleShowPassword2}>
-                             {showPassword2 ? <VisibilityOff /> : <Visibility />}
-                           </IconButton>
-                         </InputAdornment>
-                       ),
-                     }}
-                    label="Confirm your password"
-                    autoFocus
-                    onChange={confirm}
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={handlePasswordChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleShowPassword}>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
-
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="confirmpass"
+                    label="Confirm Password"
+                    type={showPassword2 ? "text" : "password"}
+                    id="confirmpass"
+                    autoComplete="new-password"
+                    onChange={(e) => setConformpass(e.target.value)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleShowPassword2}>
+                            {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
               </Grid>
               <Button
                 type="submit"
@@ -270,6 +275,7 @@ export default function SignUp({ user, setUser,setIsLoggedIn }) {
             </Box>
           </Box>
         </Container>
-      </ThemeProvider></Box>
+      </ThemeProvider>
+    </Box>
   );
 }
