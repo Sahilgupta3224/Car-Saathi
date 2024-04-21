@@ -4,14 +4,16 @@ import Navbar from '../../components/Navbar/Navbar.jsx';
 import Analytics from '../../components/Analytics/Analytics.jsx';
 import Analytics2 from '../../components/Analytics/Analytics2.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
+import Analytics3 from '../../components/Analytics/Analytics3.jsx';
 function Dashboard ({user,setUser,setIsLoggedIn}){
   return (
     <>
     <Navbar user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>
     <Hero/>
     <Analytics/>
-    <Analytics2/>
-    <Analytics/>
+      <Analytics2 />
+      
+    <Analytics3/>
     <Footer/>
     </>
   )
