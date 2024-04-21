@@ -18,7 +18,7 @@ const TripCard = ({ trip }) => {
         <p>Fare: {trip.fare}</p>
         <p>
           Date of Traveling:{" "}
-          {new Date(trip.Date).toLocaleDateString("en-US", {
+          {new Date(trip.time).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric",

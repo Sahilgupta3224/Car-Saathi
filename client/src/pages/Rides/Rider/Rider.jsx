@@ -7,11 +7,13 @@ function Rider({ user,setCurrentChat,currentChat }) {
   const [bookings, setBookings] = useState([]);
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
+  const [driver,setDriver] = useState({});
 
   useEffect(() => {
     const fetchDriverNames = async () => {
       const names = {};
       const phones = {};
+      const driverid={};
       await Promise.all(
         bookings.map(async (booking) => {
           try {
@@ -20,15 +22,18 @@ function Rider({ user,setCurrentChat,currentChat }) {
             );
             names[booking._id] = res.data.user.name;
             phones[booking._id] = res.data.user.phone;
+            driverid[booking._id] = res.data.user._id;
           } catch (err) {
             console.error(err);
             names[booking._id] = '';
             phones[booking._id] = '';
+            driverid[booking._id]= '';
           }
         })
       );
       setDriverNames(names);
       setDriverPhones(phones);
+      setDriver(driverid);
     };
 
     fetchDriverNames();
@@ -40,10 +45,14 @@ function Rider({ user,setCurrentChat,currentChat }) {
         const response = await axios.get(
           `http://localhost:3001/api/booking/mybookings/${user._id}`
         );
+        console.log(response);
         setBookings(response.data.book);
       } catch (err) {
+        if (err.response && err.response.status === 400) {
+          return;
+        }
         if (err.response) {
-          alert(err.response.data.message);
+          console.log(err);
         } else {
           console.log(err);
         }
@@ -51,7 +60,7 @@ function Rider({ user,setCurrentChat,currentChat }) {
     };
 
     getBookings();
-  }, [user._id]);
+  }, []);
   const pastBooking = bookings.filter((book)=>{
     const bookDate = new Date(book.Date);
     return bookDate <= new Date();
@@ -69,13 +78,13 @@ function Rider({ user,setCurrentChat,currentChat }) {
         <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {upcomingBooking.map((booking) => {
-            return <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
+            return <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
           })}
         </div>
         <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pastBooking.map((booking) => (
-            <BookCard key={booking._id} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
+            <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
           ))}
         </div>
       </div>

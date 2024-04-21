@@ -16,9 +16,6 @@ function Hero() {
         <button onClick={()=>{
           navigate('/search')
         }} className='mt-3 bg-[#4caf50] hover:bg-[#8bc34a] w-[200px] font-medium text-black border-1 rounded-md mx-auto my-10 py-3'>Find a Ride</button>
-                <button onClick={()=>{
-          navigate('/myrides')
-        }} className='mt-3 bg-[#4caf50] hover:bg-[#8bc34a] w-[200px] font-medium text-black border-1 rounded-md mx-auto my-10 py-3'>My Rides</button>
       </div>
     </div>
   );

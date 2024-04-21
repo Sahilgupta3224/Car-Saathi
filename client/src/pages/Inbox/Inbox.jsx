@@ -49,7 +49,7 @@ const Inbox = ({ user, setUser }) => {
         {notifications.length > 0 ? (
           notifications.map((notification, index) => (
             <div key={index} className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-md mb-2">
-              <span className="font-bold">New booking:</span> {notification.content} to {notification.destination} on {notification.date}
+              <span className="font-bold">New booking:</span> {notification.content}
             </div>
           ))
         ) : (

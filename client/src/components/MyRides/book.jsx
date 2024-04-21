@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+const BookCard = ({ booking ,driverid,name,phone,setCurrentChat,currentChat}) => {
   const today = new Date();
   const bookDate = new Date(booking.Date);
   const textColorClass = bookDate < today ? 'text-red-900' : 'text-green-900';
   const navigate = useNavigate()
-  // console.log(booking)
+  console.log(driverid);
 
   const handleMessageClick = ()=>{
       const getConversation = async()=>{
@@ -37,6 +39,10 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
       getConversation()
   }
 
+  const userprofile=()=>{
+    navigate(`/profile/${driverid}`)
+  }
+
     return (
   <div
   className={` border border-gray-300 rounded-md p-4 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass} ${
@@ -53,7 +59,10 @@ const BookCard = ({ booking ,name,phone,setCurrentChat,currentChat}) => {
     <div className="flex justify-between items-center mb-4">
       <div>
         <p>Seats: {booking.NoofBookedSeats}</p>
-        <p>Driver's phone: {phone}</p>
+        <button onClick={() => userprofile()}>
+  <FontAwesomeIcon icon={faUser} className="mr-2" />
+   Driver's Profile
+</button>
       </div>
       <div>
         <p>Driver's Name: {name}</p>

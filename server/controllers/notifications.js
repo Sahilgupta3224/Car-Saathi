@@ -17,7 +17,9 @@ export const bookingnotification =async(req,res)=>{
       });
       console.log("mannu",todayBookings)
         for (const booking of todayBookings) {
-            const content = `${booking.source} to ${booking.destination} on ${booking.Date}`;
+          const datee = new Date(booking.Date);
+          const bookdate = datee.toISOString().slice(0, 10);
+            const content = `${booking.source} to ${booking.destination} on ${bookdate}`;
             const existingNotification = await NotificationSchema.findOne({ userId, type, content });
             if (!existingNotification) {
               console.log("roo");

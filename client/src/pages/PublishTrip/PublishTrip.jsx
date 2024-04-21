@@ -92,10 +92,12 @@ function PublishTrip({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (availableSeats > maxSeats || availableSeats < 0) {
-      alert("Maximum seats should be greater than or equal to available seats.");
-      return;
-    }
+    // if (availableSeats > maxSeats || availableSeats < 0) {
+    //   console.log(availableSeats);
+    //   console.log(maxSeats);
+    //   alert("Maximum seats should be greater than or equal to available seats.");
+    //   return;
+    // }
     if(maxSeats <1){
       alert('Maximum Seats should be greater than 0.')
       return;
@@ -110,7 +112,6 @@ function PublishTrip({ user, setUser }) {
     }
     setSource(sourceRef.current.value);
     setDestination(destinationRef.current.value);
-    // console.log(source, "hihi", destination);
     const data = {
       source,
       destination,
@@ -121,10 +122,10 @@ function PublishTrip({ user, setUser }) {
       fare,
       driver: user
     };
-    // console.log(data)
+
     try{
       await axios.post('http://localhost:3001/api/trip/createtrip', data);
-      console.log('response is send')
+      console.log(data)
       navigate('/')
     }catch(err){
       if (err.response && err.response.status === 400) {

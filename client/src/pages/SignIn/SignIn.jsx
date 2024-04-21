@@ -18,7 +18,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {auth,provider} from "../firebase.js"
+import {signInWithPopup} from "firebase/auth"
+import GoogleButton from 'react-google-button'
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
@@ -101,6 +103,25 @@ export default function SignInSide({ user, setUser }) {
       setIsLoading(false);
     }
   };
+
+  const googlesekar = (req,res)=>{
+    signInWithPopup(auth,provider).then((result)=>{
+      console.log(result);
+      console.log(result.user.photoURL);
+      axios
+            .post("http://localhost:3001/api/auth/google", {
+              username: result.user.displayName,
+              email: result.user.email,
+              image: result.user.photoURL,
+            })
+            .then((res) => {
+              console.log(res.data)
+              // setUser(res.data)
+            localStorage.setItem(`user${user._id}`, JSON.stringify(res.data))
+              // navigate("/dashboard")
+            });
+    }).catch((err)=>{console.log(err)})``
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -207,6 +228,7 @@ export default function SignInSide({ user, setUser }) {
                   </Link>
                 </Grid>
               </Grid>
+      <GoogleButton  onClick={googlesekar}/>
             </Box>
           </Box>
         </Grid>

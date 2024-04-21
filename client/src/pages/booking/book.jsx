@@ -47,7 +47,7 @@ function BookingPage({ user, setUser }) {
       navigate('/mybooking')
     } catch (err) {
       if (err.response && err.response.status === 400) {
-      alert(err.response.data.message);
+      console.log(err)
     } else {
       console.log(err);
     }

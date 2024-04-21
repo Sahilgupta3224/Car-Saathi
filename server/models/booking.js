@@ -39,6 +39,18 @@ const bookingSchema = new mongoose.Schema({
     },
     rt:{
         type: Number,
+    },
+    Payment_id:{
+        type:String,
+    },
+    Payment_order_id:{
+        type:String,
+    },
+    Payment_signature:{
+        type:String,
+    },
+    Remark:{
+        type:String,
     }
 },{timestamps: true});
 
