@@ -9,7 +9,7 @@ import "./SearchTrip.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function SearchTrip({ user }) {
+function SearchTrip({ user,setIsLoggedIn }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
@@ -113,7 +113,7 @@ function SearchTrip({ user }) {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
       <div className="container flex flex-col">
         <div className="Top flex">
           <div className="left-section p-4">

@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-export const ContactUs = ({ user }) => {
+export const ContactUs = ({ user,setIsLoggedIn }) => {
   const form = useRef();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
@@ -41,7 +41,7 @@ export const ContactUs = ({ user }) => {
 
   return (
     <div className="min-h-screen bg-light bg-yellow-100">
-      <Navbar user={user} />
+      <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       <ToastContainer />
       <div className=" mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

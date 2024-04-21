@@ -59,8 +59,8 @@ export const booktrip = async (req, res) => {
 export const mybookings=async(req,res)=>{
     const userId=req.params.id;
     try{
-        
         const {bookings} = await User.findById(userId)
+        // console.log("bookings",bookings)
         bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
         const book =[];
         for(const id of bookings){
@@ -81,7 +81,7 @@ export const mybookings=async(req,res)=>{
 }
 
 export const cancelbooking = async(req,res)=>{
-    const {source,destination,time} = req.body;
+    // const {source,destination,Date} = req.body;
     try{
         const booking = await bookingSchema.findByIdAndDelete(req.params.id);
         const Driver = booking.Driver;
@@ -125,7 +125,7 @@ export const cancelbooking = async(req,res)=>{
                 {new: true}
             );
         }
-        res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver });
+        res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver});
         //payment lautana h
     }
     catch{

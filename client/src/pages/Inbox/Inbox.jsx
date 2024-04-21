@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import axios from "axios";
 
-const Inbox = ({ user, setUser }) => {
+const Inbox = ({ user, setUser,setIsLoggedIn }) => {
   const [notifications, setNotifications] = useState([]);
   const [inboxuser, setInboxUser] = useState({});
   const [bookings, setBookings] = useState([]);
@@ -43,7 +43,7 @@ const Inbox = ({ user, setUser }) => {
 
   return (
     <div className='dark:bg-[#181818] min-h-screen'>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 text-[#8656cd] dark:text-[#f0f0f0]'>Inbox</div>
       <div className="mt-8 mx-4">
         {notifications.length > 0 ? (

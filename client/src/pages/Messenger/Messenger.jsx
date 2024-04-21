@@ -21,7 +21,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import { MessageItem } from '../../components/Conversation/MessageItem';
 import {io} from "socket.io-client"
 
-export const Messenger = ({user,currentChat,setCurrentChat}) => {
+export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
     const [conversations,setConversations] = useState([])
     const [messages,setMessages] = useState([])
     const [newMessage,setNewMessage] = useState("")
@@ -164,7 +164,7 @@ export const Messenger = ({user,currentChat,setCurrentChat}) => {
       }
   return (
     <div>
-        <Navbar user={user} />
+        <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
         {!isLoading ? (<div style={{ position: "relative", height: "90vh" }}>
          <MainContainer>
           <ConversationList>
