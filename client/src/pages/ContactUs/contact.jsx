@@ -40,7 +40,7 @@ export const ContactUs = ({ user,setIsLoggedIn }) => {
   };
 
   return (
-    <div className="min-h-screen bg-light bg-yellow-100">
+    <div className="min-h-screen bg-light bg-green-500">
       <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       <ToastContainer />
       <div className=" mx-auto py-12 px-4 sm:px-6 lg:px-8">

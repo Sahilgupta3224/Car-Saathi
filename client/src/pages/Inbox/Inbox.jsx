@@ -42,18 +42,27 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
   console.log(notifications)
 
   return (
-    <div className='dark:bg-[#181818] min-h-screen'>
+    <div className="dark:bg-[#276453] min-h-screen">
       <Navbar user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 text-[#8656cd] dark:text-[#f0f0f0]'>Inbox</div>
+      <div className="font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 text-[#44c767] dark:text-[#d4d4d4]">
+        Inbox
+      </div>
       <div className="mt-8 mx-4">
         {notifications.length > 0 ? (
           notifications.map((notification, index) => (
-            <div key={index} className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-md mb-2">
-              <span className="font-bold">New booking:</span> {notification.content} to {notification.destination} on {notification.date}
+            <div
+              key={index}
+              className="bg-[#2e7253] border border-[#2e7253] text-[#f0f0f0] dark:text-[#121212] px-4 py-2 rounded-md mb-2 shadow-lg"
+            >
+              <span className="font-bold">New booking:</span>{" "}
+              {notification.content} to {notification.destination} on{" "}
+              {notification.date}
             </div>
           ))
         ) : (
-          <div className="bg-gray-100 border border-gray-400 text-gray-700 px-4 py-2 rounded-md">No new bookings today</div>
+          <div className="bg-[#2e7253] border border-[#2e7253] text-[#f0f0f0] dark:text-[#121212] px-4 py-2 rounded-md shadow-lg">
+            No new bookings today
+          </div>
         )}
       </div>
     </div>
