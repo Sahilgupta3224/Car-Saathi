@@ -49,7 +49,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
   const handleForget = async (e)=>{
     e.preventDefault();
     if(!email){
-      return alert('Fill email')
+      return toast.warning('Fill email')
     }
 
     try {

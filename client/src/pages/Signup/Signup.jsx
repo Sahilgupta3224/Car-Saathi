@@ -5,6 +5,9 @@ import axios from 'axios';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // import 'react-phone-number-input/style.css';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +17,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [phonee, setPhonee] = useState('');
+  const [phonee, setPhonee] = useState();
   const [confirmpass, setConformpass] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -22,7 +25,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [countryCode, setCountryCode] = useState('');
   const navigate = useNavigate()
-  const [isValidPhone, setIsValidPhone] = useState(false)
+  const [isValidPhone, setIsValidPhone] = useState(true)
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -34,7 +37,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
     setIsValidPassword(newPassword.length >= 8);
   };
 
-  React.useEffect(()=>{
+  useEffect(()=>{
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsValid(emailRegex.test(email));
   }, [email])
@@ -75,31 +78,26 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
     setUsername(newUsername);
   };
 
-  useEffect(()=>{
-    if(phonee.length == 10){
-      setIsValidPhone(true)
-    }
-  })
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isValid) {
-      return alert("Invalid Email");
+      return toast.error("Invalid Email");
     }
     if (!isValidPassword) {
-      return alert("Make a strong password");
+      return toast.warning("Make a strong password");
     }
     if (confirmpass !== password) {
-      return alert("Password and confirmed password didn't match");
+      return toast.info("Password and confirmed password didn't match");
     }
     if(!isValidPhone){
-      return alert('Enter Valid Contact Number')
+      return toast.error('Invalid Contact Number')
     }
-    console.log(phonee)
     let phone = countryCode+phonee
     const Entry = { name, username, password, email, phone };
-    console.log(Entry);
     try {
-      const res = await axios.post("http://localhost:3001/api/auth/signup", Entry);
+      await axios.post("http://localhost:3001/api/auth/signup", Entry);
       navigate('/signin')
       
       setEmail("");
@@ -108,7 +106,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
       setConformpass("");
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
         console.log(err);
       }
@@ -274,6 +272,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
               </Grid>
             </Box>
           </Box>
+          <ToastContainer />
         </Container>
       </ThemeProvider>
     </Box>

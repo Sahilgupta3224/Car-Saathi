@@ -14,7 +14,6 @@ const Map = ({ directionsResponses }) => {
   const [error, setError] = useState(null);
   const [source, setSource] = useState();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState();
-  // console.log(directionsResponses);
 
   const handleRouteClick = (index) => {
     setSelectedRouteIndex(index);
@@ -69,7 +68,6 @@ const Map = ({ directionsResponses }) => {
                   onClick={() => handleRouteClick(index)}
                 />
               ))}
-            {console.log('here')}
             {(!directionsResponses ||
               directionsResponses.routes.length === 0) && (
               <p>Please enter valid route locations.</p>
