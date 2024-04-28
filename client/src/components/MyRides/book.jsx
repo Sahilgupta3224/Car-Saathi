@@ -22,7 +22,7 @@ const style = {
   p: 4,
 };
 
-const BookCard = ({ booking ,driverid,name,phone,setCurrentChat,currentChat}) => {
+const BookCard = ({ booking ,onDelete,driverid,name,phone,setCurrentChat,currentChat}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -67,8 +67,7 @@ const BookCard = ({ booking ,driverid,name,phone,setCurrentChat,currentChat}) =>
 
   const handleDelete = async()=>{
     try{
-      const res = axios.delete(`http://localhost:3001/api/booking/cancelbooking/${booking._id}`)
-      console.log(res.data);
+      await onDelete(booking._id);
       toast.success("Booking removed successfully!")
       handleClose()
     }catch(err){
@@ -105,7 +104,7 @@ const BookCard = ({ booking ,driverid,name,phone,setCurrentChat,currentChat}) =>
     {/* {textColorClass === "text-green-900" ? ( */}
         <div className="flex justify-end">
           <button className="bg-red-500 text-white rounded-md px-4 py-2 mr-2 hover:bg-red-600" onClick={handleOpen}>
-            Delete Trip
+            Delete Booking
           </button>
           <button className="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600" onClick={handleMessageClick}>
             Message Driver

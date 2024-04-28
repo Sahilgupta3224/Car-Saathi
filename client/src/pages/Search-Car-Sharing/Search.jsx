@@ -13,7 +13,6 @@ function SearchTrip({ user,setIsLoggedIn }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
-  const [seats, setSeats] = useState(1);
   const [resdata, setResdata] = useState([]);
   const [routeLoading, setRouteLoading] = useState();
   const [directionResponses, setDirectionsResponses] = useState();
@@ -83,15 +82,11 @@ function SearchTrip({ user,setIsLoggedIn }) {
     setSource(sourceRef.current.value)
     setDestination(destinationRef.current.value)
     calculateRoute()
-    if (seats < 1) {
-      alert("Number of seats should be greater than 0.");
-      return;
-    }
-
     const data = {
       source,
       destination,
-      date: date,
+      time: date,
+      user: user
     };
     console.log(data);
     try {
@@ -149,15 +144,6 @@ function SearchTrip({ user,setIsLoggedIn }) {
                   type="date"
                   value={date.toISOString().slice(0, 10)}
                   onChange={(e) => setDate(new Date(e.target.value))}
-                  className="input"
-                />
-              </label>
-              <label className="label">
-                Number of seats:
-                <input
-                  type="number"
-                  value={seats}
-                  onChange={(e) => setSeats(parseInt(e.target.value))}
                   className="input"
                 />
               </label>

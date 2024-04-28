@@ -71,6 +71,16 @@ function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
     return bookDate > new Date();
   })
 
+  const handleDeleteBooking = async (bookingId) => {
+    try {
+        await axios.delete(`http://localhost:3001/api/booking/cancelbooking/${bookingId}`);
+        // Update bookings state after successful deletion
+        setBookings(bookings.filter(booking => booking._id !== bookingId));
+    } catch (error) {
+        console.error('Error deleting booking:', error);
+    }
+};
+
   return (
     <>
     <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
@@ -79,13 +89,13 @@ function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
         <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {upcomingBooking.map((booking) => {
-            return <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
+            return <BookCard key={booking._id} onDelete={handleDeleteBooking} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
           })}
         </div>
         <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pastBooking.map((booking) => (
-            <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
+            <BookCard key={booking._id} onDelete={handleDeleteBooking} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
           ))}
         </div>
       </div>

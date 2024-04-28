@@ -92,12 +92,12 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (availableSeats > maxSeats || availableSeats < 0) {
-    //   console.log(availableSeats);
-    //   console.log(maxSeats);
-    //   alert("Maximum seats should be greater than or equal to available seats.");
-    //   return;
-    // }
+    if (availableSeats < 0) {
+      console.log(availableSeats);
+      console.log(maxSeats);
+      alert("Maximum seats should be greater than or equal to available seats.");
+      return;
+    }
     if(maxSeats <1){
       alert('Maximum Seats should be greater than 0.')
       return;

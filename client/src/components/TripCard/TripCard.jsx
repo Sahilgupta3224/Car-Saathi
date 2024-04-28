@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 
 const TripCard = ({trip, user}) => {
-  const { driver, CarModel, availableSeats, fare } = trip
+  const { driver, CarModel, availableSeats, fare ,time} = trip
+  const dateObj = new Date(time);
+  const date = dateObj.toISOString().slice(0, 10)
   const [driverName, setDrivername] = useState('')
   const [driverMobileNumber, setDriverMobileNumber] = useState('')
   const navigate = useNavigate()
@@ -12,7 +14,6 @@ const TripCard = ({trip, user}) => {
     console.log(trip)
     navigate('/booking',{state: {trip}})
   }
-  // console.log(driver)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,6 +49,7 @@ const TripCard = ({trip, user}) => {
             <p className="text-blue-600 uppercase">{availableSeats}</p>
             <p className="text-blue-600 uppercase">{driverMobileNumber}</p>
             <p className="text-blue-600 uppercase">{fare}</p>
+            <p className="text-blue-600 uppercase">{date}</p>
           </div>
         </div>
       </div>

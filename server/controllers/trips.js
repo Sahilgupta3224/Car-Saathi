@@ -36,11 +36,18 @@ export const mytrips=async(req,res)=>{
 }
 
 export const findtrip = async(req,res)=>{
-    const {source,destination,date} = req.body;
+    const {source,destination,time,user} = req.body;
+    const userId = user._id;
     console.log(req.body)
     try{
-        const trip = await tripSchema.find({source:source,destination:destination});
-        res.status(200).json({trip});
+        // if(user){
+        //     const trip = await tripSchema.find({source:source,destination:destination,time :{$gte:time},driver:{$ne:{userId}}});
+        //     res.status(200).json({trip});
+        // }
+        // else{
+            const trip = await tripSchema.find({source:source,destination:destination,time :{$gte:time}});
+            res.status(200).json({trip});
+        // }
     }
     catch{
         res.json({message:"No such trips found"})

@@ -47,7 +47,6 @@ const tripSchema = new mongoose.Schema({
     },
     time:{
         type: Date,
-        // required: true,
     },
     route:{
         type: Array

@@ -25,6 +25,9 @@ function App() {
   // Update localStorage when user state changes
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
+    if(user){
+      setIsLoggedIn(true);
+    }
   }, [user]);
   return (
     <>
