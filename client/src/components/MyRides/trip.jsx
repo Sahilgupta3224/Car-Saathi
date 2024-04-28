@@ -2,7 +2,7 @@ import React from "react";
 
 const TripCard = ({ trip }) => {
   const today = new Date();
-  const tripDate = new Date(trip.Date);
+  const tripDate = new Date(trip.time);
   const textColorClass = tripDate < today ? "text-red-900" : "text-green-900";
   return (
     <div

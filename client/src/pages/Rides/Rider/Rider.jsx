@@ -8,6 +8,7 @@ function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
   const [driver,setDriver] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDriverNames = async () => {
@@ -48,6 +49,7 @@ function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
         console.log(response);
         console.log(response.data)
         setBookings(response.data.book);
+        setIsLoading(false)
       } catch (err) {
         if (err.response && err.response.status === 400) {
           return;
@@ -81,26 +83,32 @@ function Rider({ user,setCurrentChat,currentChat,setIsLoggedIn }) {
     }
 };
 
-  return (
-    <>
-    <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
-      <div className="mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-6">Your Bookings</h1>
-        <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {upcomingBooking.map((booking) => {
-            return <BookCard key={booking._id} onDelete={handleDeleteBooking} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
-          })}
-        </div>
-        <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pastBooking.map((booking) => (
-            <BookCard key={booking._id} onDelete={handleDeleteBooking} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
-          ))}
-        </div>
+    return (
+      <div>
+        { isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
+            <div className="mx-auto px-4 py-8">
+              <h1 className="text-3xl font-semibold mb-6">Your Bookings</h1>
+              <h2 className="text-2xl font-semibold mb-4">Upcoming Bookings</h2>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                {upcomingBooking.map((booking) => {
+                  return <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>;
+                })}
+              </div>
+              <h2 className="text-2xl font-semibold mb-4 mt-8">Past Bookings</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {pastBooking.map((booking) => (
+                  <BookCard key={booking._id} driverid={driver[booking._id]} booking={booking} name={driverNames[booking._id] || ''} phone={driverPhones[booking._id] || ''} setCurrentChat={setCurrentChat} currentChat={currentChat}/>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
-    </>
-  );
+    );
 }
 
 export default Rider;
