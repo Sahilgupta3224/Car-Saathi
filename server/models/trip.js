@@ -47,10 +47,15 @@ const tripSchema = new mongoose.Schema({
     },
     time:{
         type: Date,
-        // required: true,
     },
-    route:{
-        type: Array
+    totalTime:{
+        type: String,
+    },
+    totalDistance:{
+        type: String,
+    },
+    routes:{
+        type: String
     },
     fare:{
         type:Number,

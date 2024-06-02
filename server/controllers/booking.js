@@ -13,7 +13,14 @@ export const booktrip = async (req, res) => {
             return res.status(400).json("not enough seats,Sorry!")
         }
       await booking.save();
-      const content = `New booking made by ${Bookingperson} with {trip.Driver} with ${NoofBookedSeats} seats`;
+      const findtrip = await Trip.findById(trip);
+      console.log(findtrip)
+      const tripdriver = await User.findById(findtrip.driver);
+      console.log(tripdriver)
+      const content = `New booking made by ${Bookingperson.name} with ${tripdriver.username} with ${NoofBookedSeats} seats`;
+      console.log(content);
+      console.log(trip);
+      console.log("yo",Bookingperson)
         const notification = new Notification({
             userId: Bookingperson,
             type: "booking-confirmed",
@@ -48,20 +55,22 @@ export const booktrip = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
-
+  
 export const mybookings=async(req,res)=>{
     const userId=req.params.id;
     try{
         const {bookings} = await User.findById(userId)
-        // console.log("bookings",bookings)
         bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
         const book =[];
         for(const id of bookings){
             const bookingdata = await bookingSchema.findById(id)
-            if(bookingdata)book.push(bookingdata)
+            if(!bookingdata){
+                // res.status(400).json("nhi ho rha bhai");
+            }
+            else{
+                book.push(bookingdata);
+            }
         }
-        // console.log("book",book)
-
         res.status(200).json({book});
     }
     catch(err){

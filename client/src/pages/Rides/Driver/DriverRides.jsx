@@ -68,10 +68,15 @@ function DriverRides({ user, setIsLoggedIn }) {
     getTrips();
   }, [user._id]);
 
-  const upcomingTrips = trips.filter(
-    (trip) => new Date(trip.time) > new Date()
-  );
-  const pastTrips = trips.filter((trip) => new Date(trip.time) <= new Date());
+  const upcomingTrips = trips.filter((trip) => {
+    const tripDate = new Date(trip.time);
+    return tripDate > new Date();
+  });
+
+  const pastTrips = trips.filter((trip) => {
+    const tripDate = new Date(trip.time);
+    return tripDate <= new Date();
+  });
 
   return (
     <>

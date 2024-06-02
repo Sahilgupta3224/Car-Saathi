@@ -32,14 +32,14 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
   const [bookings, setBookings] = useState([]);
   const [driverNames, setDriverNames] = useState({});
   const [driverPhones, setDriverPhones] = useState({});
-  const [driver, setDriver] = useState({});
+  const [driver,setDriver] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDriverNames = async () => {
       const names = {};
       const phones = {};
-      const driverid = {};
+      const driverid={};
       await Promise.all(
         bookings.map(async (booking) => {
           try {
@@ -51,9 +51,9 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
             driverid[booking._id] = res.data.user._id;
           } catch (err) {
             console.error(err);
-            names[booking._id] = "";
-            phones[booking._id] = "";
-            driverid[booking._id] = "";
+            names[booking._id] = '';
+            phones[booking._id] = '';
+            driverid[booking._id]= '';
           }
         })
       );
@@ -71,8 +71,10 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
         const response = await axios.get(
           `http://localhost:3001/api/booking/mybookings/${user._id}`
         );
+        console.log(response);
+        console.log(response.data)
         setBookings(response.data.book);
-        setIsLoading(false);
+        setIsLoading(false)
       } catch (err) {
         if (err.response && err.response.status === 400) {
           return;
@@ -87,8 +89,7 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
 
     getBookings();
   }, []);
-
-  const pastBooking = bookings.filter((book) => {
+  const pastBooking = bookings.filter((book)=>{
     const bookDate = new Date(book.Date);
     return bookDate <= new Date();
   });
@@ -96,19 +97,17 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
   const upcomingBooking = bookings.filter((book) => {
     const bookDate = new Date(book.Date);
     return bookDate > new Date();
-  });
+  })
 
   const handleDeleteBooking = async (bookingId) => {
     try {
-      await axios.delete(
-        `http://localhost:3001/api/booking/cancelbooking/${bookingId}`
-      );
-      // Update bookings state after successful deletion
-      setBookings(bookings.filter((booking) => booking._id !== bookingId));
+        await axios.delete(`http://localhost:3001/api/booking/cancelbooking/${bookingId}`);
+        // Update bookings state after successful deletion
+        setBookings(bookings.filter(booking => booking._id !== bookingId));
     } catch (error) {
-      console.error("Error deleting booking:", error);
+        console.error('Error deleting booking:', error);
     }
-  };
+};
 
   return (
     <div

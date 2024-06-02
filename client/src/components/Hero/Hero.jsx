@@ -27,7 +27,7 @@ function Hero() {
             Find a Ride
           </button>
         </div>
-        <div className="flex-shrink-0 w-full md:w-1/2">
+        <div className="flex-shrink-0 w-full md:w-1/2 ">
           <img
             src="https://img.freepik.com/free-vector/sedan-car-concept-illustration_114360-13223.jpg?w=1800&t=st=1713288231~exp=1713288831~hmac=71eeb61d9e5dfed94ff5007730c1c3cc71534da07e3e8140310e60a5ef4c51e0"
             alt="car illustration"

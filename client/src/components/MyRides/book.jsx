@@ -45,14 +45,16 @@ const BookCard = ({
 
   const [per, setRefundPercentage] = useState(1);
   const [refund, setRefund] = useState(booking.fare * per);
-
+  
   useEffect(() => {
     const today = new Date();
     const bookingDate = new Date(booking.Date);
 
+    // Calculate the difference in days between today and the booking date
     const differenceInTime = bookingDate.getTime() - today.getTime();
     const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
-
+    
+    // Set the refund percentage based on the difference in days
     if (differenceInDays >= 2) {
       setRefundPercentage(0.95);
     } else if (differenceInDays === 1) {
@@ -61,13 +63,13 @@ const BookCard = ({
       setRefundPercentage(0);
     }
     setRefund(booking.fare * per);
-  }, [booking.Date, booking.fare, per]);
+  }, [booking.Date, per]);
 
   const today = new Date();
   const bookDate = new Date(booking.Date);
-  const textColorClass = bookDate < today ? "text-red-700" : "text-green-700";
+  const textColorClass = bookDate < today ? 'text-red-900' : 'text-green-900';
   const navigate = useNavigate();
-
+  
   const handleMessageClick = () => {
     const getConversation = async () => {
       try {
@@ -77,6 +79,7 @@ const BookCard = ({
         );
         let conversations = res.data;
 
+        // Find if conversation with the driver already exists
         let chatExists = conversations?.find((conversation) =>
           conversation.members.includes(booking.Driver)
         );
@@ -89,10 +92,7 @@ const BookCard = ({
         } else {
           const res = await axios.post(
             "http://localhost:3001/api/conversation/",
-            {
-              senderId: booking.Bookingperson,
-              receiverId: booking.Driver,
-            }
+            { senderId: booking.Bookingperson, receiverId: booking.Driver }
           );
           setCurrentChat(res.data);
           navigate("/messenger");
@@ -122,8 +122,8 @@ const BookCard = ({
     <div
       className={`border border-gray-300 rounded-lg p-6 mb-6 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass}`}
       style={{
-        backgroundColor: "#5f90c2", // Light purple background
-        color: "#ffffff", // White text
+        backgroundColor: "#5f90c2",
+        color: "#ffffff",
         padding: "20px",
         borderRadius: "10px",
         marginBottom: "20px",
@@ -134,17 +134,17 @@ const BookCard = ({
           <Typography
             variant="h5"
             className="font-semibold text-blue-900"
-            style={{ marginBottom: "16px" }} // Added margin-bottom for spacing
+            style={{ marginBottom: "16px" }}
           >
-            Journey : {booking.source} to {booking.destination}
+            Journey: {booking.source} to {booking.destination}
           </Typography>
 
           <Typography
             variant="h6"
             className="text-gray-800"
-            style={{ marginBottom: "16px" }} // Added margin-bottom for spacing
+            style={{ marginBottom: "16px" }}
           >
-            Date of Travel :{" "}
+            Date of Travel:{" "}
             {new Date(booking.Date).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",
@@ -155,9 +155,9 @@ const BookCard = ({
           <Typography
             variant="h6"
             className="text-red-400"
-            style={{ marginBottom: "1px" }} // Added margin-bottom for spacing
+            style={{ marginBottom: "1px" }}
           >
-            Fare Charges : ${booking.fare}
+            Fare Charges: ${booking.fare}
           </Typography>
           
         </div>
@@ -165,14 +165,14 @@ const BookCard = ({
       <div className="flex justify-between items-center mb-3">
         <div style={{ textAlign: "left", width: "50%" }}>
           <Typography variant="h6" className="text-green-900">
-            Driver Name : {name}
+            Driver Name: {name}
           </Typography>
         </div>
       </div>
       <div className="flex justify-between items-center mb-3">
         <div style={{ textAlign: "left", width: "80%" }}>
           <Typography variant="h6" className="text-blue-700">
-            Seats Booked : {booking.NoofBookedSeats}
+            Seats Booked: {booking.NoofBookedSeats}
           </Typography>
         </div>
       </div>
@@ -181,7 +181,7 @@ const BookCard = ({
           variant="outlined"
           color="primary"
           onClick={userProfile}
-          style={{ flex: 1 }} 
+          style={{ flex: 1 }}
         >
           <FontAwesomeIcon icon={faUser} className="mr-2" />
           View Profile
@@ -190,7 +190,7 @@ const BookCard = ({
           variant="contained"
           color="secondary"
           onClick={handleOpen}
-          style={{ flex: 1 }} // Added flex property
+          style={{ flex: 1 }}
         >
           Cancel Booking
         </Button>
@@ -198,7 +198,7 @@ const BookCard = ({
           variant="contained"
           color="primary"
           onClick={handleMessageClick}
-          style={{ flex: 1 }} // Added flex property
+          style={{ flex: 1 }}
         >
           Message Driver
         </Button>
@@ -216,13 +216,13 @@ const BookCard = ({
             component="h2"
             style={{ textAlign: "center", color: "red" }}
           >
-            Confirm Cancellation ?
+            Confirm Cancellation?
           </Typography>
           <Typography
             id="modal-modal-description"
             sx={{ mt: 2, textAlign: "center" }}
           >
-            Are you sure you want to cancel/delete this booking ?
+            Are you sure you want to cancel/delete this booking?
           </Typography>
           <div className="flex justify-center mt-4" style={{ gap: "16px" }}>
             <Button
