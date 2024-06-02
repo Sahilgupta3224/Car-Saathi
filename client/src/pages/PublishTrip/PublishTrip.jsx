@@ -1,15 +1,35 @@
 import React, { useEffect, useReducer, useRef } from "react";
 import { useState } from "react";
 import GMap from "../../components/GMap/GMap";
-import { Autocomplete, GoogleMap, LoadScript, DirectionsRenderer, DirectionsService, useLoadScript} from '@react-google-maps/api';
+import {
+  Autocomplete,
+  useLoadScript,
+} from "@react-google-maps/api";
 import { GMapAPI } from "../../keys";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: 1,
+  boxShadow: 24,
 
-function PublishTrip({ user, setUser,setIsLoggedIn }) {
+  p: 4,
+};
+
+
+
+function PublishTrip({ user, setUser, setIsLoggedIn }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyClnzcci8V997acQhlpEiYhaLlz_ogR_Vc",
     libraries: ["places"],
@@ -18,6 +38,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [availableSeats, setAvailableSeats] = useState();
+  const [selectedRouteIndex, setSelectedRouteIndex] = useState('');
   const [carModel, setCarModel] = useState("");
   const [maxSeats, setMaxSeats] = useState();
   const [date, setDate] = useState(new Date());
@@ -27,15 +48,73 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
   const destinationRef = useRef();
   const [routeLoading, setRouteLoading] = useState();
   const [directionResponses, setDirectionsResponses] = useState();
-  
+
+
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  //!open modal when publish click button pressed
+  const handlePublishClick = () => {
+    setIsOpen(true)
+  }
+
+  //!When the user finally click on yes
+  const handleYes = async () => {
+    try {
+      const source1 = directionResponses.routes[selectedRouteIndex].legs[0].start_address
+      const destination1 = directionResponses.routes[selectedRouteIndex].legs[0].end_address
+      const totalTime =
+        directionResponses.routes[selectedRouteIndex].legs[0].duration.text;
+      const totalDistance =
+        directionResponses.routes[selectedRouteIndex].legs[0].distance.text;
+      const route = directionResponses.routes[0].summary;
+      const data = {
+        source: source1,
+        destination: destination1,
+        availableSeats,
+        CarModel: carModel,
+        Max_Seats: maxSeats,
+        time: date,
+        fare,
+        driver: user,
+        routes: route,
+        totalTime,
+        totalDistance,
+      }
+      console.log(data)
+      const res = await axios.post('http://localhost:3001/api/trip/createtrip', data);
+      console.log(res);
+      toast.success('Trip Published Successfully');
+      navigate('/')
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data.message);
+      } else {
+        console.log(err);
+      }
+    }
+  }
+
+  //!when user click cancel
+  const handleCancel = () => {
+    setIsOpen(false)
+  }
+
+
+  useEffect(() => {
+    console.log(selectedRouteIndex);
+  }, [selectedRouteIndex]);
+  if (!isLoaded) return <div>Loading...</div>;
+
+
   if (!isLoaded) return <div>Loading... Hi Hi</div>;
-
-
 
   const onSourceChange = (place) => {
     setSource(sourceRef.current.value);
-    };
-
+  };
+  const handleRouteClick = (index) => {
+    setSelectedRouteIndex(index);
+  };
   async function calculateRoute() {
     if (source === "" || destination === "") {
       toast.error("Please enter Origin and Destination", {
@@ -50,7 +129,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
     }
 
     setRouteLoading(true);
-    const directionsService = new window.google.maps.DirectionsService()
+    const directionsService = new window.google.maps.DirectionsService();
 
     try {
       const results = await directionsService.route({
@@ -65,7 +144,7 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
         throw new Error("Error: " + results.status);
       }
 
-      // console.log(results);
+      console.log(results.routes);
       setDirectionsResponses(results);
     } catch (error) {
       console.error("Error calculating route:", error);
@@ -85,60 +164,39 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
       setRouteLoading(false);
     }
   }
-
   const handleDestinationChange = () => {
     setDestination(destinationRef.current.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (availableSeats > maxSeats || availableSeats < 0) {
-      alert("Maximum seats should be greater than or equal to available seats.");
+    if (maxSeats < 1) {
+      toast.info("Maximum Seats should be greater than 0.");
       return;
     }
-    if(maxSeats <1){
-      alert('Maximum Seats should be greater than 0.')
-      return;
-    }
-    if (new Date(date) <= new Date()) {
-      alert("Date should be selected from today onwards.");
+    if (new Date(date) < new Date()) {
+      toast.warning("Date should be selected from today onwards.");
       return;
     }
     if (fare <= 0) {
-      alert("Fare should be greater than 0.");
+      toast.warning("Fare should be greater than 0.");
       return;
     }
-    setSource(sourceRef.current.value);
-    setDestination(destinationRef.current.value);
-    // console.log(source, "hihi", destination);
-    const data = {
-      source,
-      destination,
-      availableSeats,
-      CarModel: carModel,
-      Max_Seats: maxSeats,
-      time: date,
-      fare,
-      driver: user
-    };
-    // console.log(data)
-    try{
-      await axios.post('http://localhost:3001/api/trip/createtrip', data);
-      console.log('response is send')
-      navigate('/')
-    }catch(err){
-      if (err.response && err.response.status === 400) {
-        alert(err.response.data.message);
-      } else {
-        console.log(err);
-      }
+    if (!directionResponses) {
+      toast.error('Click on Show Route')
+      return;
     }
+    if (selectedRouteIndex === '') {
+      toast.error('Select any route')
+      return;
+    }
+    handlePublishClick();
   };
 
   return (
     <>
       <div className="z-10">
-        <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
+        <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       </div>
       <div className="container mx-auto px-4 py-8 flex">
         <div className="w-1/2 pr-4">
@@ -279,8 +337,72 @@ function PublishTrip({ user, setUser,setIsLoggedIn }) {
           </form>
         </div>
         <div className="w-1/2">
-          {<GMap apiKey={GMapAPI} start={source} end={destination} directionsResponses={directionResponses} />}
+          {
+            <GMap
+              apiKey={GMapAPI}
+              start={source}
+              end={destination}
+              directionsResponses={directionResponses}
+            />
+          }
+          {directionResponses && (
+            <div className=" mt-4 p-4 border w-[80%] m-auto flex flex-col gap-4 overflow-y-auto h-[200px]">
+              {directionResponses.routes.map((route, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <input
+                    type="radio"
+                    id={`route${index}`}
+                    name="routes"
+                    value={index}
+                    checked={selectedRouteIndex === index}
+                    onChange={() => handleRouteClick(index)}
+                    className="mr-2"
+                  />
+                  <label
+                    htmlFor={`route${index}`}
+                    className="flex-grow py-2 px-4 bg-gray-100 rounded-lg cursor-pointer"
+                  >
+                    <div className="font-semibold">{route.summary}</div>
+                    <div className="text-sm text-gray-600">
+                      <div>Distance: {route.legs[0].distance.text}</div>
+                      <div>Duration: {route.legs[0].duration.text}</div>
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+        <Modal
+          open={isOpen}
+          onClose={handleCancel}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <div className="text-lg">
+              Are you sure you want to confirm the trip ?
+            </div>
+            <div className="flex justify-between mt-4">
+              <Button
+                variant="outlined"
+                color="success"
+                size="large"
+                onClick={handleYes}
+              >
+                YES
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                size="large"
+                onClick={handleCancel}
+              >
+                NO
+              </Button>
+            </div>
+          </Box>
+        </Modal>
         <ToastContainer />
       </div>
     </>

@@ -18,7 +18,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {auth,provider} from "../firebase.js"
+import {signInWithPopup} from "firebase/auth"
+import GoogleButton from 'react-google-button'
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
@@ -47,12 +49,11 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
   const handleForget = async (e)=>{
     e.preventDefault();
     if(!email){
-      return alert('Fill email')
+      return toast.warning('Fill email')
     }
 
     try {
       const res = await axios.post('http://localhost:3001/api/auth/forget-password', { email });
-
       alert('Reset token sent to your email');
       // console.log(res.data.resetToken)
       const resetToken = res.data.resetToken;
@@ -101,6 +102,25 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
       setIsLoading(false);
     }
   };
+
+  const googlesekar = (req,res)=>{
+    signInWithPopup(auth,provider).then((result)=>{
+      console.log(result);
+      console.log(result.user.photoURL);
+      axios
+            .post("http://localhost:3001/api/auth/google", {
+              username: result.user.displayName,
+              email: result.user.email,
+              image: result.user.photoURL,
+            })
+            .then((res) => {
+              console.log(res.data)
+              // setUser(res.data)
+            localStorage.setItem(`user${user._id}`, JSON.stringify(res.data))
+              // navigate("/dashboard")
+            });
+    }).catch((err)=>{console.log(err)})``
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -186,7 +206,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
                 <Grid item xs></Grid>
                 <Grid item>
                   <Link href="/signin" variant="body2" onClick={handleForget}>
-                    {"Forget Password"}
+                    {"Forgot Password"}
                   </Link>
                 </Grid>
               </Grid>
@@ -207,6 +227,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
                   </Link>
                 </Grid>
               </Grid>
+      <GoogleButton  onClick={googlesekar}/>
             </Box>
           </Box>
         </Grid>

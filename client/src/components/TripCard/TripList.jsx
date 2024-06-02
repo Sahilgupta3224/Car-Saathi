@@ -4,12 +4,15 @@ import TripCard from './TripCard';
 const TripList = ({ trips, user}) => {
   const chunkArray = (arr, size) => {
     const chunkedArr = [];
-    for (let i = 0; i < arr.length; i += size) {
-      chunkedArr.push(arr.slice(i, i + size));
+    if(arr){
+      for (let i = 0; i < arr.length; i += size) {
+        chunkedArr.push(arr.slice(i, i + size));
+      }
     }
+    
     return chunkedArr;
   };
-
+  console.log(trips);
   const chunkedTrips = chunkArray(trips, 2);
 
   return (

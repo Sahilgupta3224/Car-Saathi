@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 
 const TripCard = ({trip, user}) => {
-  const { driver, CarModel, availableSeats, fare } = trip
+  const { driver, CarModel, availableSeats, fare, routes, totalTime, totalDistance ,time} = trip
+  const dateObj = new Date(time);
+  const date = dateObj.toISOString().slice(0, 10)
   const [driverName, setDrivername] = useState('')
   const [driverMobileNumber, setDriverMobileNumber] = useState('')
   const navigate = useNavigate()
@@ -12,7 +14,6 @@ const TripCard = ({trip, user}) => {
     console.log(trip)
     navigate('/booking',{state: {trip}})
   }
-  // console.log(driver)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,13 +42,20 @@ const TripCard = ({trip, user}) => {
             <p className="text-gray-700">Car Model:</p>
             <p className="text-gray-700">Available Seats:</p>
             <p className="text-gray-700">Driver Mobile Number:</p>
-            <p className="text-gray-700 mt-4">Fare per Seat:</p>
+            <p className="text-gray-700 ">Fare per Seat:</p>
+            <p className="text-gray-700 ">Route:</p>
+            <p className="text-gray-700 ">Total Distance:</p>
+            <p className="text-gray-700 ">Estimated Time:</p>
           </div>
           <div>
             <p className="text-blue-600 uppercase">{CarModel}</p>
             <p className="text-blue-600 uppercase">{availableSeats}</p>
             <p className="text-blue-600 uppercase">{driverMobileNumber}</p>
             <p className="text-blue-600 uppercase">{fare}</p>
+            <p className="text-blue-600 uppercase">{routes}</p>
+            <p className="text-blue-600 uppercase">{totalDistance}</p>
+            <p className="text-blue-600 uppercase">{totalTime}</p>
+            <p className="text-blue-600 uppercase">{date}</p>
           </div>
         </div>
       </div>

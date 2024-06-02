@@ -25,6 +25,8 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
     setRemarks(e.target.value);
   };
   const navigate = useNavigate()
+  console.log(trip);
+  console.log(user);
   const bookingConfirm = async(di, order, signature )=>{
     const data = {
       Driver: trip.driver,
@@ -43,11 +45,10 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
     }
     try {
       const response = await axios.post('http://localhost:3001/api/booking/booktrip', data);
-      // console.log(response.data.booking)
       navigate('/mybooking')
     } catch (err) {
       if (err.response && err.response.status === 400) {
-      alert(err.response.data.message);
+      console.log(err)
     } else {
       console.log(err);
     }
@@ -163,4 +164,4 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
   );
 }
 
-        export default BookingPage;
+export default BookingPage;

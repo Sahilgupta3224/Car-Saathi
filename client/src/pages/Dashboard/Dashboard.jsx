@@ -10,10 +10,9 @@ function Dashboard ({user,setUser,setIsLoggedIn}){
     <>
     <Navbar user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>
     <Hero/>
-    <Analytics/>
-      <Analytics2 />
-      
     <Analytics3/>
+    <Analytics2 />
+    <Analytics/>
     <Footer/>
     </>
   )

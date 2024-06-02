@@ -5,7 +5,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-800 py-16">
+    <div className="bg-gray-800 py-20">
       <div className="container mx-auto flex flex-col md:flex-row items-center">
         <div className="max-w-xl mx-auto text-center text-white md:text-left md:mr-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -31,7 +31,7 @@ function Hero() {
           <img
             src="https://img.freepik.com/free-vector/sedan-car-concept-illustration_114360-13223.jpg?w=1800&t=st=1713288231~exp=1713288831~hmac=71eeb61d9e5dfed94ff5007730c1c3cc71534da07e3e8140310e60a5ef4c51e0"
             alt="car illustration"
-            className="w-full h-auto rounded-lg shadow-md"
+            className="w-[40vw] h-auto rounded-lg shadow-md"
           />
         </div>
       </div>

@@ -1,11 +1,54 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styled from "styled-components";
 import Navbar from "../../../components/Navbar/Navbar.jsx";
 import TripCard from "../../../components/MyRides/trip.jsx";
 
-function DriverRides({ user,setIsLoggedIn }) {
+// Create a styled container with a gradient background effect
+const GradientContainer = styled.div`
+  background: linear-gradient( to right, #22543d, #1a3a2a); 
+  padding: 2rem; /* Add some padding */
+  min-height: 100vh; 
+  color: white; 
+   // display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #f9d423; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: semi-bold;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  color: #f9d423;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`;
+
+const TripsGrid = styled.div`
+  //display: grid;
+  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+`;
+
+const Message = styled.p`
+  font-size: 1.25rem;
+  text-align: center;
+  color: #f9d423;
+`;
+
+function DriverRides({ user, setIsLoggedIn }) {
   const [trips, setTrips] = useState([]);
-  console.log(trips)
 
   useEffect(() => {
     const getTrips = async () => {
@@ -23,67 +66,47 @@ function DriverRides({ user,setIsLoggedIn }) {
       }
     };
     getTrips();
-  }, []);
+  }, [user._id]);
 
-  const upcomingTrips = trips.filter((trip) => {
-    const tripDate = new Date(trip.Date);
-    return tripDate > new Date();
-  });
-
-  const pastTrips = trips.filter((trip) => {
-    const tripDate = new Date(trip.Date);
-    return tripDate <= new Date();
-  });
+  const upcomingTrips = trips.filter(
+    (trip) => new Date(trip.time) > new Date()
+  );
+  const pastTrips = trips.filter((trip) => new Date(trip.time) <= new Date());
 
   return (
     <>
-      <Navbar user={user} setIsLoggedIn={setIsLoggedIn}/>
-      {/* <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-6">Your Rides</h1>
-        <h2 className="text-2xl font-semibold mb-4">Upcoming Rides</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {upcomingTrips.map((trip) => {
-            return <TripCard key={trip._id} trip={trip} />;
-          })}
-        </div>
-        <h2 className="text-2xl font-semibold mb-4 mt-8">Past Rides</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pastTrips.map((trip) => {
-            return <TripCard key={trip._id} trip={trip} />;
-          })}
-        </div>
-      </div> */}
-      <div className="mx-auto px-4 py-8">
-  <h1 className="text-3xl font-semibold mb-6">Your Rides</h1>
-  
-  {/* Upcoming Rides */}
-  <div>
-    <h2 className="text-2xl font-semibold mb-4">Upcoming Rides</h2>
-    {upcomingTrips.length > 0 ? (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {upcomingTrips.map((trip) => {
-          return <TripCard key={trip._id} trip={trip} />;
-        })}
-      </div>
-    ) : (
-      <p className="text-lg">You have no upcoming rides.</p>
-    )}
-  </div>
+      <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
+      <GradientContainer>
+        <Title>Your Rides</Title>
 
-  {/* Past Rides */}
-  <div>
-    <h2 className="text-2xl font-semibold mb-4 mt-8">Past Rides</h2>
-    {pastTrips.length > 0 ? (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {pastTrips.map((trip) => {
-          return <TripCard key={trip._id} trip={trip} />;
-        })}
-      </div>
-    ) : (
-      <p className="text-lg">You have no past rides.</p>
-    )}
-  </div>
-</div>
+        {/* Upcoming Rides */}
+        <div>
+          <SectionTitle>Upcoming Rides:</SectionTitle>
+          {upcomingTrips.length > 0 ? (
+            <TripsGrid>
+              {upcomingTrips.map((trip) => (
+                <TripCard key={trip._id} trip={trip} />
+              ))}
+            </TripsGrid>
+          ) : (
+            <Message>You have no upcoming rides.</Message>
+          )}
+        </div>
+
+        {/* Past Rides */}
+        <div>
+          <SectionTitle>Past Rides:</SectionTitle>
+          {pastTrips.length > 0 ? (
+            <TripsGrid>
+              {pastTrips.map((trip) => (
+                <TripCard key={trip._id} trip={trip} />
+              ))}
+            </TripsGrid>
+          ) : (
+            <Message>You have no past rides.</Message>
+          )}
+        </div>
+      </GradientContainer>
     </>
   );
 }
