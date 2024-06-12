@@ -42,9 +42,9 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
   console.log(notifications)
 
   return (
-    <div className="dark:bg-[#276453] min-h-screen">
+    <div className=" min-h-screen">
       <Navbar user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
-      <div className="font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 text-[#44c767] dark:text-[#d4d4d4]">
+      <div className="font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 text-[#171717]">
         Inbox
       </div>
       <div className="mt-8 mx-4">

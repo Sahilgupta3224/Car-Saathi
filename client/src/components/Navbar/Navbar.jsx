@@ -5,6 +5,7 @@ import { RiLogoutBoxLine, RiUserLine } from "react-icons/ri"; // Using modern ic
 import { navItems } from "./Navitems.jsx";
 import Button from "./Button.jsx";
 import Dropdown from "./Dropdown.jsx";
+import { Tooltip } from "@mui/material";
 
 function Navbar({ user,setIsLoggedIn }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -77,21 +78,21 @@ function Navbar({ user,setIsLoggedIn }) {
       </ul>
       
       <div className="flex items-center space-x-4 ml-auto">
-        <Button/>
         {user._id ? (
-          <div className="flex space-x-6 ">
+          <div className="flex ">
+            <Button/>
             <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={profile}>
-              <RiUserLine className="text-3xl mr-1" />
-              <span>Profile</span>
+            <Tooltip title="Profile"> <RiUserLine className="text-2xl mr-3" /></Tooltip>
+              {/* <span>Profile</span> */}
             </div>
             <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={Logout}>
-              <RiLogoutBoxLine className="text-3xl mr-1" />
-              <span>Logout</span>
+            <Tooltip title="Logout"> <RiLogoutBoxLine className="text-2xl mr-3" /></Tooltip>
+              {/* <span>Logout</span> */}
             </div>
           </div>
         ) : (
           <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={Logout}>
-            <RiUserLine className="text-3xl mr-1" />
+            <RiUserLine className="text-3xl mr-3" />
             <span>Login</span>
           </div>
         )}
