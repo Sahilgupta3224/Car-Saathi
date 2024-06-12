@@ -46,6 +46,7 @@ const BookCard = ({
   const [per, setRefundPercentage] = useState(1);
   const [refund, setRefund] = useState(booking.fare * per);
   
+  
   useEffect(() => {
     const today = new Date();
     const bookingDate = new Date(booking.Date);
@@ -120,29 +121,30 @@ const BookCard = ({
 
   return (
     <div
-      className={`border border-gray-300 rounded-lg p-6 mb-6 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass}`}
+      className={`border border-gray-300 rounded-lg p-6 transition-transform duration-500 ease-in-out transform hover:scale-105 ${textColorClass}`}
       style={{
-        backgroundColor: "#5f90c2",
+        backgroundColor: "#f2f2f2",
         color: "#ffffff",
         padding: "20px",
         borderRadius: "10px",
-        marginBottom: "20px",
+        // marginBottom: "20px",
       }}
     >
-      <div className="flex justify-between items-center mb-3">
+    <div className="flex flex-col justify-between h-full">
+      <div className="flex justify-between items-center">
         <div style={{ textAlign: "left", width: "100%" }}>
           <Typography
             variant="h5"
-            className="font-semibold text-blue-900"
+            className="font-bold text-gray-800"
             style={{ marginBottom: "16px" }}
           >
             Journey: {booking.source} to {booking.destination}
           </Typography>
 
           <Typography
-            variant="h6"
+            // variant="h6"
             className="text-gray-800"
-            style={{ marginBottom: "16px" }}
+            style={{ marginBottom: "5px" }}
           >
             Date of Travel:{" "}
             {new Date(booking.Date).toLocaleDateString("en-US", {
@@ -153,29 +155,39 @@ const BookCard = ({
           </Typography>
 
           <Typography
-            variant="h6"
-            className="text-red-400"
-            style={{ marginBottom: "1px" }}
+            // variant="h6"
+            className="text-gray-800"
+            style={{ marginBottom: "5px" }}
           >
             Fare Charges: ${booking.fare}
           </Typography>
           
         </div>
       </div>
-      <div className="flex justify-between items-center mb-3">
+      {/* <div className="flex justify-between items-center mb-3"> */}
         <div style={{ textAlign: "left", width: "50%" }}>
-          <Typography variant="h6" className="text-green-900">
+          <Typography 
+          // variant="h6" 
+          className="text-gray-800"
+          style={{ marginBottom: "5px" }}
+          
+          >
             Driver Name: {name}
           </Typography>
-        </div>
+        {/* </div> */}
       </div>
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex justify-between items-center">
         <div style={{ textAlign: "left", width: "80%" }}>
-          <Typography variant="h6" className="text-blue-700">
+          <Typography 
+          // variant="h6" 
+          className="text-gray-800"
+          style={{ marginBottom: "5px" }}
+          >
             Seats Booked: {booking.NoofBookedSeats}
           </Typography>
         </div>
       </div>
+
       <div className="flex justify-between space-x-2">
         <Button
           variant="outlined"
@@ -186,14 +198,14 @@ const BookCard = ({
           <FontAwesomeIcon icon={faUser} className="mr-2" />
           View Profile
         </Button>
-        <Button
+       {(new Date().getTime > booking.Date.getTime) &&  <Button
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={handleOpen}
           style={{ flex: 1 }}
         >
           Cancel Booking
-        </Button>
+        </Button>}
         <Button
           variant="contained"
           color="primary"
@@ -202,6 +214,7 @@ const BookCard = ({
         >
           Message Driver
         </Button>
+      </div>
       </div>
       <Modal
         open={open}

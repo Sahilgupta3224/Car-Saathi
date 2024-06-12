@@ -3,40 +3,47 @@ import axios from "axios";
 import styled from "styled-components";
 import Navbar from "../../../components/Navbar/Navbar.jsx";
 import TripCard from "../../../components/MyRides/trip.jsx";
+import Paper from '@mui/material/Paper';
+import { styled as sty} from '@mui/material/styles';
+
+const DemoPaper = sty(Paper)(({ theme }) => ({
+  width: 120,
+  height: 120,
+  padding: theme.spacing(2),
+  ...theme.typography.body2,
+  textAlign: 'center',
+}));
 
 // Create a styled container with a gradient background effect
-const GradientContainer = styled.div`
-  background: linear-gradient( to right, #22543d, #1a3a2a); 
-  padding: 2rem; /* Add some padding */
-  min-height: 100vh; 
-  color: white; 
-   // display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+// const GradientContainer = styled.div`
+//   background: linear-gradient( to right, #22543d, #1a3a2a); 
+//   padding: 2rem; /* Add some padding */
+//   min-height: 100vh; 
+//   color: white; 
+//    // display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  text-align: center;
-  color: #f9d423; 
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #171717; 
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: semi-bold;
   margin-bottom: 1rem;
   margin-top: 2rem;
-  color: #f9d423;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #171717;
 `;
 
 const TripsGrid = styled.div`
-  //display: grid;
+  display: grid;
   margin-top: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: auto auto;
   gap: 1.5rem;
   width: 100%;
 `;
@@ -81,7 +88,8 @@ function DriverRides({ user, setIsLoggedIn }) {
   return (
     <>
       <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
-      <GradientContainer>
+      {/* <GradientContainer> */}
+      <div className="p-8">
         <Title>Your Rides</Title>
 
         {/* Upcoming Rides */}
@@ -111,7 +119,8 @@ function DriverRides({ user, setIsLoggedIn }) {
             <Message>You have no past rides.</Message>
           )}
         </div>
-      </GradientContainer>
+        </div>
+      {/* </GradientContainer> */}
     </>
   );
 }

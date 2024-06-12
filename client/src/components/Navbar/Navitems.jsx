@@ -1,18 +1,5 @@
 export const navItems = [
-  {
-    id: 2,
-    title: "Contact Us",
-    path: "/contactus",
-    cName: "nav-item",
-    
-  },
-  {
-    id: 5,
-    title: "Inbox",
-    path: "/messenger",
-    cName: "submenu-item",
-    
-  },
+  
   {
     id: 3,
     title: "Rides",
@@ -30,7 +17,21 @@ export const navItems = [
     title: "Publish Ride",
     path: '/createtrip',
     cName: "nav-item",
-  }
+  },
+  {
+    id: 5,
+    title: "Messenger",
+    path: "/messenger",
+    cName: "submenu-item",
+    
+  },
+  {
+    id: 2,
+    title: "Contact Us",
+    path: "/contactus",
+    cName: "nav-item",
+    
+  },
 ];
 
 export const ServiceDropdown = [
