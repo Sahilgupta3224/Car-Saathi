@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, MenuItem, Link, Grid, Box, Typography, Container, CssBaseline, Avatar, IconButton, InputAdornment } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import axios from 'axios';
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -96,21 +96,13 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
     }
     let phone = countryCode+phonee
     const Entry = { name, username, password, email, phone };
-    try {
-      await axios.post("http://localhost:3001/api/auth/signup", Entry);
-      navigate('/signin')
-      
-      setEmail("");
-      setPassword("");
-      setUsername("");
-      setConformpass("");
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        toast.error(err.response.data.message);
-      } else {
-        console.log(err);
-      }
-    }
+    navigate('/personal', {
+      state: {Entry}
+    })
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setConformpass("");    
   };
 
   const defaultTheme = createTheme({
@@ -261,7 +253,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Next
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>

@@ -11,7 +11,8 @@ import DriverRides from './pages/Rides/Driver/DriverRides.jsx';
 import ResetPassword from './pages/Reset/Reset.jsx';
 import { ContactUs } from './pages/ContactUs/contact.jsx';
 import Inbox from './pages/Inbox/Inbox.jsx';
+import PersonalInfo from './pages/Signup/PersonalInfo.jsx';
 
 
 
-export {Signup, SignIn, Dashboard, Profile, BookingPage, Messenger, Search, PublishTrip, Rider, DriverRides, ResetPassword, ContactUs, Inbox}
+export {Signup, SignIn, Dashboard, Profile, BookingPage, Messenger, Search, PublishTrip, Rider, DriverRides, ResetPassword, ContactUs, Inbox, PersonalInfo}

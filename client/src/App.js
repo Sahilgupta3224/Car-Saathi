@@ -16,6 +16,7 @@ import ResetPassword from './pages/Reset/Reset.jsx';
 import { ContactUs } from './pages/ContactUs/contact.jsx';
 import Inbox from './pages/Inbox/Inbox.jsx';
 import ProtectedRoute from './ProtectedRoute.js';
+import { PersonalInfo } from './Routes.js';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
@@ -39,6 +40,7 @@ function App() {
           <Route path='/resetPassword' element={<ResetPassword />}/>
           <Route path="/contactus" element={<ContactUs user={user} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
+          <Route path='/personal' element={<PersonalInfo user={user} setUser= {setUser} setIsLoggedIn= {setIsLoggedIn}/>} />
           <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
             <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
             <Route path="/booking" element={<BookingPage user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} /> 

@@ -68,6 +68,19 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    age:{
+        type: Number,
+        default: 18
+    },
+    gender:{
+        type: String
+    },
+    address:{
+        type: String
+    },
+    prof:{
+        type: String
+    }
 },{timestamps: true});
 
 export default mongoose.model("User",userSchema)

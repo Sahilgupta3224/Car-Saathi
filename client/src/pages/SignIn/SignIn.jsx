@@ -53,6 +53,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
     }
 
     try {
+      alert('Trying to reset your password')
       const res = await axios.post('http://localhost:3001/api/auth/forget-password', { email });
       alert('Reset token sent to your email');
       // console.log(res.data.resetToken)
