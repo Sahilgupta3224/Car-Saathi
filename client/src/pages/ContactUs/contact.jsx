@@ -40,7 +40,7 @@ export const ContactUs = ({ user,setIsLoggedIn }) => {
   };
 
   return (
-    <div className="min-h-screen bg-light bg-green-700">
+    <div className="min-h-screen bg-light ">
       <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       <ToastContainer />
       <div className=" mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@ export const ContactUs = ({ user,setIsLoggedIn }) => {
               alt="Contact Us"
             />
           </div>
-          <div className="bg-white shadow-md rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6">
             <h2 className="text-4xl font-semibold mb-7">Contact Us</h2>
             <form ref={form} onSubmit={sendEmail}>
               <div className="mb-4">

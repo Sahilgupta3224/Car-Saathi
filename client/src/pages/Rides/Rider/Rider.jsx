@@ -9,8 +9,7 @@ const Title = styled.h1`
   font-weight: bold;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #f9d423;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #171717;
 `;
 
 const SectionTitle = styled.h2`
@@ -18,8 +17,7 @@ const SectionTitle = styled.h2`
   font-weight: 600;
   margin-bottom: 1rem;
   margin-top: 2rem;
-  color: #f9d423;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #171717;
 `;
 
 const GridContainer = styled.div`
@@ -112,16 +110,18 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
   return (
     <div
       style={{
-        background: "linear-gradient(to right, #22543d, #1a3a2a)",
         minHeight: "100vh",
       }}
     >
       {isLoading ? (
+        <>
+        <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
         <p>Loading...</p>
+        </>
       ) : (
         <>
           <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
-          <div className="mx-auto px-4 py-8">
+          <div className="mx-auto px-8 py-8">
             <Title>Your Bookings</Title>
 
             <SectionTitle>Upcoming Bookings :</SectionTitle>
