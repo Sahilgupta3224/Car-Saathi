@@ -24,7 +24,7 @@ function SearchTrip({ user,setIsLoggedIn }) {
     googleMapsApiKey: "AIzaSyClnzcci8V997acQhlpEiYhaLlz_ogR_Vc",
     libraries: ["places"],
   });
-  if (!isLoaded) return <div>Loading... Hi Hi</div>;
+  if (!isLoaded) return <div>Loading...</div>;
 
   async function calculateRoute() {
     if (source === "" || destination === "") {

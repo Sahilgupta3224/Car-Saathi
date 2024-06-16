@@ -51,18 +51,20 @@ const TripsGrid = styled.div`
 const Message = styled.p`
   font-size: 1.25rem;
   text-align: center;
-  color: #f9d423;
+  color: #064E3B;
 `;
 
 function DriverRides({ user, setIsLoggedIn }) {
   const [trips, setTrips] = useState([]);
-
+  const [update,setupdate]=useState(false);
   useEffect(() => {
     const getTrips = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/api/trip/mytrips/${user._id}`
         );
+        console.log(user._id);
+        console.log(response.data.trips);
         setTrips(response.data.trips);
       } catch (err) {
         if (err.response) {
@@ -73,7 +75,9 @@ function DriverRides({ user, setIsLoggedIn }) {
       }
     };
     getTrips();
-  }, [user._id]);
+  }, [user._id,update]);
+
+
 
   const upcomingTrips = trips.filter((trip) => {
     const tripDate = new Date(trip.time);
@@ -98,7 +102,7 @@ function DriverRides({ user, setIsLoggedIn }) {
           {upcomingTrips.length > 0 ? (
             <TripsGrid>
               {upcomingTrips.map((trip) => (
-                <TripCard key={trip._id} trip={trip} />
+                <TripCard key={trip._id} trip={trip} setupdate={setupdate}/>
               ))}
             </TripsGrid>
           ) : (
@@ -112,7 +116,7 @@ function DriverRides({ user, setIsLoggedIn }) {
           {pastTrips.length > 0 ? (
             <TripsGrid>
               {pastTrips.map((trip) => (
-                <TripCard key={trip._id} trip={trip} />
+                <TripCard key={trip._id} trip={trip} setupdate={setupdate} />
               ))}
             </TripsGrid>
           ) : (

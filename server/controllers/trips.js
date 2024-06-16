@@ -1,5 +1,6 @@
 import tripSchema from "../models/trip.js";
 import User from "../models/user.js";
+import BookingSchema from "../models/booking.js"
 
 export const createtrip =async(req,res)=>{
     const {source,destination,driver,availableSeats,CarModel,Riders,Max_Seats,completed,time,route,fare} = req.body;
@@ -65,14 +66,16 @@ export const edittrip = async(req,res)=>{
 
 export const deleteTrip = async(req,res)=>{
     try{
+        console.log(req.params.id);
         const trip = await tripSchema.findByIdAndDelete(req.params.id);
+        console.log(trip);
         const driver = trip.driver;
         const updatedDriver = await User.findByIdAndUpdate(
             driver,
-            {$pull:{trips:req.params.id}},
+            {$pull:{trips:trip}},
             {new: true}
         );
-
+        console.log(driver);
         // Iterate through each booking associated with the trip
         for (const bookingId of trip.Bookings) {
             const booking = await BookingSchema.findById(bookingId);
@@ -85,7 +88,7 @@ export const deleteTrip = async(req,res)=>{
                 );
             }
         }
-        res.json({message:"trip deleted"});
+        res.json({trip});
     } catch(err){
         console.error(err);
         res.status(500).json({message:"cannot delete the trip/trip not found"});
