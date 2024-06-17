@@ -60,7 +60,7 @@ const TripCard = ({trip, user}) => {
         </div>
       </div>
       <div className="bg-gray-100 p-6 flex items-center justify-center">
-        <button className="bg-indigo-500 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110" onClick={handleBook}>
+        <button className="bg-[#1976d2] hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110" onClick={handleBook}>
           Book Now
         </button>
       </div>

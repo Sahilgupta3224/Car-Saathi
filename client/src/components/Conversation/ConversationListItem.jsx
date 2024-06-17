@@ -55,6 +55,7 @@ export const ConversationListItem = ({conversation,user,onlineUsers}) => {
 
     //Finding status of the user
     const isOnline = onlineUsers.some(user=>user?.userId === usr?._id)
+    console.log(usr);
 
     return (
     <div>

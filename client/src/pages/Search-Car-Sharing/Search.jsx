@@ -156,7 +156,7 @@ function SearchTrip({ user,setIsLoggedIn }) {
           {<GMap apiKey={GMapAPI} start={source} end={destination} directionsResponses={directionResponses} />}
         </div>
         </div>
-        <div className="">
+        <div className="grid grid-cols-2">
           <TripList trips={resdata} />
         </div>
         <ToastContainer />

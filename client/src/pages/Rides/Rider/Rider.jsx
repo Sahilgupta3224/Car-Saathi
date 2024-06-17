@@ -125,6 +125,7 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
             <Title>Your Bookings</Title>
 
             <SectionTitle>Upcoming Bookings :</SectionTitle>
+            {upcomingBooking.length===0 && <p className="text-slate-400 p-1">You have no upcoming bookings</p>}
             <GridContainer>
               {upcomingBooking.map((booking) => (
                 <BookCard
@@ -140,6 +141,7 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
             </GridContainer>
 
             <SectionTitle>Past Bookings :</SectionTitle>
+            {pastBooking.length===0 && <p className="text-slate-400 p-1">You have no past bookings yet</p>}
             <GridContainer>
               {pastBooking.map((booking) => (
                 <BookCard
