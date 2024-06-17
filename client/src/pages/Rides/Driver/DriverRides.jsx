@@ -51,7 +51,7 @@ const TripsGrid = styled.div`
 const Message = styled.p`
   font-size: 1.25rem;
   text-align: center;
-  color: #064E3B;
+  color: #171717;
 `;
 
 function DriverRides({ user, setIsLoggedIn }) {
@@ -63,8 +63,8 @@ function DriverRides({ user, setIsLoggedIn }) {
         const response = await axios.get(
           `http://localhost:3001/api/trip/mytrips/${user._id}`
         );
-        console.log(user._id);
-        console.log(response.data.trips);
+        // console.log(user._id);
+        // console.log(response.data.trips);
         setTrips(response.data.trips);
       } catch (err) {
         if (err.response) {
@@ -83,6 +83,7 @@ function DriverRides({ user, setIsLoggedIn }) {
     const tripDate = new Date(trip.time);
     return tripDate > new Date();
   });
+  console.log(upcomingTrips)
 
   const pastTrips = trips.filter((trip) => {
     const tripDate = new Date(trip.time);

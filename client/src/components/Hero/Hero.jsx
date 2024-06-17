@@ -22,7 +22,7 @@ function Hero() {
           </p>
           <button
             onClick={() => navigate("/search")}
-            className="bg-[#00df9a] hover:bg-green-300 text-[#171717] font-bold py-4 px-8 rounded-md transition duration-300 ease-in-out"
+            className="bg-[#1976d2] hover:bg-blue-500 text-[#f2f2f2] font-bold py-4 px-8 rounded-md transition duration-300 ease-in-out"
           >
             FIND A RIDE →
           </button>

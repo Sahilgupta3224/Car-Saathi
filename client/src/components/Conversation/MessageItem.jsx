@@ -4,7 +4,7 @@ import {format} from "timeago.js"
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 export const MessageItem = ({message,own}) => {
-    console.log(message)
+    // console.log(message)
     const [usr,setUsr] = useState(null)
 
     // Fetching details of the receiver
@@ -12,7 +12,7 @@ export const MessageItem = ({message,own}) => {
         const getUser = async()=>{
             try{
                 const res= await axios.get("http://localhost:3001/api/user/getUser/"+message.sender);
-                console.log(res.data.user)
+                console.log(res.data.user,message)
                 setUsr(res.data.user)
 
             }catch(err){
@@ -20,7 +20,8 @@ export const MessageItem = ({message,own}) => {
             }
         }
         getUser()
-    },[])
+    },[message.sender])
+
   return (
     <div>
       {usr && (<Message
@@ -35,8 +36,8 @@ export const MessageItem = ({message,own}) => {
       <Message.Footer sentTime={format(message.createdAt)}/>
       
       <Avatar
-          name={usr.name}
-          src={`https://ui-avatars.com/api/?name=${usr.name}&background=random`}
+          name={usr?.name}
+          src={`https://ui-avatars.com/api/?name=${usr?.name}&background=random`}
       />
     </Message>)
     }

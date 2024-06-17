@@ -16,9 +16,7 @@ function Footer() {
             Car-Saathi.Com
           </h1>
           <p className="py-4 text-sm">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id odit
-            ullam iste repellat consequatur libero reiciendis, blanditiis
-            accusantium.
+           Car Saathi is your go-to platform for finding and offering rides. We aim to make commuting easier, more affordable, and environmentally friendly by connecting drivers and passengers for carpooling
           </p>
           <div className="flex justify-between md:w-[75%] my-6">
             <FaFacebookSquare size={30} className="hover:text-blue-500" />
