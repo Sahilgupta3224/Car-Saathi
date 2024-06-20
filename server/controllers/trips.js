@@ -17,7 +17,7 @@ export const createtrip =async(req,res)=>{
         res.status(200).json({trip})
 
     }catch(err){
-        res.status(500).json({message:'Server error by kritarth'})
+        res.status(500).json({message:'Server error'})
         console.log(err);
     }
     console.log(trip)
@@ -31,7 +31,7 @@ export const mytrips=async(req,res)=>{
         res.status(200).json({trips});
     }
     catch(err){
-        res.status(500).json("error in fiinding trips");
+        res.status(500).json("error in finding trips");
         console.log(err);
     }
 }
@@ -39,14 +39,15 @@ export const mytrips=async(req,res)=>{
 export const findtrip = async(req,res)=>{
     const {source,destination,time,user} = req.body;
     const userId = user._id;
-    console.log(req.body)
+    console.log("Request body of find trip",req.body)
     try{
         // if(user){
         //     const trip = await tripSchema.find({source:source,destination:destination,time :{$gte:time},driver:{$ne:{userId}}});
         //     res.status(200).json({trip});
         // }
         // else{
-            const trip = await tripSchema.find({source:source,destination:destination,time :{$gte:time}});
+            const trip = await tripSchema.find({source:source,destination:destination,time :{$gte:time},availableSeats:{$gte:1}});
+            console.log("Trip",trip)
             res.status(200).json({trip});
         // }
     }

@@ -29,6 +29,7 @@ const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
+    text-align: center;
   color: #171717; 
 `;
 
@@ -43,15 +44,15 @@ const SectionTitle = styled.h2`
 const TripsGrid = styled.div`
   display: grid;
   margin-top: 1.5rem;
-  grid-template-columns: auto auto;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1rem;
   width: 100%;
 `;
 
 const Message = styled.p`
   font-size: 1.25rem;
   text-align: center;
-  color: #171717;
+  color: #9ca3af;
 `;
 
 function DriverRides({ user, setIsLoggedIn }) {
@@ -64,7 +65,7 @@ function DriverRides({ user, setIsLoggedIn }) {
           `http://localhost:3001/api/trip/mytrips/${user._id}`
         );
         // console.log(user._id);
-        // console.log(response.data.trips);
+        console.log(response.data.trips);
         setTrips(response.data.trips);
       } catch (err) {
         if (err.response) {
@@ -75,7 +76,7 @@ function DriverRides({ user, setIsLoggedIn }) {
       }
     };
     getTrips();
-  }, [user._id,update]);
+  }, []);
 
 
 
