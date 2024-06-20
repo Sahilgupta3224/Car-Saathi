@@ -6,7 +6,7 @@ import useRazorpay from "react-razorpay"; // Import the Razorpay component
 import { useLocation, useNavigate } from "react-router-dom";
 
 function BookingPage({ user, setUser,setIsLoggedIn }) {
-  const [seatsToBook, setSeatsToBook] = useState("");
+  const [seatsToBook, setSeatsToBook] = useState();
   const [seatPreference, setSeatPreference] = useState("");
   const [remarks, setRemarks] = useState("");
   const [Razorpay] = useRazorpay();
@@ -49,6 +49,7 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
     } catch (err) {
       if (err.response && err.response.status === 400) {
       console.log(err)
+      alert("Not enough seats")
     } else {
       console.log(err);
     }
@@ -62,6 +63,10 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
     };
 
     try {
+      if(trip.availableSeats-seatsToBook<0){
+        alert("Not enough seats")
+        return;
+      }
       // Make a POST request to your server to create a payment order
       const res = await axios.post(
         "http://localhost:3001/api/payment/create-order",

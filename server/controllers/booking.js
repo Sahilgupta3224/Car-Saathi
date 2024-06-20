@@ -7,43 +7,58 @@ export const booktrip = async (req, res) => {
     const { Driver, Bookingperson, trip, NoofBookedSeats } = req.body;
     const rt = Math.random();
     const booking = new bookingSchema({ ...req.body, rt });
-    console.log(req.body)
+    console.log("Request body",req.body)
     try {
-        if(trip.availableSeats-NoofBookedSeats<0){
-            return res.status(400).json("not enough seats,Sorry!")
-        }
+       
       await booking.save();
       const findtrip = await Trip.findById(trip);
-      console.log(findtrip)
+      console.log("Find Trip",findtrip)
+      console.log("seats avail",findtrip.availableSeats-NoofBookedSeats)
+      if(findtrip.availableSeats-NoofBookedSeats<0){
+          return res.status(400).json("not enough seats,Sorry!")
+      }
       const tripdriver = await User.findById(findtrip.driver);
-      console.log(tripdriver)
+    //   console.log("Trip driver",tripdriver)
       const content = `New booking made by ${Bookingperson.name} with ${tripdriver.username} with ${NoofBookedSeats} seats`;
-      console.log(content);
-      console.log(trip);
-      console.log("yo",Bookingperson)
+      console.log("Content",content);
+      console.log("Trip",trip);
+      console.log("Booking person",Bookingperson)
         const notification = new Notification({
             userId: Bookingperson,
             type: "booking-confirmed",
             content: content
         });
         await notification.save();
-      const user = await User.findByIdAndUpdate(
-        Bookingperson,
-        { $push: { bookings: booking._id } },
-        { new: true }
-      );
+     
       const updatedTrip = await Trip.findByIdAndUpdate(
         trip,
         {
           $push: {
             Bookings: booking._id,
-            riders: booking.riders,
-            bookers: Bookingperson,
+            Riders: booking.riders,
+            Bookers: Bookingperson,
           },
           $inc: { availableSeats: -NoofBookedSeats }
         },
         { new: true }
       );
+      const user = await User.findByIdAndUpdate(
+        Bookingperson,
+        { $push: { bookings: booking._id} },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        Driver,
+        { $pull: { trips: findtrip } },
+        { new: true }
+      );
+    
+      const user2 = await User.findByIdAndUpdate(
+        Driver,
+        { $push: { trips: updatedTrip } },
+        { new: true }
+      );
+      console.log("Updated Trip",updatedTrip);
   
       res.status(200).json({ booking });
     } catch (err) {
@@ -85,7 +100,7 @@ export const cancelbooking = async(req,res)=>{
         const booking = await bookingSchema.findByIdAndDelete(req.params.id);
         const Driver = booking.Driver;
         const bookinguser = booking.bookinguser;
-        if(booking.BookingStatus===true){
+        const findtrip = await Trip.findById(booking.trip)
             const updatedTrip = await Trip.findByIdAndUpdate(
                 booking.trip,
                 {
@@ -97,7 +112,7 @@ export const cancelbooking = async(req,res)=>{
                         }
                     }, 
                     $pull: { Bookers: booking.Bookingperson }, 
-                    $inc: { availableSeats: booking.seats }
+                    $inc: { availableSeats: booking.NoofBookedSeats }
                 },
                 { new: true }
             );
@@ -108,24 +123,16 @@ export const cancelbooking = async(req,res)=>{
             );
             const driver = await User.findByIdAndUpdate(
                 Driver,
-                {$pull:{trips:req.params.id}},
+                {$pull:{trips:findtrip}},
                 {new: true}
             );
-        }
-        else{
-            const user = await User.findByIdAndUpdate(
-                bookinguser,
-                {$pull:{requestedbooking:req.params.id}},
-                {new: true}
-            );
-            const driver = await User.findByIdAndUpdate(
+            const driver2 = await User.findByIdAndUpdate(
                 Driver,
-                {$pull:{requestedtrips:req.params.id}},
+                {$push:{trips:updatedTrip}},
                 {new: true}
             );
-        }
+            console.log(driver2)
         res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver});
-        //payment lautana h
     }
     catch{
         res.json({message:"No such bookings found"})

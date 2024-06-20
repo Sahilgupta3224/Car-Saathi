@@ -136,6 +136,7 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
                   phone={driverPhones[booking._id] || ""}
                   setCurrentChat={setCurrentChat}
                   currentChat={currentChat}
+                  handleDeleteBooking={handleDeleteBooking}
                 />
               ))}
             </GridContainer>

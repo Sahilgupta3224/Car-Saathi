@@ -30,6 +30,7 @@ const BookCard = ({
   phone,
   setCurrentChat,
   currentChat,
+  handleDeleteBooking
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -111,7 +112,8 @@ const BookCard = ({
 
   const handleDelete = async () => {
     try {
-      await onDelete(booking._id);
+      // await onDelete(booking._id);
+      handleDeleteBooking(booking._id)
       toast.success("Booking removed successfully!");
       handleClose();
     } catch (err) {
@@ -198,14 +200,24 @@ const BookCard = ({
           <FontAwesomeIcon icon={faUser} className="mr-2" />
           View Profile
         </Button>
-       {(new Date().getTime > booking.Date.getTime) &&  <Button
+       {/* {(new Date() >= booking.Date) &&  
+       (<Button
           variant="contained"
           color="error"
           onClick={handleOpen}
           style={{ flex: 1 }}
         >
           Cancel Booking
-        </Button>}
+        </Button>)} */}
+  <Button
+    variant="contained"
+    color="error"
+    onClick={handleOpen}
+    style={{ flex: 1 }}
+  >
+    Cancel Booking
+  </Button>
+
         <Button
           variant="contained"
           color="primary"
