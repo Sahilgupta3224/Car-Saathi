@@ -18,17 +18,22 @@ export const booktrip = async (req, res) => {
           return res.status(400).json("not enough seats,Sorry!")
       }
       const tripdriver = await User.findById(findtrip.driver);
-    //   console.log("Trip driver",tripdriver)
-      const content = `New booking made by ${Bookingperson.name} with ${tripdriver.username} with ${NoofBookedSeats} seats`;
-      console.log("Content",content);
+      const drivercontent = `New booking made by ${Bookingperson.name} with you with  ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
+      const bookercontent = `New booking made by you with ${tripdriver.name} with ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
       console.log("Trip",trip);
       console.log("Booking person",Bookingperson)
-        const notification = new Notification({
-            userId: Bookingperson,
-            type: "booking-confirmed",
-            content: content
-        });
+      const notification = new Notification({
+        userId: Bookingperson,
+        type: "booking-confirmed",
+        content: bookercontent
+      });
+      const notification2 = new Notification({
+        userId: tripdriver,
+        type: "booking-confirmed",
+        content: drivercontent
+      });
         await notification.save();
+        await notification2.save();
      
       const updatedTrip = await Trip.findByIdAndUpdate(
         trip,
@@ -95,48 +100,62 @@ export const mybookings=async(req,res)=>{
 }
 
 export const cancelbooking = async(req,res)=>{
-    // const {source,destination,Date} = req.body;
-    try{
+    try {
         const booking = await bookingSchema.findByIdAndDelete(req.params.id);
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+    
         const Driver = booking.Driver;
-        const bookinguser = booking.bookinguser;
-        const findtrip = await Trip.findById(booking.trip)
-            const updatedTrip = await Trip.findByIdAndUpdate(
-                booking.trip,
-                {
-                    $pull: { 
-                        Riders: {
-                            name: booking.riders.name,
-                            age: booking.riders.age,
-                            location: booking.riders.location
-                        }
-                    }, 
-                    $pull: { Bookers: booking.Bookingperson }, 
-                    $inc: { availableSeats: booking.NoofBookedSeats }
-                },
-                { new: true }
-            );
-            const user = await User.findByIdAndUpdate(
-                bookinguser,
-                {$pull:{bookings:req.params.id}},
-                {new: true}
-            );
-            const driver = await User.findByIdAndUpdate(
-                Driver,
-                {$pull:{trips:findtrip}},
-                {new: true}
-            );
-            const driver2 = await User.findByIdAndUpdate(
-                Driver,
-                {$push:{trips:updatedTrip}},
-                {new: true}
-            );
-            console.log(driver2)
-        res.status(200).json({ message: "Booking canceled", booking, user: updatedUser, driver: updatedDriver});
-    }
-    catch{
-        res.json({message:"No such bookings found"})
-    }
+        const bookinguser = booking.Bookingperson;
+    
+        console.log("Driver:", Driver);
+        console.log("Booking user:", bookinguser);
+    
+        const findtrip = await Trip.findById(booking.trip);
+        console.log("Find trip:", findtrip);
+    
+        const updatedTrip = await Trip.findByIdAndUpdate(
+            booking.trip,
+            {
+                $pull: { Bookers: booking.Bookingperson },
+                $inc: { availableSeats: booking.NoofBookedSeats }
+            },
+            { new: true }
+        );
+        console.log("Updated trip:", updatedTrip);
+    
+        const user = await User.findByIdAndUpdate(
+            bookinguser,
+            { $pull: { bookings: req.params.id } },
+            { new: true }
+        );
+        console.log("Updated user:", user);
+    
+        const driver = await User.findByIdAndUpdate(
+            Driver,
+            { $pull: { trips: findtrip } },
+            { new: true }
+        );
+        console.log("Updated driver (pull):", driver);
+    
+        const driver2 = await User.findByIdAndUpdate(
+            Driver,
+            { $push: { trips: updatedTrip } },
+            { new: true }
+        );
+        console.log("Updated driver (push):", driver2);
+    
+        res.status(200).json({ 
+            message: "Booking canceled", 
+            booking, 
+            user, 
+            driver: driver2 
+        });
+    } catch (error) {
+        console.error("Error occurred:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }    
 }
 
 export const confirmbooking = async (req, res) => {

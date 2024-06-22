@@ -43,7 +43,10 @@ const BookCard = ({
     handleClose();
     handleDelete();
   };
-
+  const handleRefundCloseCancel = () => {
+    setRefundOpen(false);
+    handleClose();
+  };
   const [per, setRefundPercentage] = useState(1);
   const [refund, setRefund] = useState(booking.fare * per);
   
@@ -324,7 +327,7 @@ const BookCard = ({
                 variant="outlined"
                 color="error"
                 size="large"
-                onClick={handleRefundClose}
+                onClick={handleRefundCloseCancel}
               >
                 Cancel
               </Button>

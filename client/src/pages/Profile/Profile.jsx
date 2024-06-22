@@ -41,6 +41,7 @@ const Profile = ({ user, setUser, setIsLoggedIn }) => {
   const [openSnack, setOpenSnack] = useState(false);
   const [openEditSnack, setOpenEditSnack] = useState(false);
   const [newPhoto, setNewPhoto] = useState(null);
+  const [flag,setflag]=useState(false)
 
   useEffect(() => {
     const getUser = async () => {
@@ -80,7 +81,7 @@ const Profile = ({ user, setUser, setIsLoggedIn }) => {
     getUser();
     getRating();
     getReviews();
-  }, [params.id]);
+  }, [params.id,flag]);
 
   const handleSubmit = async () => {
     try {
@@ -97,6 +98,7 @@ const Profile = ({ user, setUser, setIsLoggedIn }) => {
         `http://localhost:3001/api/reviews/addReview/${params.id}`,
         review
       );
+      setflag((p)=>!(p))
       setComment("");
       setRating(0);
       handleClose();

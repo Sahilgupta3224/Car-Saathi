@@ -7,6 +7,7 @@ import { validationResult } from "express-validator";
 
 export const googleAuth = async (req, res, next) => {
     try {
+      console.log("noice",req.body);
       const user = await User.findOne({ email: req.body.email });
       if (user) {
         res
@@ -14,6 +15,7 @@ export const googleAuth = async (req, res, next) => {
           .json(user._doc);
       } else {
         const newUser = new User({
+          name:req.body.username,
           ...req.body,
         });
         const savedUser = await newUser.save();

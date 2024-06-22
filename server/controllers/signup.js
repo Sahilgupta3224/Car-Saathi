@@ -152,7 +152,12 @@ export const signup = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Phone number is already in use." });
     }
-
+    const existingUsername = await User.findOne({ username: req.body.username });
+    if (existingUsername) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Username is already in use." });
+    }
     const newUser = new User({ ...req.body, password: hash, phone: mobno });
 
     const userData = await newUser.save();

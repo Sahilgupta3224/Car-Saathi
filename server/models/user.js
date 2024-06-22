@@ -17,13 +17,10 @@ const userSchema = new mongoose.Schema({
     email:{
         type:String,
         required:true,
-        unique:true,
         trim:true
     },
     phone:{
-        type:String, 
-        unique:true,
-        required: true
+        type:String,
     },
     email_verified:{
         type:Boolean,

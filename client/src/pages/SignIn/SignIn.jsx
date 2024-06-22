@@ -62,6 +62,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         alert(error.response.data.message);
+        console.log(error);
       }  else {
         console.log(error);
       }
@@ -116,11 +117,11 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
             })
             .then((res) => {
               console.log(res.data)
-              // setUser(res.data)
-            localStorage.setItem(`user${user._id}`, JSON.stringify(res.data))
-              // navigate("/dashboard")
+              setUser(res.data)
+              localStorage.setItem("user", JSON.stringify(res.data))
+              navigate("/")
             });
-    }).catch((err)=>{console.log(err)})``
+    }).catch((err)=>{console.log(err)})
   }
 
   return (

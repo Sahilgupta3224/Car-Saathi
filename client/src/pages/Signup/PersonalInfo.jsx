@@ -45,7 +45,7 @@ const PersonalInfo = () => {
         console.log(entry, '- entry')
         try {
             const res = await axios.post("http://localhost:3001/api/auth/signup", entry);
-            // console.log(res)
+            
             navigate('/signin')
 
         } catch (err) {

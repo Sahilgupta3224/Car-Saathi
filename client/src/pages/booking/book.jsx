@@ -100,17 +100,7 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
       const rzp1 = new Razorpay(options);
       // Render the Razorpay component
       rzp1.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-
-        //! Agar payment failed ho jai to booking delete karna hai 
-        //! yaha pe booking delete karna hai
-
+        alert("payment failed");
       });
 
       rzp1.open();

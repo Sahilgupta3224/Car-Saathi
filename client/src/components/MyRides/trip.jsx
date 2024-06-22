@@ -3,7 +3,6 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
 const TripCard = ({ trip,setupdate}) => {
-  // console.log(trip)
   const today = new Date();
   const tripDate = new Date(trip.time);
   const textColorClass = tripDate < today ? "text-red-900" : "text-green-900";
@@ -56,7 +55,6 @@ const TripCard = ({ trip,setupdate}) => {
         color: "#ffffff",
         padding: "20px",
         borderRadius: "10px",
-        // marginBottom: "20px",
       }}
     >
     <div className="flex flex-col justify-between h-full">

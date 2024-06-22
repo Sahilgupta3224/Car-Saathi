@@ -83,7 +83,7 @@ export const deleteTrip = async(req,res)=>{
             if (booking) {
                 // Removing the trip from each booker's bookings array
                 const updatedUser = await User.findByIdAndUpdate(
-                    booking.userId,
+                    booking.Bookingperson,
                     {$pull:{bookings:bookingId}},
                     {new: true}
                 );

@@ -78,15 +78,22 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
     setUsername(newUsername);
   };
 
-  
+  const handlePhoneChange = (event) => {
+    const phone = event.target.value;
+    setPhonee(phone);
+    setIsValidPhone(phone.length === 10);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!name || !username || !email || !phonee || !countryCode || !password || !confirmpass) {
+      return toast.error("All fields are required.");
+    }    
     if (!isValid) {
       return toast.error("Invalid Email");
     }
     if (!isValidPassword) {
-      return toast.warning("Make a strong password");
+      return toast.warning("Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special character.");
     }
     if (confirmpass !== password) {
       return toast.info("Password and confirmed password didn't match");
@@ -199,9 +206,7 @@ export default function SignUp({ setUser, setIsLoggedIn }) {
                     label="Phone number"
                     name="phone"
                     autoComplete="Your Phone"
-                    onChange={(e)=>{
-                      setPhonee(e.target.value)
-                    }}
+                    onChange={handlePhoneChange}
                   />
                 </Grid>
                 <Grid item xs={12}>

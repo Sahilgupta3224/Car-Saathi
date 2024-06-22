@@ -40,7 +40,6 @@ function App() {
           <Route path="/contactus" element={<ContactUs user={user} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/profile/:id" element={<Profile user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path='/personal' element={<PersonalInfo user={user} setUser= {setUser} setIsLoggedIn= {setIsLoggedIn}/>} />
-      
             <Route path="/BookingInfo" element={<BookingInfo user={user} setUser={setUser} />} /> 
             <Route path="/booking" element={<BookingPage user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} /> 
             <Route path="/messenger" element={<Messenger user={user} setUser={setUser} currentChat={currentChat} setCurrentChat={setCurrentChat} setIsLoggedIn={setIsLoggedIn}/>}></Route>
