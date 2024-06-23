@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const style = {
   position: "absolute",
@@ -44,6 +45,11 @@ const BookCard = ({
     setRefundOpen(false);
     handleClose();
     handleDelete();
+  };
+
+  const handleRefundCloseCancel = () => {
+    setRefundOpen(false);
+    handleClose();
   };
 
   const [per, setRefundPercentage] = useState(1);
@@ -163,7 +169,7 @@ const BookCard = ({
             className="text-gray-800"
             style={{ marginBottom: "5px" }}
           >
-            Fare Charges: ${booking.fare}
+            Fare Charges: <CurrencyRupeeIcon style={{fontSize: "16px", marginRight: "1px" }} />{booking.fare}
           </Typography>
           
         </div>
@@ -273,7 +279,7 @@ const BookCard = ({
       </Modal>
       <Modal
         open={refundOpen}
-        onClose={handleRefundClose}
+        onClose={ handleRefundCloseCancel}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -326,7 +332,7 @@ const BookCard = ({
                 variant="outlined"
                 color="error"
                 size="large"
-                onClick={handleRefundClose}
+                onClick={ handleRefundCloseCancel}
               >
                 Cancel
               </Button>

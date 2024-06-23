@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import axios from "axios";
 import BookerButton from "./BookerButton"
 
@@ -93,7 +94,7 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
             className="text-gray-800"
             style={{ marginBottom: "5px" }}
           >
-            Fare Charges: ${trip.fare}
+            Fare Charges: <CurrencyRupeeIcon style={{fontSize: "16px", marginRight: "1px" }} />{trip.fare}
           </Typography>
           <Typography
             // variant="h6"

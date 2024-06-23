@@ -48,6 +48,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
   currentChat }) {
   const [trips, setTrips] = useState([]);
   const [update,setupdate]=useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getTrips = async () => {
       try {
@@ -57,6 +58,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
         // console.log(user._id);
         console.log(response.data.trips);
         setTrips(response.data.trips);
+        setIsLoading(false)
       } catch (err) {
         if (err.response) {
           alert(err.response.data.message);
@@ -82,6 +84,8 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
   });
 
   return (
+
+    
     <>
       <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
       {/* <GradientContainer> */}

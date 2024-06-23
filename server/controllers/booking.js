@@ -20,22 +20,20 @@ export const booktrip = async (req, res) => {
       const tripdriver = await User.findById(findtrip.driver);
       const drivercontent = `New booking made by ${Bookingperson.name} with you from ${findtrip.source} to ${findtrip.destination} with  ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
       const bookercontent = `New booking made by you with ${tripdriver.name} from ${findtrip.source} to ${findtrip.destination} with ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
-    //   console.log("Trip driver",tripdriver)
-    //   const content = `New booking made by ${Bookingperson.name} with ${tripdriver.username} from ${findtrip.source} to ${findtrip.destination} with ${NoofBookedSeats} seats`;
-      console.log("Content",content);
+    //   console.log("Content",content);
       console.log("Trip",trip);
       console.log("Booking person",Bookingperson)
-      const notification = new Notification({
-        userId: Bookingperson,
+      const notification1 = new Notification({
+        userId: Bookingperson._id,
         type: "booking-confirmed",
         content: bookercontent
       });
       const notification2 = new Notification({
-        userId: tripdriver,
+        userId: tripdriver._id,
         type: "booking-confirmed",
         content: drivercontent
       });
-        await notification.save();
+        await notification1.save();
         await notification2.save();
      
       const updatedTrip = await Trip.findByIdAndUpdate(
@@ -148,9 +146,8 @@ export const cancelbooking = async(req,res)=>{
             { new: true }
         );
         console.log("Updated driver (push):", driver2);
-    
         res.status(200).json({ 
-            message: "Booking canceled", 
+            message: "Booking cancelled", 
             booking, 
             user, 
             driver: driver2 
