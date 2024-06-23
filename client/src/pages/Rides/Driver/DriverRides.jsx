@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Navbar from "../../../components/Navbar/Navbar.jsx";
-import TripCard from "../../../components/MyRides/trip.jsx";
+import TripCard from "../../../components/Cards/trip.jsx";
 import Paper from '@mui/material/Paper';
 import { styled as sty} from '@mui/material/styles';
 
@@ -13,17 +13,6 @@ const DemoPaper = sty(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   textAlign: 'center',
 }));
-
-// Create a styled container with a gradient background effect
-// const GradientContainer = styled.div`
-//   background: linear-gradient( to right, #22543d, #1a3a2a); 
-//   padding: 2rem; /* Add some padding */
-//   min-height: 100vh; 
-//   color: white; 
-//    // display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
@@ -55,7 +44,8 @@ const Message = styled.p`
   color: #9ca3af;
 `;
 
-function DriverRides({ user, setIsLoggedIn }) {
+function DriverRides({ user, setIsLoggedIn,setCurrentChat,
+  currentChat }) {
   const [trips, setTrips] = useState([]);
   const [update,setupdate]=useState(false);
   useEffect(() => {
@@ -104,7 +94,7 @@ function DriverRides({ user, setIsLoggedIn }) {
           {upcomingTrips.length > 0 ? (
             <TripsGrid>
               {upcomingTrips.map((trip) => (
-                <TripCard key={trip._id} trip={trip} setupdate={setupdate}/>
+                <TripCard key={trip._id} trip={trip} setupdate={setupdate}  setCurrentChat={setCurrentChat} currentChat={currentChat}/>
               ))}
             </TripsGrid>
           ) : (
@@ -118,7 +108,7 @@ function DriverRides({ user, setIsLoggedIn }) {
           {pastTrips.length > 0 ? (
             <TripsGrid>
               {pastTrips.map((trip) => (
-                <TripCard key={trip._id} trip={trip} setupdate={setupdate} />
+                <TripCard key={trip._id} trip={trip} setupdate={setupdate} setCurrentChat={setCurrentChat} currentChat={currentChat} />
               ))}
             </TripsGrid>
           ) : (

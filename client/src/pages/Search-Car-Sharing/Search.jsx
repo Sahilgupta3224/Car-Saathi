@@ -8,6 +8,7 @@ import TripList from "../../components/TripCard/TripList";
 import "./SearchTrip.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LinearProgress from '@mui/material/LinearProgress';
 
 function SearchTrip({ user,setIsLoggedIn }) {
   const [source, setSource] = useState("");
@@ -24,7 +25,7 @@ function SearchTrip({ user,setIsLoggedIn }) {
     googleMapsApiKey: "AIzaSyClnzcci8V997acQhlpEiYhaLlz_ogR_Vc",
     libraries: ["places"],
   });
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <div><LinearProgress/></div>;
 
   async function calculateRoute() {
     if (source === "" || destination === "") {

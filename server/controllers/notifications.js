@@ -37,7 +37,7 @@ export const bookingnotification =async(req,res)=>{
               }
             }
     }catch(err){
-        res.status(500).json({message:'Server error by kritarth'})
+        res.status(500).json({message:'Server error'})
         console.log(err);
     }
 }
@@ -51,6 +51,6 @@ export const getnotifications =async(req,res)=>{
   }
   catch(e){
     console.log(e);
-    res.status(500).json("erro in retrieving notifications");
+    res.status(500).json("error in retrieving notifications");
   }
 }

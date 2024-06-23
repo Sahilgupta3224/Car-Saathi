@@ -2,6 +2,7 @@ import Conversation from  "../models/Conversation.js"
 
 //New Conversation
 export const newConversation = async(req,res)=>{
+    console.log(req.body);
     const newConvo = new Conversation({
         members: [req.body.senderId,req.body.receiverId],
     });

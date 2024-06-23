@@ -17,7 +17,7 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
         'Content-Type': 'application/json',
       },
     });
-          console.log('response is send')
+          console.log('response is sent')
           console.log(response.data);
         }catch(err){
           console.log(err)
@@ -55,8 +55,8 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
             </div>
           ))
         ) : (
-          <div className="bg-[#2e7253] border border-[#2e7253] text-[#f0f0f0] dark:text-[#121212] px-4 py-2 rounded-md shadow-lg">
-            No new bookings today
+          <div className="bg-[#cae7da] border border-[#cdf6e3] text-[#f0f0f0] dark:text-[#121212] px-4 py-2 rounded-md shadow-lg">
+            No notifications yet
           </div>
         )}
       </div>

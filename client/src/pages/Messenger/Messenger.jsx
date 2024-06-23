@@ -85,7 +85,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
     },[user])
     console.log(socket)
 
-    // To get all conversations of the user
+    // To get all conversations of the user 
     useEffect(()=>{
         const getConversations = async()=>{
             try{
