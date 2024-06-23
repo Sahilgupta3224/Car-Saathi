@@ -18,8 +18,11 @@ export const booktrip = async (req, res) => {
           return res.status(400).json("not enough seats,Sorry!")
       }
       const tripdriver = await User.findById(findtrip.driver);
-      const drivercontent = `New booking made by ${Bookingperson.name} with you with  ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
-      const bookercontent = `New booking made by you with ${tripdriver.name} with ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
+      const drivercontent = `New booking made by ${Bookingperson.name} with you from ${findtrip.source} to ${findtrip.destination} with  ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
+      const bookercontent = `New booking made by you with ${tripdriver.name} from ${findtrip.source} to ${findtrip.destination} with ${NoofBookedSeats} ${NoofBookedSeats == 1 ? 'seat' : 'seats'}`;
+    //   console.log("Trip driver",tripdriver)
+    //   const content = `New booking made by ${Bookingperson.name} with ${tripdriver.username} from ${findtrip.source} to ${findtrip.destination} with ${NoofBookedSeats} seats`;
+      console.log("Content",content);
       console.log("Trip",trip);
       console.log("Booking person",Bookingperson)
       const notification = new Notification({

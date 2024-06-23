@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/Navbar/Navbar.jsx";
-import BookCard from "../../../components/MyRides/book.jsx";
+import BookCard from "../../../components/Cards/book.jsx";
 import axios from "axios";
 import styled from "styled-components";
+import { LinearProgress } from "@mui/material";
 
 const Title = styled.h1`
   font-size: 2.5rem;
@@ -116,7 +117,7 @@ function Rider({ user, setCurrentChat, currentChat, setIsLoggedIn }) {
       {isLoading ? (
         <>
         <Navbar user={user} setIsLoggedIn={setIsLoggedIn} />
-        <p>Loading...</p>
+        <p><LinearProgress/></p>
         </>
       ) : (
         <>
