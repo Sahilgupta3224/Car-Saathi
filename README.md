@@ -123,15 +123,15 @@ Car-Saathi is a carpooling platform designed to connect drivers with passengers 
 5. Open a pull request
 
 # Team Members
-Sahil Gupta - []
+Sahil Gupta - [gupsahil2005@gmail.com]
 Rudra Sharma - [sharmarudra761@gmail.com]
-Khanak Patwari - []
-kitarth Shrivastav - []
+Khanak Patwari - [khanakpatwari21@gmail.com]
+kritarth Shrivastav - [srikritarth007@gmail.com]
 
 # Contact
-Sahil Gupta - []
+Sahil Gupta - [gupsahil2005@gmail.com]
 Rudra Sharma - [sharmarudra761@gmail.com]
-Khanak Patwari - []
-kitarth Shrivastav - []
+Khanak Patwari - [khanakpatwari21@gmail.com]
+kritarth Shrivastav - [srikritarth007@gmail.com]
 
 Project Link: https://github.com/Sahilgupta3224/Car-Saathi
