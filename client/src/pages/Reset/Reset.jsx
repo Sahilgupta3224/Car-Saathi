@@ -24,7 +24,7 @@ const ResetPassword = () => {
     try {
       console.log(password);
       const response = await axios.get(
-        `http://localhost:3001/api/auth/reset-password/${token}`,
+        `https://car-saathi.onrender.com/api/auth/reset-password/${token}`,
         {
           params: {
             password: password,

@@ -82,7 +82,7 @@ function PublishTrip({ user, setUser, setIsLoggedIn }) {
         totalDistance,
       }
       console.log(data)
-      const res = await axios.post('http://localhost:3001/api/trip/createtrip', data);
+      const res = await axios.post('https://car-saathi.onrender.com/api/trip/createtrip', data);
       console.log(res);
       toast.success('Trip Published Successfully');
       navigate('/')

@@ -44,7 +44,7 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
       Remark: remarks
     }
     try {
-      const response = await axios.post('http://localhost:3001/api/booking/booktrip', data);
+      const response = await axios.post('https://car-saathi.onrender.com/api/booking/booktrip', data);
       navigate('/mybooking')
     } catch (err) {
       if (err.response && err.response.status === 400) {
@@ -69,7 +69,7 @@ function BookingPage({ user, setUser,setIsLoggedIn }) {
       }
       // Make a POST request to your server to create a payment order
       const res = await axios.post(
-        "http://localhost:3001/api/payment/create-order",
+        "https://car-saathi.onrender.com/api/payment/create-order",
         body2
       );
       const { orderId, amount } = res.data;

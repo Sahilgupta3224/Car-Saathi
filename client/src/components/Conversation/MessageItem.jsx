@@ -11,7 +11,7 @@ export const MessageItem = ({message,own}) => {
     useEffect(()=>{
         const getUser = async()=>{
             try{
-                const res= await axios.get("http://localhost:3001/api/user/getUser/"+message.sender);
+                const res= await axios.get("https://car-saathi.onrender.com/api/user/getUser/"+message.sender);
                 console.log(res.data.user,message)
                 setUsr(res.data.user)
 

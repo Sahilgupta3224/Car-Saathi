@@ -45,7 +45,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
         console.log(friendId)
         const getUser = async()=>{
             try{
-                const res= await axios("http://localhost:3001/api/user/getUser/"+friendId);
+                const res= await axios("https://car-saathi.onrender.com/api/user/getUser/"+friendId);
                 // console.log('friend is here',res.data)
                 setReceiver(res.data.user.name)
 
@@ -58,7 +58,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
 
     // Connecting to socket and receiving message
     useEffect(()=>{
-        socket.current = io("ws://localhost:8900")
+        socket.current = io("https://car-saathi-socket.onrender.com")
         socket.current.on("getMessage",data=>{
             setArrivalMessage({
                 sender: data.senderId,
@@ -89,7 +89,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
     useEffect(()=>{
         const getConversations = async()=>{
             try{
-            const res = await axios.get("http://localhost:3001/api/conversation/getConversation/"+user._id)
+            const res = await axios.get("https://car-saathi.onrender.com/api/conversation/getConversation/"+user._id)
             setConversations(res.data)
             setIsLoading(false)
             console.log("conversations",res.data);
@@ -104,7 +104,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
     useEffect(()=>{
         const getMessages = async() =>{
             try{
-                const res = await axios.get("http://localhost:3001/api/message/"+currentChat._id)
+                const res = await axios.get("https://car-saathi.onrender.com/api/message/"+currentChat._id)
                 setMessages(res.data)
                 setIsLoaded(true)
             }catch(err){
@@ -148,7 +148,7 @@ export const Messenger = ({user,currentChat,setCurrentChat, setIsLoggedIn}) => {
         })
 
         try{
-            const res = await axios.post("http://localhost:3001/api/message/",msg)
+            const res = await axios.post("https://car-saathi.onrender.com/api/message/",msg)
             setMessages([...messages,res.data])
             setNewMessage("")
 

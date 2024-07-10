@@ -92,7 +92,7 @@ function SearchTrip({ user,setIsLoggedIn }) {
     console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/trip/findtrip",
+        "https://car-saathi.onrender.com/api/trip/findtrip",
         data
       );
       setResdata(response.data.trip);

@@ -79,7 +79,7 @@ const BookCard = ({
     const getConversation = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3001/api/conversation/getConversation/" +
+          "https://car-saathi.onrender.com/api/conversation/getConversation/" +
             booking.Bookingperson
         );
         let conversations = res.data;
@@ -96,7 +96,7 @@ const BookCard = ({
           }
         } else {
           const res = await axios.post(
-            "http://localhost:3001/api/conversation/",
+            "https://car-saathi.onrender.com/api/conversation/",
             { senderId: booking.Bookingperson, receiverId: booking.Driver }
           );
           setCurrentChat(res.data);

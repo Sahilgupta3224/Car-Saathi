@@ -47,7 +47,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
     const getTrips = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/trip/mytrips/${user._id}`
+          `https://car-saathi.onrender.com/api/trip/mytrips/${user._id}`
         );
         // console.log(user._id);
         console.log(response.data.trips);
