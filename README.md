@@ -39,15 +39,11 @@ Car-Saathi is a carpooling platform designed to connect drivers with passengers 
    npm install
    nodemon index.js
 
-6. Create a .env file in the server directory and add your MongoDB connection string and other environment variables:
-   MONGODB_URI = MONGO=mongodb+srv://sahil:sahil@cluster0.pnuom1f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-   PORT=3000
-
-7. Start the development server
+6. Start the development server
   - cd server
   - npx nodemon server.js
    
-8. Start the client
+7. Start the client
   - cd ../client
   - npm run start
 
