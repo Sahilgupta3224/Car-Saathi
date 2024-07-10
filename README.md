@@ -92,7 +92,7 @@ Car-Saathi is a carpooling platform designed to connect drivers with passengers 
 7. Payment option available on website
    - Secure payment integration with RazorPAY.
 
-#Tech Stack
+# Tech Stack
 1. Frontend: HTML, CSS, React, CSS bootstrap,CSS Tailwind
 2. Backend: Node.js, Express
 3. Database: MongoDB
