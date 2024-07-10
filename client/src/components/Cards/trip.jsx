@@ -20,7 +20,7 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
   const handleDelete = async()=>{
     try{
       console.log(trip);
-        const res=await axios.delete(`http://localhost:3001/api/trip/deleteTrip/${trip._id}`)
+        const res=await axios.delete(`https://car-saathi.onrender.com/api/trip/deleteTrip/${trip._id}`)
         console.log(res.data)
         setupdate((prev)=>!(prev))
     }catch(err){
@@ -29,7 +29,7 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
   }
   const getUser = async(id)=>{
     try{
-      const res = await axios.get(`http://localhost:3001/api/user/getUser/${id}`)
+      const res = await axios.get(`https://car-saathi.onrender.com/api/user/getUser/${id}`)
       const user=res.data.user
       setBookerDetails(prev=>{
         const newMap = new Map(prev)

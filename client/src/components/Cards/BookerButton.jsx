@@ -20,7 +20,7 @@ export default function BookerButton({user,curruser,currentChat,setCurrentChat})
     const getConversation = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3001/api/conversation/getConversation/" +
+          "https://car-saathi.onrender.com/api/conversation/getConversation/" +
             user._id
         );
         let conversations = res.data;
@@ -39,7 +39,7 @@ export default function BookerButton({user,curruser,currentChat,setCurrentChat})
           }
         } else {
           const res = await axios.post(
-            "http://localhost:3001/api/conversation/",
+            "https://car-saathi.onrender.com/api/conversation/",
             { senderId: curruser, receiverId: user._id }
           );
           console.log(res.data)

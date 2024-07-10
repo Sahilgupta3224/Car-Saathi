@@ -12,7 +12,7 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
         try{
           const data = { userId: user._id }; // Pass user ID as an object with userId property
     console.log(user._id);
-    const response = await axios.post('http://localhost:3001/api/notifications/booknotify', data, {
+    const response = await axios.post('https://car-saathi.onrender.com/api/notifications/booknotify', data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,7 +29,7 @@ const Inbox = ({ user, setUser,setIsLoggedIn }) => {
   useEffect(()=>{
     const getNotifications = async()=>{
       try{
-        const res = await axios.get(`http://localhost:3001/api/notifications/getnotifications/${user._id}`)
+        const res = await axios.get(`https://car-saathi.onrender.com/api/notifications/getnotifications/${user._id}`)
         console.log(res.data.notifications);
         setNotifications(res.data.notifications)
       }

@@ -13,6 +13,7 @@ export const ErrorMessage = (status, message) => {
 
 export const forgetPassword = async (req, res) => {
   const { email } = req.body;
+  console.log(email)
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -23,9 +24,11 @@ export const forgetPassword = async (req, res) => {
     });
     user.resetToken = resetToken;
     user.resetTokenExpiration = Date.now() + 15 * 60 * 1000; // 15 minutes
+    console.log(user)
     await user.save();
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      
       auth: {
         user: "gupsahil2005@gmail.com",
         pass: "xqzn aaev tdud grbk",
@@ -49,6 +52,7 @@ export const forgetPassword = async (req, res) => {
       return res.status(200).json({ message: "Reset token sent to your email", resetToken });
     });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: "Internal server error" });
   }
 };

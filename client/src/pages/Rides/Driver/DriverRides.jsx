@@ -23,8 +23,8 @@ const Title = styled.h1`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: semi-bold;
+  font-size: 2rem;
+  font-weight: 600;
   margin-bottom: 1rem;
   margin-top: 2rem;
   color: #171717;
@@ -38,12 +38,6 @@ const TripsGrid = styled.div`
   width: 100%;
 `;
 
-const Message = styled.p`
-  font-size: 1.25rem;
-  text-align: center;
-  color: #9ca3af;
-`;
-
 function DriverRides({ user, setIsLoggedIn,setCurrentChat,
   currentChat }) {
   const [trips, setTrips] = useState([]);
@@ -53,7 +47,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
     const getTrips = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/trip/mytrips/${user._id}`
+          `https://car-saathi.onrender.com/api/trip/mytrips/${user._id}`
         );
         // console.log(user._id);
         console.log(response.data.trips);
@@ -102,7 +96,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
               ))}
             </TripsGrid>
           ) : (
-            <Message>You have no upcoming rides.</Message>
+            <p className="text-slate-400 p-1">You have no upcoming rides.</p>
           )}
         </div>
 
@@ -116,7 +110,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
               ))}
             </TripsGrid>
           ) : (
-            <Message>You have no past rides.</Message>
+            <p className="text-slate-400 p-1">You have no past rides.</p>
           )}
         </div>
         </div>

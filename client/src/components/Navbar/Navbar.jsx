@@ -28,7 +28,7 @@ function Navbar({ user,setIsLoggedIn }) {
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  const [dropdown, setDropdown] = useState(false);
+  // const [dropdown, setDropdown] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     console.log(user);
@@ -91,7 +91,7 @@ function Navbar({ user,setIsLoggedIn }) {
             </div>
           </div>
         ) : (
-          <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={Logout}>
+          <div className="text-white cursor-pointer hover:text-yellow-400 flex items-center justify-center" onClick={navigate("/Signin")}>
             <RiUserLine className="text-3xl mr-3" />
             <span>Login</span>
           </div>

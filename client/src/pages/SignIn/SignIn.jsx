@@ -53,8 +53,8 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
     }
 
     try {
-      alert('Trying to reset your password')
-      const res = await axios.post('http://localhost:3001/api/auth/forget-password', { email });
+      // alert('Trying to reset your password')
+      const res = await axios.post('https://car-saathi.onrender.com/api/auth/forget-password', { email });
       alert('Reset token sent to your email');
       // console.log(res.data.resetToken)
       const resetToken = res.data.resetToken;
@@ -79,7 +79,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
     console.log(formdata)
     try {
       const res = await axios.post(
-        "http://localhost:3001/api/auth/signin",
+        "https://car-saathi.onrender.com/api/auth/signin",
         formdata
       );
       setUser(res.data.others);
@@ -110,7 +110,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
       console.log(result);
       console.log(result.user.photoURL);
       axios
-            .post("http://localhost:3001/api/auth/google", {
+            .post("https://car-saathi.onrender.com/api/auth/google", {
               username: result.user.displayName,
               email: result.user.email,
               image: result.user.photoURL,
@@ -207,9 +207,9 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>
-                  <Link href="/signin" variant="body2" onClick={handleForget}>
-                    {"Forgot Password"}
-                  </Link>
+                  {/* <Link href="/resetPassword" variant="body2" onClick={handleForget}> */}
+                    {/* {"Forgot Password"} */}
+                  {/* </Link> */}
                 </Grid>
               </Grid>
               <Button
@@ -229,7 +229,7 @@ export default function SignInSide({ user, setUser,isLoggedIn,setIsLoggedIn }) {
                   </Link>
                 </Grid>
               </Grid>
-      <GoogleButton  onClick={googlesekar}/>
+     <div className="w-full flex justify-center my-6"> <GoogleButton  onClick={googlesekar}/></div>
             </Box>
           </Box>
         </Grid>

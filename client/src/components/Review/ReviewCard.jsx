@@ -75,7 +75,7 @@ export default function RecipeReviewCard({data,review,setOpenSnack,setOpenEditSn
         Date: review.Date
     }
       console.log("edited review input",review)
-      const res = await axios.patch(`http://localhost:3001/api/reviews/editReview/${params.id}`,{editedReview:newreview});
+      const res = await axios.patch(`https://car-saathi.onrender.com/api/reviews/editReview/${params.id}`,{editedReview:newreview});
       console.log(res.data);
       setOpenEditSnack(true)
       handleClose();
@@ -89,7 +89,7 @@ export default function RecipeReviewCard({data,review,setOpenSnack,setOpenEditSn
 const handleDelete = async() => {
     // Handle delete functionality
     try{
-      const res = await axios.delete(`http://localhost:3001/api/reviews/deleteReview/${params.id}/${review._id}`);
+      const res = await axios.delete(`https://car-saathi.onrender.com/api/reviews/deleteReview/${params.id}/${review._id}`);
       console.log(res.data);
       setOpenSnack(true)
 

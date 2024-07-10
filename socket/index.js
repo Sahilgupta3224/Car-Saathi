@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 
-const io = new Server(8900,{ 
+const io = new Server(10000,{ 
     cors: {
         origin:"http://localhost:3000"//react application http
     }

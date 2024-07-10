@@ -44,7 +44,7 @@ const PersonalInfo = () => {
         const entry = { ...Entry, age, address, gender, prof }
         console.log(entry, '- entry')
         try {
-            const res = await axios.post("http://localhost:3001/api/auth/signup", entry);
+            const res = await axios.post("https://car-saathi.onrender.com/api/auth/signup", entry);
             
             navigate('/signin')
 
