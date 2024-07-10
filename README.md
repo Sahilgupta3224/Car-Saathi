@@ -1,4 +1,4 @@
-﻿# Car-Saathi# Car-Saathi
+﻿# Car-Saathi
 
 ## Description
 Car-Saathi is a carpooling platform designed to connect drivers with passengers looking for a ride. This project aims to promote carpooling, reduce traffic congestion, and minimize carbon emissions. Built using React, Node.js, Express, and MongoDB, Car-Saathi provides a seamless and user-friendly experience for ride-sharing.
