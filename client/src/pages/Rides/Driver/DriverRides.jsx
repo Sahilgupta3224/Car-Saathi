@@ -23,8 +23,8 @@ const Title = styled.h1`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: semi-bold;
+  font-size: 2rem;
+  font-weight: 600;
   margin-bottom: 1rem;
   margin-top: 2rem;
   color: #171717;
@@ -36,12 +36,6 @@ const TripsGrid = styled.div`
   grid-template-columns: repeat(2,1fr);
   gap: 1rem;
   width: 100%;
-`;
-
-const Message = styled.p`
-  font-size: 1.25rem;
-  text-align: center;
-  color: #9ca3af;
 `;
 
 function DriverRides({ user, setIsLoggedIn,setCurrentChat,
@@ -102,7 +96,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
               ))}
             </TripsGrid>
           ) : (
-            <Message>You have no upcoming rides.</Message>
+            <p className="text-slate-400 p-1">You have no upcoming rides.</p>
           )}
         </div>
 
@@ -116,7 +110,7 @@ function DriverRides({ user, setIsLoggedIn,setCurrentChat,
               ))}
             </TripsGrid>
           ) : (
-            <Message>You have no past rides.</Message>
+            <p className="text-slate-400 p-1">You have no past rides.</p>
           )}
         </div>
         </div>
