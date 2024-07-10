@@ -44,12 +44,12 @@ Car-Saathi is a carpooling platform designed to connect drivers with passengers 
    PORT=3000
 
 7. Start the development server
-   cd server
-   npx nodemon server.js
+  - cd server
+  - npx nodemon server.js
    
 8. Start the client
-   cd ../client
-   npm run start
+  - cd ../client
+  - npm run start
 
 # Usage
 
