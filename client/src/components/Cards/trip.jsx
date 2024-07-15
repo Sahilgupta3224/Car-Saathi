@@ -8,7 +8,7 @@ import BookerButton from "./BookerButton"
 const TripCard = ({ trip,setupdate,setCurrentChat,
   currentChat}) => {
   console.log("current chat in trip card component",currentChat)
-  // console.log(trip)
+  console.log(trip)
   const [bookerDetails,setBookerDetails]=useState(new Map())
 
   const today = new Date();
@@ -33,7 +33,7 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
       const user=res.data.user
       setBookerDetails(prev=>{
         const newMap = new Map(prev)
-        prev.set(user._id,user)
+        newMap.set(user._id,user)
         return newMap
       })
     }catch(err){
@@ -45,7 +45,7 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
     for(let i=0;i<trip.Bookers.length;i++){
       getUser(trip.Bookers[i])
     }
-  },[])
+  },[trip.Bookers])
   console.log(bookerDetails.entries())
   return (
     <div
@@ -109,9 +109,11 @@ const TripCard = ({ trip,setupdate,setCurrentChat,
             style={{ marginBottom: "5px" }}
           >
             Bookers: {
-              Array.from(bookerDetails.entries()).map(([id,user])=>(
-                <BookerButton user={user} currentChat={currentChat} setCurrentChat={setCurrentChat} curruser={trip.driver}/>
-              ))
+              trip.Max_Seats>trip.availableSeats ?
+                Array.from(bookerDetails.entries()).map(([id,user])=>(
+                  <BookerButton user={user} currentChat={currentChat} setCurrentChat={setCurrentChat} curruser={trip.driver}/>
+                ))
+                : <p>N/A</p>
             }
           </Typography>
           
