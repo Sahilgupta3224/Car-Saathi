@@ -131,10 +131,4 @@ Rudra Sharma - [sharmarudra761@gmail.com]
 Khanak Patwari - [khanakpatwari21@gmail.com]
 kritarth Shrivastav - [srikritarth007@gmail.com]
 
-# Contact
-Sahil Gupta - [gupsahil2005@gmail.com]
-Rudra Sharma - [sharmarudra761@gmail.com]
-Khanak Patwari - [khanakpatwari21@gmail.com]
-kritarth Shrivastav - [srikritarth007@gmail.com]
-
 Project Link: https://github.com/Sahilgupta3224/Car-Saathi
