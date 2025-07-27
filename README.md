@@ -4,7 +4,7 @@
 Car-Saathi is a carpooling platform designed to connect drivers with passengers looking for a ride. This project aims to promote carpooling, reduce traffic congestion, and minimize carbon emissions. Built using React, Node.js, Express, and MongoDB, Car-Saathi provides a seamless and user-friendly experience for ride-sharing.
 
 ## Deployed Webiste
-https://paisa-vasooli.netlify.app/
+https://carsaathi-carpool.netlify.app/
 
 ## Table of Contents
 - [Installation](#installation)
